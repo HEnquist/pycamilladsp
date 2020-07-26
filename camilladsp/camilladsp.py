@@ -128,6 +128,10 @@ class CamillaDSP:
         '''Stop processing and exit.'''
         self._query("exit")
 
+    def reload(self):
+        '''Reload config from disk.'''
+        self._query("reload")
+
     def get_config_name(self):
         '''Get path to current config file.'''
         name = self._query("getconfigname")
