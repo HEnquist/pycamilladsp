@@ -56,7 +56,7 @@ class CamillaDSP:
             raise IOError("Not connected")
 
     def _parse_response(self, resp):
-        parts = resp.split(":",3)
+        parts = resp.split(":",2)
         state = parts[0]
         command = parts[1]
         if state == "OK":
@@ -163,6 +163,7 @@ class CamillaDSP:
 
 
 if __name__ == "__main__":
+    '''Testing area'''
     cdsp = CamillaDSP("127.0.0.1", 1234)
     cdsp.connect()
     print("Version: {}".format(cdsp.get_version()))
