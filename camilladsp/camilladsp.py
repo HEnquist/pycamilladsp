@@ -1,22 +1,37 @@
-#play wav
+# play wav
 import yaml
 from websocket import create_connection
 import math
 
-standard_rates = [8000, 11025, 16000, 22050, 32000, 44100, 48000, 88200, 96000, 176400, 192000, 352800, 384000]
+standard_rates = [
+    8000,
+    11025,
+    16000,
+    22050,
+    32000,
+    44100,
+    48000,
+    88200,
+    96000,
+    176400,
+    192000,
+    352800,
+    384000,
+]
+
 
 class CamillaDSP:
-    '''Class for communicating with CamillaDSP'''
+    """Class for communicating with CamillaDSP"""
 
     def __init__(self, host, port):
-        '''Connect to CamillaDSP on the specified host and port'''
+        """Connect to CamillaDSP on the specified host and port"""
         self._host = host
         self._port = int(port)
         self._ws = None
         self._version = None
-    
+
     def connect(self):
-        '''Connect to the websocket of CamillaDSP'''
+        """Connect to the websocket of CamillaDSP"""
         try:
             self._ws = create_connection("ws://{}:{}".format(self._host, self._port))
             rawvers = self._query("getversion")
@@ -36,7 +51,7 @@ class CamillaDSP:
                         return repl[1]
                     return
                 else:
-                    raise IOError("Invalid response received") 
+                    raise IOError("Invalid response received")
             except Exception as e:
                 self._ws = None
                 raise IOError("Lost connection to CamillaDSP")
@@ -51,12 +66,12 @@ class CamillaDSP:
             if repl[0] == command.lower():
                 return None
             else:
-                raise IOError("Invalid response received") 
+                raise IOError("Invalid response received")
         else:
             raise IOError("Not connected")
 
     def _parse_response(self, resp):
-        parts = resp.split(":",2)
+        parts = resp.split(":", 2)
         state = parts[0]
         command = parts[1]
         if state == "OK":
@@ -71,99 +86,99 @@ class CamillaDSP:
         self._version = tuple(resp.split(".", 3))
 
     def get_version(self):
-        '''Read CamillaDSP version, returns a tuple.'''
+        """Read CamillaDSP version, returns a tuple."""
         return self._version
 
     def get_state(self):
-        '''Get current processing state.'''
+        """Get current processing state."""
         state = self._query("getstate")
         return state
 
     def get_signal_range(self):
-        '''Get current signal range.'''
+        """Get current signal range."""
         sigrange = self._query("getsignalrange")
         return float(sigrange)
 
     def get_signal_range_dB(self):
-        '''Get current signal range in dB.'''
+        """Get current signal range in dB."""
         sigrange = self.get_signal_range()
         if sigrange > 0.0:
-            range_dB = 20.0 * math.log10(sigrange/2.0)
+            range_dB = 20.0 * math.log10(sigrange / 2.0)
         else:
             range_dB = -1000
         return range_dB
 
     def get_capture_rate_raw(self):
-        '''Get current capture rate, raw value.'''
+        """Get current capture rate, raw value."""
         rate = self._query("getcapturerate")
         return int(rate)
 
     def get_capture_rate(self):
-        '''Get current capture rate. Returns the nearest common value.'''
+        """Get current capture rate. Returns the nearest common value."""
         rate = self.get_capture_rate_raw()
-        if 0.9*standard_rates[0] < rate < 1.1*standard_rates[-1]:
+        if 0.9 * standard_rates[0] < rate < 1.1 * standard_rates[-1]:
             return min(standard_rates, key=lambda val: abs(val - rate))
         else:
             return None
 
     def get_update_interval(self):
-        '''Get current update interval in ms.'''
+        """Get current update interval in ms."""
         interval = self._query("getupdateinterval")
         return int(interval)
 
     def set_update_interval(self, value):
-        '''Set current update interval in ms.'''
+        """Set current update interval in ms."""
         self._set_value("setupdateinterval", value)
 
     def get_rate_adjust(self):
-        '''Get current value for rate adjust in %.'''
+        """Get current value for rate adjust in %."""
         adj = self._query("getrateadjust")
         return float(adj)
 
     def stop(self):
-        '''Stop processing and wait for new config if wait mode is active, else exit. '''
+        """Stop processing and wait for new config if wait mode is active, else exit. """
         self._query("stop")
 
     def exit(self):
-        '''Stop processing and exit.'''
+        """Stop processing and exit."""
         self._query("exit")
 
     def reload(self):
-        '''Reload config from disk.'''
+        """Reload config from disk."""
         self._query("reload")
 
     def get_config_name(self):
-        '''Get path to current config file.'''
+        """Get path to current config file."""
         name = self._query("getconfigname")
         return name
 
     def set_config_name(self, value):
-        '''Set path to config file.'''
+        """Set path to config file."""
         self._set_value("setconfigname", value)
 
     def get_config_raw(self):
-        '''Get the active configuation in yaml format as a string.'''
+        """Get the active configuation in yaml format as a string."""
         config = self._query("getconfig")
         return config
 
     def set_config_raw(self, value):
-        '''Upload a new configuation in yaml format as a string.'''
+        """Upload a new configuation in yaml format as a string."""
         self._set_value("setconfig", value)
 
     def get_config(self):
-        '''Get the active configuation as an object'''
+        """Get the active configuation as an object"""
         config_raw = self.get_config_raw()
-        config=yaml.safe_load(config_raw)
+        config = yaml.safe_load(config_raw)
         return config
 
     def set_config(self, config):
-        '''Upload a new configuation from an object'''
+        """Upload a new configuation from an object"""
         config_raw = yaml.dump(config)
         self.set_config_raw(config_raw)
 
 
 if __name__ == "__main__":
-    '''Testing area'''
+    """Testing area"""
     cdsp = CamillaDSP("127.0.0.1", 1234)
     cdsp.connect()
     print("Version: {}".format(cdsp.get_version()))

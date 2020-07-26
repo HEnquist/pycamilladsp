@@ -4,7 +4,7 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="camilladsp", # Replace with your own username
+    name="camilladsp",
     version="0.0.1",
     author="Henrik Enquist",
     author_email="henrik.enquist@gmail.com",
@@ -13,5 +13,6 @@ setuptools.setup(
     long_description_content_type="text/markdown",
     url="https://github.com/HEnquist/pycamilladsp",
     packages=setuptools.find_packages(),
-    python_requires='>=3.6',
+    python_requires=">=3",
+    install_requires=["PyYAML", "websocket_client"],
 )

@@ -1,4 +1,4 @@
-#play wav
+# play wav
 from camilladsp import CamillaDSP
 import sys
 import os
@@ -17,21 +17,22 @@ except:
     sys.exit()
 # read the config to a Python dict
 with open(template_file) as f:
-    cfg=yaml.safe_load(f)
+    cfg = yaml.safe_load(f)
 
 wav_info = read_wav_header(wav_file)
 if wav_info["SampleFormat"] == "unknown":
     print("Unknown wav sample format!")
 
-# template
+# templates
 capt_device = {
     "type": "File",
     "filename": wav_file,
     "format": wav_info["SampleFormat"],
     "channels": wav_info["NumChannels"],
     "skip_bytes": wav_info["DataStart"],
-    "read_bytes":  wav_info["DataLength"],
+    "read_bytes": wav_info["DataLength"],
 }
+
 # Modify config
 cfg["devices"]["capture_samplerate"] = wav_info["SampleRate"]
 cfg["devices"]["enable_rate_adjust"] = False
