@@ -1,4 +1,3 @@
-# play wav
 import yaml
 from websocket import create_connection
 import math
@@ -36,7 +35,7 @@ class CamillaDSP:
             self._ws = create_connection("ws://{}:{}".format(self._host, self._port))
             rawvers = self._query("getversion")
             self._update_version(rawvers)
-        except Exception as e:
+        except Exception as _e:
             self._ws = None
             raise
 
@@ -52,7 +51,7 @@ class CamillaDSP:
                     return
                 else:
                     raise IOError("Invalid response received")
-            except Exception as e:
+            except Exception as _e:
                 self._ws = None
                 raise IOError("Lost connection to CamillaDSP")
         else:
