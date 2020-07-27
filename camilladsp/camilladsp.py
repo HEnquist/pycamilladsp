@@ -39,6 +39,15 @@ class CamillaDSP:
             self._ws = None
             raise
 
+    def disconnect(self):
+        """Close the connection to the websocket"""
+        if self._ws is not None:
+            try:
+                self._ws.close()
+            except Exception as _e:
+                pass
+            self._ws = None
+
     def _query(self, command):
         if self._ws is not None:
             try:
