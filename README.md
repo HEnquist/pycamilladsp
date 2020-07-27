@@ -1,5 +1,6 @@
 # pyCamillaDSP
 Python library for handling the communication with CamillaDSP via a websocket.
+Works with CamillaDSP version 0.3.2 and up.
 
 Install with 
 ```sh
