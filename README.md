@@ -30,6 +30,7 @@ The CamillaDSP class provides the following methods:
 |----------|---------------|
 |`connect()` | Connect to the Websocket server. Must be called before any other method can be used.|
 |`disconnect()` | Close the connection to the websocket.|
+|`is_connected()` | Is websocket connected? Returns True or False.|
 |`get_version()` | Read CamillaDSP version, returns a tuple with 3 elements|
 |`get_state()` | Get current processing state. Returns one of "RUNNING", "PAUSED" or "INACTIVE".|
 |`get_signal_range()` | Get current signal range.|

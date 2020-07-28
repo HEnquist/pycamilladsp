@@ -48,6 +48,10 @@ class CamillaDSP:
                 pass
             self._ws = None
 
+    def is_connected(self):
+        """Is websocket connected? Returns True or False"""
+        return self._ws is not None
+
     def _query(self, command):
         if self._ws is not None:
             try:
