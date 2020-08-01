@@ -15,4 +15,8 @@ setuptools.setup(
     packages=setuptools.find_packages(),
     python_requires=">=3",
     install_requires=["PyYAML", "websocket_client"],
+    entry_points = {
+        'console_scripts': ['plotcamillaconf=camilladsp.plotcamillaconf:main'],
+    }
+
 )
