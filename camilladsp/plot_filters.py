@@ -1,21 +1,22 @@
 
-from filter_eval import Biquad, BiquadCombo, Conv, DiffEq
+from camilladsp.filter_eval import Biquad, BiquadCombo, Conv, DiffEq
 import numpy as np
 from matplotlib import pyplot as plt
+import io
 
-def plot_filter(filterconf, srate):
-    fvect = np.linspace(1, (srate*0.95)/2.0, 10000)
+def plot_filter(filterconf, srate, toimage=False):
+    fvect = np.linspace(1, (srate*0.95)/2.0, 1000)
     filter, fconf = filterconf
     if fconf['type'] in ('Biquad', 'DiffEq', 'BiquadCombo'):
         if fconf['type'] == 'DiffEq':
-            kladd = DiffEq(fconf['parameters'], srate)
+            currfilt = DiffEq(fconf['parameters'], srate)
         elif fconf['type'] == 'BiquadCombo':
-            kladd = BiquadCombo(fconf['parameters'], srate)
+            currfilt = BiquadCombo(fconf['parameters'], srate)
         else:
-            kladd = Biquad(fconf['parameters'], srate)
+            currfilt = Biquad(fconf['parameters'], srate)
         plt.figure(num=filter)
-        fplot, magn, phase = kladd.gain_and_phase(fvect)
-        stable = kladd.is_stable()
+        fplot, magn, phase = currfilt.gain_and_phase(fvect)
+        stable = currfilt.is_stable()
         plt.subplot(2,1,1)
         plt.semilogx(fplot, magn)
         plt.title("{}, stable: {}\nMagnitude".format(filter, stable))
@@ -24,19 +25,25 @@ def plot_filter(filterconf, srate):
         plt.title("Phase")
     elif fconf['type'] == 'Conv':
         if 'parameters' in fconf:
-            kladd = Conv(fconf['parameters'], srate)
+            currfilt = Conv(fconf['parameters'], srate)
         else:
-            kladd = Conv(None, srate)
+            currfilt = Conv(None, srate)
         plt.figure(num=filter)
-        ftemp, magn, phase = kladd.gain_and_phase()
+        ftemp, magn, phase = currfilt.gain_and_phase()
         plt.subplot(2,1,1)
         plt.semilogx(ftemp, magn)
         plt.title("FFT of {}".format(filter))
         plt.gca().set(xlim=(10, srate/2.0))
-        t, imp = kladd.get_impulse()
+        t, imp = currfilt.get_impulse()
         plt.subplot(2,1,2)
         plt.plot(t, imp)
         plt.title("Impulse response of {}".format(filter))
+    if toimage:
+        buf = io.BytesIO()
+        plt.savefig(buf, format='svg')
+        buf.seek(0)
+        plt.close()
+        return buf
             
 def plot_filters(conf):
     srate = conf['devices']['samplerate']

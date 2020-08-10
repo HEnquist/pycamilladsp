@@ -81,7 +81,6 @@ def plot_pipeline(conf, toimage=False):
     stage_start = 0
     if 'pipeline' in conf:
         for step in conf['pipeline']:
-            stage = len(stages)
             if step['type'] == 'Mixer':
                 total_length += 1
                 name = step['name']
@@ -147,6 +146,7 @@ def plot_pipeline(conf, toimage=False):
         buf = io.BytesIO()
         plt.savefig(buf, format='svg')
         buf.seek(0)
+        plt.close()
         return buf
 
 

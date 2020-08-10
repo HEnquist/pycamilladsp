@@ -435,14 +435,14 @@ def main():
         for filter, fconf in conf['filters'].items():
             if fconf['type'] in ('Biquad', 'DiffEq', 'BiquadCombo'):
                 if fconf['type'] == 'DiffEq':
-                    kladd = DiffEq(fconf['parameters'], srate)
+                    currfilt = DiffEq(fconf['parameters'], srate)
                 elif fconf['type'] == 'BiquadCombo':
-                    kladd = BiquadCombo(fconf['parameters'], srate)
+                    currfilt = BiquadCombo(fconf['parameters'], srate)
                 else:
-                    kladd = Biquad(fconf['parameters'], srate)
+                    currfilt = Biquad(fconf['parameters'], srate)
                 plt.figure(num=filter)
-                magn, phase = kladd.gain_and_phase(fvect)
-                stable = kladd.is_stable()
+                magn, phase = currfilt.gain_and_phase(fvect)
+                stable = currfilt.is_stable()
                 plt.subplot(2,1,1)
                 plt.semilogx(fvect, magn)
                 plt.title("{}, stable: {}\nMagnitude".format(filter, stable))
@@ -452,18 +452,18 @@ def main():
                 fignbr += 1
             elif fconf['type'] == 'Conv':
                 if 'parameters' in fconf:
-                    kladd = Conv(fconf['parameters'], srate)
+                    currfilt = Conv(fconf['parameters'], srate)
                 else:
-                    kladd = Conv(None, srate)
+                    currfilt = Conv(None, srate)
                 plt.figure(num=filter)
-                ftemp, magn, phase = kladd.gain_and_phase()
+                ftemp, magn, phase = currfilt.gain_and_phase()
                 plt.subplot(2,1,1)
                 plt.semilogx(ftemp, magn)
                 plt.title("FFT of {}".format(filter))
                 plt.gca().set(xlim=(10, srate/2.0))
                 #fignbr += 1
                 #plt.figure(fignbr)
-                t, imp = kladd.get_impulse()
+                t, imp = currfilt.get_impulse()
                 plt.subplot(2,1,2)
                 plt.plot(t, imp)
                 plt.title("Impulse response of {}".format(filter))
