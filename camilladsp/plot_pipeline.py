@@ -5,6 +5,7 @@ import numpy.fft as fft
 import csv
 import yaml
 import sys
+import matplotlib
 from matplotlib import pyplot as plt
 from matplotlib.patches import Rectangle
 import math
@@ -55,6 +56,8 @@ def draw_box(ax, level, size, label=None):
 
 
 def plot_pipeline(conf, toimage=False):
+    if toimage:
+        matplotlib.use('Agg')
     stages = []
     fig = plt.figure(num='Pipeline')
     

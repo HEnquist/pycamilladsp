@@ -19,7 +19,7 @@ standard_rates = [
 ]
 
 
-class CamillaDSP:
+class CamillaConnection:
     """Class for communicating with CamillaDSP"""
 
     def __init__(self, host, port):

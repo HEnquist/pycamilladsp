@@ -1,5 +1,5 @@
 # pyCamillaDSP
-Python library for handling the communication with CamillaDSP via a websocket.
+Companion Python library for CamillaDSP.
 Works with CamillaDSP version 0.3.2 and up.
 
 Install with 
@@ -7,24 +7,37 @@ Install with
 pip install .
 ```
 
+## Plotting a configuration
+This library provides the console command `plotcamillaconf`. Once the library is installed, the command should be available in your terminal.
+To use it type:
+```sh
+plotcamillaconf /path/to/some/config.yml
+```
+
+This will plot the frequency response of all the defined filters, and show a block diagram of the pipeline.
+
+
+## Communicating with the CamillaDSP process
+This library provides an easy way to communicate with CamillaDSP via a websocket.
+
 Simple example to connect to CamillaDSP to read the version (assuming CamillaDSP is running on the same machine and listening on port 1234):
 ```python
-from camilladsp import CamillaDSP
+from camilladsp import CamillaConnection
 
-cdsp = CamillaDSP("127.0.0.1", 1234)
+cdsp = CamillaConnection("127.0.0.1", 1234)
 cdsp.connect()
 print("Version: {}".format(cdsp.get_version()))
 ```
 
-## Classes
-All functionality is provided by the class CamillaDSP. The contructor accepts two arguments: host and port.
+### Classes
+All communication functionality is provided by the class CamillaConnection. The contructor accepts two arguments: host and port.
 ```
-CamillaDSP(host, port)
+CamillaConnection(host, port)
 ```
 
 ## Methods
 
-The CamillaDSP class provides the following methods:
+The CamillaConnection class provides the following methods:
 
 | Method   |  Description  |
 |----------|---------------|
@@ -51,7 +64,21 @@ The CamillaDSP class provides the following methods:
 |`set_config(config)` | Upload a new configuation from an object.|
 
 
-## Included examples:
+## Evaluating filters
+To plot the frequency response of a filter, use the function `plot_filter`. This is mostly meant for internal use by the `plotcamillaconf` command.
+```python
+plot_filter(filterconf, samplerate, npoints=1000, toimage=False)
+```
+This will plot using PyPlot. The filter cofiguration, `fiterconf`, is a tuple where the first element is a string giving the name of the filter (used for labels) and the second the configuration. If `toimage` is set to True, then it will instead return the plot as an svg image.
+
+## Plotting the pipeline
+To plot a block diagram of the pipeline, use the function `plot_pipeline`. This is mostly meant for internal use by the `plotcamillaconf` command.
+```python
+plot_pipeline(conf, toimage=False)
+```
+This takes a full CamillaDSP configuration, `conf`. It will then plot the pipeline using PyPlot. If `toimage` is set to True, then it will instead return the plot as an svg image.
+
+# Included examples:
 
 play_wav: Play a wav file. This example reads a configuration from a file, updates the capture device fto point at a given .wav file, and sends this modified config to CamillaDSP.
 Usage example:

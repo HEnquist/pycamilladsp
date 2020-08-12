@@ -1,11 +1,14 @@
 
 from camilladsp.filter_eval import Biquad, BiquadCombo, Conv, DiffEq
 import numpy as np
+import matplotlib
 from matplotlib import pyplot as plt
 import io
 
-def plot_filter(filterconf, srate, toimage=False):
-    fvect = np.linspace(1, (srate*0.95)/2.0, 1000)
+def plot_filter(filterconf, srate, npoints=1000, toimage=False):
+    if toimage:
+        matplotlib.use('Agg')
+    fvect = np.linspace(1, (srate*0.95)/2.0, npoints)
     filter, fconf = filterconf
     if fconf['type'] in ('Biquad', 'DiffEq', 'BiquadCombo'):
         if fconf['type'] == 'DiffEq':
@@ -19,10 +22,11 @@ def plot_filter(filterconf, srate, toimage=False):
         stable = currfilt.is_stable()
         plt.subplot(2,1,1)
         plt.semilogx(fplot, magn)
-        plt.title("{}, stable: {}\nMagnitude".format(filter, stable))
+        plt.title("{}, stable: {}".format(filter, stable))
+        plt.ylabel("Magnitude")
         plt.subplot(2,1,2)
         plt.semilogx(fvect, phase)
-        plt.title("Phase")
+        plt.ylabel("Phase")
     elif fconf['type'] == 'Conv':
         if 'parameters' in fconf:
             currfilt = Conv(fconf['parameters'], srate)
@@ -32,12 +36,13 @@ def plot_filter(filterconf, srate, toimage=False):
         ftemp, magn, phase = currfilt.gain_and_phase()
         plt.subplot(2,1,1)
         plt.semilogx(ftemp, magn)
-        plt.title("FFT of {}".format(filter))
+        plt.title("{}".format(filter))
+        plt.ylabel("Magnitude")
         plt.gca().set(xlim=(10, srate/2.0))
         t, imp = currfilt.get_impulse()
         plt.subplot(2,1,2)
         plt.plot(t, imp)
-        plt.title("Impulse response of {}".format(filter))
+        plt.ylabel("Impulse response")
     if toimage:
         buf = io.BytesIO()
         plt.savefig(buf, format='svg')
