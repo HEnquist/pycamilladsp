@@ -11,7 +11,7 @@ def main():
 
     conf = yaml.safe_load(conffile)
 
-    plot_pipeline(conf, 1)
+    plot_pipeline(conf)
     plot_filters(conf)
 
     plt.show()

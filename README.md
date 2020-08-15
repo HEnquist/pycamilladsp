@@ -67,9 +67,9 @@ The CamillaConnection class provides the following methods:
 ## Evaluating filters
 To plot the frequency response of a filter, use the function `plot_filter`. This is mostly meant for internal use by the `plotcamillaconf` command.
 ```python
-plot_filter(filterconf, samplerate, npoints=1000, toimage=False)
+plot_filter(filterconf, name=None, samplerate=44100, npoints=1000, toimage=False)
 ```
-This will plot using PyPlot. The filter cofiguration, `fiterconf`, is a tuple where the first element is a string giving the name of the filter (used for labels) and the second the configuration. If `toimage` is set to True, then it will instead return the plot as an svg image.
+This will plot using PyPlot. The filter configuration `fiterconf` must be provided. The `samplerate` defaults to 44100 if not given. The filter `name` is used for labels. The number of points in the plot is set with `npoints`. If `toimage` is set to True, then it will instead return the plot as an svg image.
 
 ## Plotting the pipeline
 To plot a block diagram of the pipeline, use the function `plot_pipeline`. This is mostly meant for internal use by the `plotcamillaconf` command.

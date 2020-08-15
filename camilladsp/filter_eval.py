@@ -63,6 +63,7 @@ class DiffEq(object):
 
     def gain_and_phase(self, f):
         z = np.exp(1j*2*np.pi*f/self.fs)
+        print(self.a, self.b)
         A1=np.zeros(z.shape)
         for n, bn in enumerate(self.b):
             A1 = A1 + bn*z**(-n)

@@ -1,6 +1,7 @@
 import yaml
 from websocket import create_connection
 import math
+from threading import Lock
 
 standard_rates = [
     8000,
@@ -28,11 +29,13 @@ class CamillaConnection:
         self._port = int(port)
         self._ws = None
         self._version = None
+        self._lock = Lock()
 
     def connect(self):
         """Connect to the websocket of CamillaDSP"""
         try:
-            self._ws = create_connection("ws://{}:{}".format(self._host, self._port))
+            with self._lock:
+                self._ws = create_connection("ws://{}:{}".format(self._host, self._port))
             rawvers = self._query("getversion")
             self._update_version(rawvers)
         except Exception as _e:
@@ -43,7 +46,8 @@ class CamillaConnection:
         """Close the connection to the websocket"""
         if self._ws is not None:
             try:
-                self._ws.close()
+                with self._lock:
+                    self._ws.close()
             except Exception as _e:
                 pass
             self._ws = None
@@ -55,8 +59,9 @@ class CamillaConnection:
     def _query(self, command):
         if self._ws is not None:
             try:
-                self._ws.send(command)
-                rawrepl = self._ws.recv()
+                with self._lock:
+                    self._ws.send(command)
+                    rawrepl = self._ws.recv()
                 repl = self._parse_response(rawrepl)
                 if repl[0] == command.lower():
                     if len(repl) > 1:
@@ -72,8 +77,9 @@ class CamillaConnection:
 
     def _set_value(self, command, value):
         if self._ws is not None:
-            self._ws.send("{}:{}".format(command, value))
-            rawrepl = self._ws.recv()
+            with self._lock:
+                self._ws.send("{}:{}".format(command, value))
+                rawrepl = self._ws.recv()
             repl = self._parse_response(rawrepl)
             if repl[0] == command.lower():
                 return None
@@ -191,7 +197,7 @@ class CamillaConnection:
 
 if __name__ == "__main__":
     """Testing area"""
-    cdsp = CamillaDSP("127.0.0.1", 1234)
+    cdsp = CamillaConnection("127.0.0.1", 1234)
     cdsp.connect()
     print("Version: {}".format(cdsp.get_version()))
     print("State: {}".format(cdsp.get_state()))
