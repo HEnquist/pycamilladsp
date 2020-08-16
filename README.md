@@ -35,6 +35,31 @@ All communication functionality is provided by the class CamillaConnection. The 
 CamillaConnection(host, port)
 ```
 
+### Exceptions
+
+The custom exception `CamillaError` is raised when CamillaDSP replies to a command with an error message. The error message is given as the message of the exception.
+
+Different exceptions are raised in different situations. Consider the following example:
+```python
+from camilladsp import CamillaConnection, CamillaError
+cdsp = CamillaConnection("127.0.0.1", 1234)
+
+myconfig = # get a config from somewhere
+try:
+    cdsp.connect()
+    cdsp.validate_config(myconfig)
+except ConnectionRefusedError as e:
+    print("Can't connect to CamillaDSP, is it running? Error:", e)
+except CamillaError as e:
+    print("CamillaDSP replied with error:", e)
+except IOError as e:
+    print("Websocket is not connected:", e)
+```
+- `ConnectionRefusedError` means that CamillaDSP isn't responding on the given host and port. 
+- `CamillaError` means that the command was sent and CamillaDSP replied with an error.
+- `IOError` can mean a few things, but the most likely is that the websocket connection was lost. This happens if the CamillaDSP process exits or is restarted. 
+
+
 ## Methods
 
 The CamillaConnection class provides the following methods:
@@ -62,6 +87,8 @@ The CamillaConnection class provides the following methods:
 |`set_config_raw(value)` | Upload a new configuation in yaml format as a string.|
 |`get_config()` | Get the active configuation as an object.|
 |`set_config(config)` | Upload a new configuation from an object.|
+|`validate_config(config)` | Validate a configuration object. Returns the validated config with all optional fields filled with defaults. Raises a CamillaError on errors.|
+|`read_config_file(path)` | Read a config file from `path`. Returns the loaded config with all optional fields filled with defaults. Raises a CamillaError on errors.|
 
 
 ## Evaluating filters

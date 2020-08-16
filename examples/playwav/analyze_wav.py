@@ -46,7 +46,7 @@ def read_wav_header(filename):
     try:
         file_in = open(filename, 'rb')
     except IOError as err:
-        logging.debug("Could not open input file %s" % (strWAVFile))
+        logging.debug("Could not open input file %s" % (filename))
         return
 
     # Read fixed header

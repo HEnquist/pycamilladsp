@@ -19,6 +19,9 @@ standard_rates = [
     384000,
 ]
 
+class CamillaError(Exception):
+    """A class representing errors returned by CamillaDSP"""
+    pass
 
 class CamillaConnection:
     """Class for communicating with CamillaDSP"""
@@ -56,22 +59,31 @@ class CamillaConnection:
         """Is websocket connected? Returns True or False"""
         return self._ws is not None
 
-    def _query(self, command):
+    def _query(self, command, arg=None):
         if self._ws is not None:
+            if arg:
+                query = "{}:{}".format(command, arg)
+            else:
+                query = command
             try:
                 with self._lock:
-                    self._ws.send(command)
+                    self._ws.send(query)
                     rawrepl = self._ws.recv()
-                repl = self._parse_response(rawrepl)
-                if repl[0] == command.lower():
-                    if len(repl) > 1:
-                        return repl[1]
-                    return
-                else:
-                    raise IOError("Invalid response received")
             except Exception as _e:
                 self._ws = None
                 raise IOError("Lost connection to CamillaDSP")
+            state, cmd, reply = self._parse_response(rawrepl)
+            if state == "OK" and cmd  == command.lower():
+                if reply:
+                    return reply
+                return
+            elif state == "ERROR" and (cmd == command.lower() or cmd == "invalid"):
+                if reply:
+                    raise CamillaError(reply)
+                else:
+                    raise CamillaError("Command returned an error")
+            else:
+                raise IOError("Invalid response received")
         else:
             raise IOError("Not connected to CamillaDSP")
 
@@ -80,9 +92,15 @@ class CamillaConnection:
             with self._lock:
                 self._ws.send("{}:{}".format(command, value))
                 rawrepl = self._ws.recv()
-            repl = self._parse_response(rawrepl)
-            if repl[0] == command.lower():
+            state, cmd, reply = self._parse_response(rawrepl)
+            if state == "OK" and cmd == command.lower():
                 return None
+            elif state == "ERROR" and (cmd == command.lower() or cmd == "invalid"):
+                if reply:
+                    msg = reply
+                else:
+                    msg = "Command returned an error"
+                raise CamillaError(msg)
             else:
                 raise IOError("Invalid response received")
         else:
@@ -92,13 +110,10 @@ class CamillaConnection:
         parts = resp.split(":", 2)
         state = parts[0]
         command = parts[1]
-        if state == "OK":
-            if len(parts) > 2:
-                return (command.lower(), parts[2])
-            else:
-                return (command.lower(),)
+        if len(parts) > 2:
+            return (state, command.lower(), parts[2])
         else:
-            raise ValueError("Command returned error")
+            return (state, command.lower(), None)
 
     def _update_version(self, resp):
         self._version = tuple(resp.split(".", 3))
@@ -189,23 +204,71 @@ class CamillaConnection:
         config = yaml.safe_load(config_raw)
         return config
 
+    def read_config_file(self, filename):
+        """Read a config file and return the contents"""
+        config_raw = self._query("readconfigfile", arg=filename)
+        config = yaml.safe_load(config_raw)
+        return config
+
     def set_config(self, config):
         """Upload a new configuation from an object"""
         config_raw = yaml.dump(config)
         self.set_config_raw(config_raw)
 
+    def validate_config(self, config):
+        """Upload a new configuation from an object"""
+        config_raw = yaml.dump(config)
+        validated_raw = self._query("validateconfig", arg=config_raw)
+        validated = yaml.safe_load(validated_raw)
+        return validated
+
 
 if __name__ == "__main__":
     """Testing area"""
+    print("\n---Connect---")
     cdsp = CamillaConnection("127.0.0.1", 1234)
     cdsp.connect()
+
+    print("\n---Read parameters---")
     print("Version: {}".format(cdsp.get_version()))
     print("State: {}".format(cdsp.get_state()))
     print("ValueRange: {}".format(cdsp.get_signal_range()))
     print("ValueRange dB: {}".format(cdsp.get_signal_range_dB()))
     print("CaptureRate raw: {}".format(cdsp.get_capture_rate_raw()))
     print("CaptureRate: {}".format(cdsp.get_capture_rate()))
-    cdsp.set_update_interval(500)
-    print("UpdateInterval: {}".format(cdsp.get_update_interval()))
     print("RateAdjust: {}".format(cdsp.get_rate_adjust()))
 
+    print("\n---SetUpdateInterval 500---")
+    cdsp.set_update_interval(500)
+    print("UpdateInterval: {}".format(cdsp.get_update_interval()))
+
+    print("\n---SetUpdateInterval invalid value---")
+    try:
+        cdsp.set_update_interval(-500)
+    except Exception as e:
+        print("Reply:", e)
+    
+    print("\n---ReadConfigFile---")
+    conf = cdsp.read_config_file("/home/henrik/rustfir/rustfir/exampleconfigs/simpleconfig.yml")
+    print(conf)
+
+    print("\n---ValidateConfig---")
+    try:
+        valconf = cdsp.validate_config(conf)
+        print("ValidateConfig OK:", valconf)
+    except CamillaError as e:
+        print("ValidateConfig Error:", e)
+
+    print("\n---ReadConfigFile non-existing---")
+    try:
+        conf = cdsp.read_config_file("/some/bad/path.yml")
+    except Exception as e:
+        print("ReadConfigFile Error:", e)
+
+    print("\n---ValidateConfig broken config---")
+    conf["devices"]["capture"]["type"] = "Teapot"
+    try:
+        valconf = cdsp.validate_config(conf)
+        print("ValidateConfig OK:", valconf)
+    except CamillaError as e:
+        print("ValidateConfig Error:", e)
