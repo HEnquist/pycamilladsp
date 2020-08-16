@@ -19,7 +19,7 @@ standard_rates = [
     384000,
 ]
 
-class CamillaError(Exception):
+class CamillaError(ValueError):
     """A class representing errors returned by CamillaDSP"""
     pass
 
