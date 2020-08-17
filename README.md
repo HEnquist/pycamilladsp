@@ -89,6 +89,7 @@ The CamillaConnection class provides the following methods:
 |`set_config(config)` | Upload a new configuation from an object.|
 |`validate_config(config)` | Validate a configuration object. Returns the validated config with all optional fields filled with defaults. Raises a CamillaError on errors.|
 |`read_config_file(path)` | Read a config file from `path`. Returns the loaded config with all optional fields filled with defaults. Raises a CamillaError on errors.|
+|`read_config(config)` | Read a config from yaml string and return the contents as an obect, with defaults filled out with their default values.|
 
 
 ## Evaluating filters

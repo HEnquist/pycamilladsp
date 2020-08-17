@@ -19,15 +19,23 @@ standard_rates = [
     384000,
 ]
 
+
 class CamillaError(ValueError):
-    """A class representing errors returned by CamillaDSP"""
+    """
+    A class representing errors returned by CamillaDSP
+    """
     pass
 
+
 class CamillaConnection:
-    """Class for communicating with CamillaDSP"""
+    """
+    Class for communicating with CamillaDSP.
+    """
 
     def __init__(self, host, port):
-        """Connect to CamillaDSP on the specified host and port"""
+        """
+        Connect to CamillaDSP on the specified host and port.
+        """
         self._host = host
         self._port = int(port)
         self._ws = None
@@ -35,10 +43,14 @@ class CamillaConnection:
         self._lock = Lock()
 
     def connect(self):
-        """Connect to the websocket of CamillaDSP"""
+        """
+        Connect to the websocket of CamillaDSP.
+        """
         try:
             with self._lock:
-                self._ws = create_connection("ws://{}:{}".format(self._host, self._port))
+                self._ws = create_connection(
+                    "ws://{}:{}".format(self._host, self._port)
+                )
             rawvers = self._query("getversion")
             self._update_version(rawvers)
         except Exception as _e:
@@ -46,7 +58,9 @@ class CamillaConnection:
             raise
 
     def disconnect(self):
-        """Close the connection to the websocket"""
+        """
+        Close the connection to the websocket.
+        """
         if self._ws is not None:
             try:
                 with self._lock:
@@ -56,7 +70,9 @@ class CamillaConnection:
             self._ws = None
 
     def is_connected(self):
-        """Is websocket connected? Returns True or False"""
+        """
+        Is websocket connected? Returns True or False.
+        """
         return self._ws is not None
 
     def _query(self, command, arg=None):
@@ -73,7 +89,7 @@ class CamillaConnection:
                 self._ws = None
                 raise IOError("Lost connection to CamillaDSP")
             state, cmd, reply = self._parse_response(rawrepl)
-            if state == "OK" and cmd  == command.lower():
+            if state == "OK" and cmd == command.lower():
                 if reply:
                     return reply
                 return
@@ -86,25 +102,6 @@ class CamillaConnection:
                 raise IOError("Invalid response received")
         else:
             raise IOError("Not connected to CamillaDSP")
-
-    def _set_value(self, command, value):
-        if self._ws is not None:
-            with self._lock:
-                self._ws.send("{}:{}".format(command, value))
-                rawrepl = self._ws.recv()
-            state, cmd, reply = self._parse_response(rawrepl)
-            if state == "OK" and cmd == command.lower():
-                return None
-            elif state == "ERROR" and (cmd == command.lower() or cmd == "invalid"):
-                if reply:
-                    msg = reply
-                else:
-                    msg = "Command returned an error"
-                raise CamillaError(msg)
-            else:
-                raise IOError("Invalid response received")
-        else:
-            raise IOError("Not connected")
 
     def _parse_response(self, resp):
         parts = resp.split(":", 2)
@@ -119,21 +116,27 @@ class CamillaConnection:
         self._version = tuple(resp.split(".", 3))
 
     def get_version(self):
-        """Read CamillaDSP version, returns a tuple."""
+        """Read CamillaDSP version, returns a tuple of (major, minor, patch)."""
         return self._version
 
     def get_state(self):
-        """Get current processing state."""
+        """
+        Get current processing state.
+        """
         state = self._query("getstate")
         return state
 
     def get_signal_range(self):
-        """Get current signal range."""
+        """
+        Get current signal range. Maximum value is 2.0.
+        """
         sigrange = self._query("getsignalrange")
         return float(sigrange)
 
     def get_signal_range_dB(self):
-        """Get current signal range in dB."""
+        """
+        Get current signal range in dB. Full scale is 0 dB.
+        """
         sigrange = self.get_signal_range()
         if sigrange > 0.0:
             range_dB = 20.0 * math.log10(sigrange / 2.0)
@@ -142,12 +145,16 @@ class CamillaConnection:
         return range_dB
 
     def get_capture_rate_raw(self):
-        """Get current capture rate, raw value."""
+        """
+        Get current capture rate, raw value.
+        """
         rate = self._query("getcapturerate")
         return int(rate)
 
     def get_capture_rate(self):
-        """Get current capture rate. Returns the nearest common value."""
+        """
+        Get current capture rate. Returns the nearest common value.
+        """
         rate = self.get_capture_rate_raw()
         if 0.9 * standard_rates[0] < rate < 1.1 * standard_rates[-1]:
             return min(standard_rates, key=lambda val: abs(val - rate))
@@ -155,72 +162,111 @@ class CamillaConnection:
             return None
 
     def get_update_interval(self):
-        """Get current update interval in ms."""
+        """
+        Get current update interval in ms.
+        """
         interval = self._query("getupdateinterval")
         return int(interval)
 
     def set_update_interval(self, value):
-        """Set current update interval in ms."""
-        self._set_value("setupdateinterval", value)
+        """
+        Set current update interval in ms.
+        """
+        self._query("setupdateinterval", arg=value)
 
     def get_rate_adjust(self):
-        """Get current value for rate adjust in %."""
+        """
+        Get current value for rate adjust, 1.0 means 1:1 resampling.
+        """
         adj = self._query("getrateadjust")
         return float(adj)
 
     def stop(self):
-        """Stop processing and wait for new config if wait mode is active, else exit. """
+        """
+        Stop processing and wait for new config if wait mode is active, else exit.
+        """
         self._query("stop")
 
     def exit(self):
-        """Stop processing and exit."""
+        """
+        Stop processing and exit.
+        """
         self._query("exit")
 
     def reload(self):
-        """Reload config from disk."""
+        """
+        Reload config from disk.
+        """
         self._query("reload")
 
     def get_config_name(self):
-        """Get path to current config file."""
+        """
+        Get path to current config file.
+        """
         name = self._query("getconfigname")
         return name
 
     def set_config_name(self, value):
-        """Set path to config file."""
-        self._set_value("setconfigname", value)
+        """
+        Set path to config file.
+        """
+        self._query("setconfigname", arg=value)
 
     def get_config_raw(self):
-        """Get the active configuation in yaml format as a string."""
-        config = self._query("getconfig")
-        return config
+        """
+        Get the active configuation in yaml format as a string.
+        """
+        config_string = self._query("getconfig")
+        return config_string
 
-    def set_config_raw(self, value):
-        """Upload a new configuation in yaml format as a string."""
-        self._set_value("setconfig", value)
+    def set_config_raw(self, config_string):
+        """
+        Upload a new configuation in yaml format as a string.
+        """
+        self._query("setconfig", arg=config_string)
 
     def get_config(self):
-        """Get the active configuation as an object"""
-        config_raw = self.get_config_raw()
-        config = yaml.safe_load(config_raw)
-        return config
+        """
+        Get the active configuation as a Python object.
+        """
+        config_string = self.get_config_raw()
+        config_object = yaml.safe_load(config_string)
+        return config_object
+
+    def read_config(self, config_string):
+        """
+        Read a config from yaml string and return the contents 
+        as a Python object, with defaults filled out with their default values.
+        """
+        config_raw = self._query("readconfig", arg=config_string)
+        config_object = yaml.safe_load(config_raw)
+        return config_object
 
     def read_config_file(self, filename):
-        """Read a config file and return the contents"""
+        """
+        Read a config file from disk and return the contents as a Python object.
+        """
         config_raw = self._query("readconfigfile", arg=filename)
         config = yaml.safe_load(config_raw)
         return config
 
-    def set_config(self, config):
-        """Upload a new configuation from an object"""
-        config_raw = yaml.dump(config)
+    def set_config(self, config_object):
+        """
+        Upload a new configuation from a Python object.
+        """
+        config_raw = yaml.dump(config_object)
         self.set_config_raw(config_raw)
 
-    def validate_config(self, config):
-        """Upload a new configuation from an object"""
-        config_raw = yaml.dump(config)
-        validated_raw = self._query("validateconfig", arg=config_raw)
-        validated = yaml.safe_load(validated_raw)
-        return validated
+    def validate_config(self, config_object):
+        """
+        Validate a configuration object.
+        Returns the validated config with all optional fields filled with defaults.
+        Raises a CamillaError on errors.
+        """
+        config_string = yaml.dump(config_object)
+        validated_string = self._query("validateconfig", arg=config_string)
+        validated_object = yaml.safe_load(validated_string)
+        return validated_object
 
 
 if __name__ == "__main__":
@@ -247,9 +293,11 @@ if __name__ == "__main__":
         cdsp.set_update_interval(-500)
     except Exception as e:
         print("Reply:", e)
-    
+
     print("\n---ReadConfigFile---")
-    conf = cdsp.read_config_file("/home/henrik/rustfir/rustfir/exampleconfigs/simpleconfig.yml")
+    conf = cdsp.read_config_file(
+        "/home/henrik/rustfir/rustfir/exampleconfigs/simpleconfig.yml"
+    )
     print(conf)
 
     print("\n---ValidateConfig---")
@@ -258,6 +306,10 @@ if __name__ == "__main__":
         print("ValidateConfig OK:", valconf)
     except CamillaError as e:
         print("ValidateConfig Error:", e)
+
+    print("\n---ReadConfig---")
+    readconf = cdsp.read_config(yaml.dump(conf))
+    print(readconf)
 
     print("\n---ReadConfigFile non-existing---")
     try:
