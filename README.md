@@ -1,5 +1,5 @@
 # pyCamillaDSP
-Python library for handling the communication with CamillaDSP via a websocket.
+Companion Python library for CamillaDSP.
 Works with CamillaDSP version 0.3.2 and up.
 
 Install with 
@@ -7,24 +7,62 @@ Install with
 pip install .
 ```
 
+## Plotting a configuration
+This library provides the console command `plotcamillaconf`. Once the library is installed, the command should be available in your terminal.
+To use it type:
+```sh
+plotcamillaconf /path/to/some/config.yml
+```
+
+This will plot the frequency response of all the defined filters, and show a block diagram of the pipeline.
+
+
+## Communicating with the CamillaDSP process
+This library provides an easy way to communicate with CamillaDSP via a websocket.
+
 Simple example to connect to CamillaDSP to read the version (assuming CamillaDSP is running on the same machine and listening on port 1234):
 ```python
-from camilladsp import CamillaDSP
+from camilladsp import CamillaConnection
 
-cdsp = CamillaDSP("127.0.0.1", 1234)
+cdsp = CamillaConnection("127.0.0.1", 1234)
 cdsp.connect()
 print("Version: {}".format(cdsp.get_version()))
 ```
 
-## Classes
-All functionality is provided by the class CamillaDSP. The contructor accepts two arguments: host and port.
+### Classes
+All communication functionality is provided by the class CamillaConnection. The contructor accepts two arguments: host and port.
 ```
-CamillaDSP(host, port)
+CamillaConnection(host, port)
 ```
+
+### Exceptions
+
+The custom exception `CamillaError` is raised when CamillaDSP replies to a command with an error message. The error message is given as the message of the exception.
+
+Different exceptions are raised in different situations. Consider the following example:
+```python
+from camilladsp import CamillaConnection, CamillaError
+cdsp = CamillaConnection("127.0.0.1", 1234)
+
+myconfig = # get a config from somewhere
+try:
+    cdsp.connect()
+    cdsp.validate_config(myconfig)
+except ConnectionRefusedError as e:
+    print("Can't connect to CamillaDSP, is it running? Error:", e)
+except CamillaError as e:
+    print("CamillaDSP replied with error:", e)
+except IOError as e:
+    print("Websocket is not connected:", e)
+```
+- `ConnectionRefusedError` means that CamillaDSP isn't responding on the given host and port. 
+- `CamillaError` means that the command was sent and CamillaDSP replied with an error.
+- `IOError` can mean a few things, but the most likely is that the websocket connection was lost. This happens if the CamillaDSP process exits or is restarted. 
+
 
 ## Methods
 
-The CamillaDSP class provides the following methods:
+The CamillaConnection class provides the following methods:
 
 | Method   |  Description  |
 |----------|---------------|
@@ -49,9 +87,26 @@ The CamillaDSP class provides the following methods:
 |`set_config_raw(value)` | Upload a new configuation in yaml format as a string.|
 |`get_config()` | Get the active configuation as an object.|
 |`set_config(config)` | Upload a new configuation from an object.|
+|`validate_config(config)` | Validate a configuration object. Returns the validated config with all optional fields filled with defaults. Raises a CamillaError on errors.|
+|`read_config_file(path)` | Read a config file from `path`. Returns the loaded config with all optional fields filled with defaults. Raises a CamillaError on errors.|
+|`read_config(config)` | Read a config from yaml string and return the contents as an obect, with defaults filled out with their default values.|
 
 
-## Included examples:
+## Evaluating filters
+To plot the frequency response of a filter, use the function `plot_filter`. This is mostly meant for internal use by the `plotcamillaconf` command.
+```python
+plot_filter(filterconf, name=None, samplerate=44100, npoints=1000, toimage=False)
+```
+This will plot using PyPlot. The filter configuration `fiterconf` must be provided. The `samplerate` defaults to 44100 if not given. The filter `name` is used for labels. The number of points in the plot is set with `npoints`. If `toimage` is set to True, then it will instead return the plot as an svg image.
+
+## Plotting the pipeline
+To plot a block diagram of the pipeline, use the function `plot_pipeline`. This is mostly meant for internal use by the `plotcamillaconf` command.
+```python
+plot_pipeline(conf, toimage=False)
+```
+This takes a full CamillaDSP configuration, `conf`. It will then plot the pipeline using PyPlot. If `toimage` is set to True, then it will instead return the plot as an svg image.
+
+# Included examples:
 
 play_wav: Play a wav file. This example reads a configuration from a file, updates the capture device fto point at a given .wav file, and sends this modified config to CamillaDSP.
 Usage example:

@@ -1,5 +1,5 @@
 # play wav
-from camilladsp import CamillaDSP
+from camilladsp import CamillaConnection
 import sys
 import os
 import yaml
@@ -44,6 +44,6 @@ else:
 cfg["devices"]["capture"] = capt_device
 
 # Send the modded config
-cdsp = CamillaDSP("127.0.0.1", port)
+cdsp = CamillaConnection("127.0.0.1", port)
 cdsp.connect()
 cdsp.set_config(cfg)
