@@ -43,7 +43,7 @@ class Conv(object):
         impfft = fft.fft(impulse)
         cut = impfft[0:npoints]
         f = np.linspace(0, self.fs/2.0, npoints)
-        gain = 20*np.log10(np.abs(cut))
+        gain = 20*np.log10(np.abs(cut)+1e-15)
         phase = 180/np.pi*np.angle(cut)
         return f, gain, phase
 

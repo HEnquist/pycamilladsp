@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="camilladsp",
-    version="0.2.0",
+    version="0.2.1",
     author="Henrik Enquist",
     author_email="henrik.enquist@gmail.com",
     description="A library for comminucating with CamillaDSP",
