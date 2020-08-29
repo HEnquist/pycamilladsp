@@ -8,7 +8,7 @@ import io
 def plot_filter(filterconf, name=None, samplerate=44100, npoints=1000, toimage=False):
     if toimage:
         matplotlib.use('Agg')
-    fvect = np.linspace(1, (samplerate*0.95)/2.0, npoints)
+    fvect = np.logspace(np.log10(1.0), np.log10((samplerate*0.95)/2.0), num=npoints, base=10.0)
     if name is None:
         name = "unnamed {}".format(filterconf['type'])
     if filterconf['type'] in ('Biquad', 'DiffEq', 'BiquadCombo'):
