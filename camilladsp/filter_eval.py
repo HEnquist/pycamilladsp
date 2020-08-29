@@ -14,8 +14,8 @@ class Conv(object):
             fname = conf['filename']
             values = []
             if 'format' not in conf:
-                conf['format'] = "text"
-            if conf['format'] == "text":
+                conf['format'] = "TEXT"
+            if conf['format'] == "TEXT":
                 with open(fname) as f:
                     values = [float(row[0]) for row in csv.reader(f)]
             elif conf['format'] == "FLOAT64LE":
