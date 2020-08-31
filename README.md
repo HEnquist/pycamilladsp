@@ -97,7 +97,13 @@ To plot the frequency response of a filter, use the function `plot_filter`. This
 ```python
 plot_filter(filterconf, name=None, samplerate=44100, npoints=1000, toimage=False)
 ```
-This will plot using PyPlot. The filter configuration `fiterconf` must be provided. The `samplerate` defaults to 44100 if not given. The filter `name` is used for labels. The number of points in the plot is set with `npoints`. If `toimage` is set to True, then it will instead return the plot as an svg image.
+This will plot using PyPlot. The filter configuration `filterconf` must be provided. The `samplerate` defaults to 44100 if not given. The filter `name` is used for labels. The number of points in the plot is set with `npoints`. If `toimage` is set to True, then it will instead return the plot as an svg image.
+
+It's also possible to plot the combined frequency response of a Filter step in the pipeline.
+```python
+plot_filterstep(conf, pipelineindex, name="filterstep", npoints=1000, toimage=False)
+```
+This command takes the full configuration as `conf` must be provided. This will plot the step with index `pipelineindex` in the pipeline where 0 is the first step. The `name` is used for the plot title. The number of points in the plot is set with `npoints`. If `toimage` is set to True, then it will instead return the plot as an svg image.
 
 ## Plotting the pipeline
 To plot a block diagram of the pipeline, use the function `plot_pipeline`. This is mostly meant for internal use by the `plotcamillaconf` command.

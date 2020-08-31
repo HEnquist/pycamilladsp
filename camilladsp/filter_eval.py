@@ -68,7 +68,7 @@ class Conv(object):
     def _read_text_coeffs(self, fname, skip_lines, read_lines):
         with open(fname) as f:
             rawvalues = itertools.islice(csv.reader(f), skip_lines, read_lines)
-        values = [float(row[0]) for row in rawvalues]
+            values = [float(row[0]) for row in rawvalues]
         return values
 
     def _read_binary_coeffs(self, fname, sampleformat, skip_bytes, read_bytes):
@@ -96,19 +96,26 @@ class Conv(object):
             new_values[idx] = values[3*idx]/fact1 + values[3*idx+1]/fact2 + values[3*idx+2]/fact3
         return new_values
 
-    def gain_and_phase(self):
+    def complex_gain(self, f):
         impulselen = len(self.impulse)
         npoints = impulselen
-        if npoints < 300:
-            npoints = 300
+        if npoints < 1024:
+            npoints = 1024
         impulse = np.zeros(npoints * 2)
         impulse[0:impulselen] = self.impulse
         impfft = fft.fft(impulse)
+        f_fft = np.linspace(0, self.fs / 2.0, npoints)
         cut = impfft[0:npoints]
-        f = np.linspace(0, self.fs / 2.0, npoints)
-        gain = 20 * np.log10(np.abs(cut) + 1e-15)
-        phase = 180 / np.pi * np.angle(cut)
+        cut = np.interp(f, f_fft, cut)
+        return f, cut
+
+    def gain_and_phase(self, f):
+        _f, A = self.complex_gain(f)
+        gain = 20 * np.log10(np.abs(A) + 1e-15)
+        phase = 180 / np.pi * np.angle(A)
         return f, gain, phase
+
+    
 
     def get_impulse(self):
         t = np.linspace(
@@ -127,7 +134,7 @@ class DiffEq(object):
         if len(self.b) == 0:
             self.b = [1.0]
 
-    def gain_and_phase(self, f):
+    def complex_gain(self, f):
         z = np.exp(1j * 2 * np.pi * f / self.fs)
         print(self.a, self.b)
         A1 = np.zeros(z.shape)
@@ -137,6 +144,10 @@ class DiffEq(object):
         for n, an in enumerate(self.a):
             A2 = A2 + an * z ** (-n)
         A = A1 / A2
+        return f, A
+
+    def gain_and_phase(self, f):
+        _f, A = self.complex_gain(f)
         gain = 20 * np.log10(np.abs(A))
         phase = 180 / np.pi * np.angle(A)
         return f, gain, phase
@@ -144,6 +155,28 @@ class DiffEq(object):
     def is_stable(self):
         # TODO
         return None
+
+
+class Gain(object):
+    def __init__(self, conf):
+        self.gain = conf["gain"]
+        self.inverted = conf["inverted"]
+
+    def complex_gain(self, f):
+        ones = np.ones(f.shape)        
+        sign = -1.0 if self.inverted else 1.0
+        gain = ones * 10.0**(self.gain/20.0) * sign
+        return f, gain
+
+    def gain_and_phase(self, f):
+        ones = np.ones(f.shape)        
+        phaseval = 180 / np.pi if self.inverted else 0
+        gain = ones * self.gain
+        phase = ones * phaseval
+        return f, gain, phase
+
+    def is_stable(self):
+        return True
 
 
 class BiquadCombo(object):
@@ -204,10 +237,15 @@ class BiquadCombo(object):
         # TODO
         return None
 
-    def gain_and_phase(self, f):
+    def complex_gain(self, f):
         A = np.ones(f.shape)
         for bq in self.biquads:
-            A = A * bq.complex_gain(f)
+            _f, Atemp = bq.complex_gain(f)
+            A = A * Atemp
+        return f, A
+
+    def gain_and_phase(self, f):
+        _f, A = self.complex_gain(f)
         gain = 20 * np.log10(np.abs(A))
         phase = 180 / np.pi * np.angle(A)
         return f, gain, phase
@@ -434,10 +472,10 @@ class Biquad(object):
         A = (self.b0 + self.b1 * z ** (-1) + self.b2 * z ** (-2)) / (
             1.0 + self.a1 * z ** (-1) + self.a2 * z ** (-2)
         )
-        return A
+        return f, A
 
     def gain_and_phase(self, f):
-        A = self.complex_gain(f)
+        _f, A = self.complex_gain(f)
         gain = 20 * np.log10(np.abs(A))
         phase = 180 / np.pi * np.angle(A)
         return f, gain, phase

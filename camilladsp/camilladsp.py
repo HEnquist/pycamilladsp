@@ -99,7 +99,7 @@ class CamillaConnection:
                 else:
                     raise CamillaError("Command returned an error")
             else:
-                raise IOError("Invalid response received")
+                raise IOError("Invalid response received: {}".format(rawrepl))
         else:
             raise IOError("Not connected to CamillaDSP")
 
@@ -269,7 +269,7 @@ class CamillaConnection:
         return validated_object
 
 
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     """Testing area"""
     print("\n---Connect---")
     cdsp = CamillaConnection("127.0.0.1", 1234)

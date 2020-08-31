@@ -1,7 +1,7 @@
 import yaml
 import sys
 from camilladsp.plot_pipeline import plot_pipeline
-from camilladsp.plot_filters import plot_filters
+from camilladsp.plot_filters import plot_filters, plot_all_filtersteps
 from matplotlib import pyplot as plt
 
 def main():
@@ -13,6 +13,7 @@ def main():
 
     plot_pipeline(conf)
     plot_filters(conf)
+    plot_all_filtersteps(conf)
 
     plt.show()
 
