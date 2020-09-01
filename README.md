@@ -1,5 +1,6 @@
-# pyCamillaDSP
 ![pyCamillaDSP](https://github.com/HEnquist/pycamilladsp/workflows/pyCamillaDSP/badge.svg)
+
+# pyCamillaDSP
 Companion Python library for CamillaDSP.
 Works with CamillaDSP version 0.3.2 and up.
 
