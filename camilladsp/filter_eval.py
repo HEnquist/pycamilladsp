@@ -15,17 +15,17 @@ class Conv(object):
         "FLOAT32LE": np.float32,
         "S16LE": np.int16,
         "S24LE": np.int32,
-        "S24LE3": np.int8,
+        "S24LE3": np.uint8,
         "S32LE": np.int32,
     }
 
     SCALEFACTOR = {
         "FLOAT64LE": 1.0,
         "FLOAT32LE": 1.0,
-        "S16LE": (2 ** 15 - 1),
-        "S24LE": (2 ** 23 - 1),
-        "S24LE3": 1.0,
-        "S32LE": (2 ** 31 - 1),
+        "S16LE": (2 ** 15),
+        "S24LE": (2 ** 23),
+        "S24LE3": (2 ** 23),
+        "S32LE": (2 ** 31),
     }
 
     BYTESPERSAMPLE = {
@@ -81,19 +81,15 @@ class Conv(object):
         datatype = self.DATATYPE[sampleformat]
         factor = self.SCALEFACTOR[sampleformat]
         values = (
-            np.fromfile(fname, offset=skip_bytes, count=count, dtype=datatype) / factor
+            np.fromfile(fname, offset=skip_bytes, count=count, dtype=datatype)
         )
         if sampleformat == "S24LE3":
             values = self._repack_24bit(values)
+        values = values / factor
         return values
 
     def _repack_24bit(self, values):
-        new_values = np.zeros(int(len(values)/3))
-        fact1 = (2 ** 7 - 1)
-        fact2 = (2 ** 15 - 1)
-        fact3 = (2 ** 23 - 1)
-        for idx in range(len(new_values)):
-            new_values[idx] = values[3*idx]/fact1 + values[3*idx+1]/fact2 + values[3*idx+2]/fact3
+        new_values = values[0::3].astype(np.int8)*2**16 + values[1::3]*2**8 + values[2::3]
         return new_values
 
     def complex_gain(self, f):

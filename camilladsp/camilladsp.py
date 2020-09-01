@@ -24,6 +24,7 @@ class CamillaError(ValueError):
     """
     A class representing errors returned by CamillaDSP
     """
+
     pass
 
 
@@ -41,6 +42,52 @@ class CamillaConnection:
         self._ws = None
         self._version = None
         self._lock = Lock()
+
+    def _query(self, command, arg=None):
+        if self._ws is not None:
+            if arg:
+                query = "{}:{}".format(command, arg)
+            else:
+                query = command
+            try:
+                with self._lock:
+                    self._ws.send(query)
+                    rawrepl = self._ws.recv()
+            except Exception as _e:
+                self._ws = None
+                raise IOError("Lost connection to CamillaDSP")
+            return self._handle_reply(command, rawrepl)
+        else:
+            raise IOError("Not connected to CamillaDSP")
+
+    def _handle_reply(self, command, rawreply):
+        try:
+            state, cmd, reply = self._parse_response(rawreply)
+            if state == "OK" and cmd == command.lower():
+                if reply:
+                    return reply
+                return
+            elif state == "ERROR" and (cmd == command.lower() or cmd == "invalid"):
+                if reply:
+                    raise CamillaError(reply)
+                else:
+                    raise CamillaError("Command returned an error")
+            else:
+                raise IOError("Invalid response received: {}".format(rawreply))
+        except IndexError:
+            raise IOError("Invalid response received: {}".format(rawreply))
+
+    def _parse_response(self, resp):
+        parts = resp.split(":", 2)
+        state = parts[0]
+        command = parts[1]
+        if len(parts) > 2:
+            return (state, command.lower(), parts[2])
+        else:
+            return (state, command.lower(), None)
+
+    def _update_version(self, resp):
+        self._version = tuple(resp.split(".", 3))
 
     def connect(self):
         """
@@ -74,46 +121,6 @@ class CamillaConnection:
         Is websocket connected? Returns True or False.
         """
         return self._ws is not None
-
-    def _query(self, command, arg=None):
-        if self._ws is not None:
-            if arg:
-                query = "{}:{}".format(command, arg)
-            else:
-                query = command
-            try:
-                with self._lock:
-                    self._ws.send(query)
-                    rawrepl = self._ws.recv()
-            except Exception as _e:
-                self._ws = None
-                raise IOError("Lost connection to CamillaDSP")
-            state, cmd, reply = self._parse_response(rawrepl)
-            if state == "OK" and cmd == command.lower():
-                if reply:
-                    return reply
-                return
-            elif state == "ERROR" and (cmd == command.lower() or cmd == "invalid"):
-                if reply:
-                    raise CamillaError(reply)
-                else:
-                    raise CamillaError("Command returned an error")
-            else:
-                raise IOError("Invalid response received: {}".format(rawrepl))
-        else:
-            raise IOError("Not connected to CamillaDSP")
-
-    def _parse_response(self, resp):
-        parts = resp.split(":", 2)
-        state = parts[0]
-        command = parts[1]
-        if len(parts) > 2:
-            return (state, command.lower(), parts[2])
-        else:
-            return (state, command.lower(), None)
-
-    def _update_version(self, resp):
-        self._version = tuple(resp.split(".", 3))
 
     def get_version(self):
         """Read CamillaDSP version, returns a tuple of (major, minor, patch)."""
