@@ -4,11 +4,34 @@
 Companion Python library for CamillaDSP.
 Works with CamillaDSP version 0.3.2 and up.
 
-Install with 
+Download the library, either by `git clone` or by downloading a zip file of the code. Then unpack the files, go to the folder containing the `setup.py` file and run: 
 ```sh
 pip install .
 ```
+Note that on some systems the command is `pip3` instead of `pip`.
 
+## Dependencies
+pyCamillaDSP requires python 3.6 or newer and the package websocket-client.
+
+These are the names of the packages needed:
+| Distribution | python | websocket-client |
+|--------------|--------|------------------|
+| Fedora | python3 | python3-websocket-client |
+| Debian/Raspbian | python3 | python3-websocket |
+| Arch | python | python-websocket-client |
+| pip | - | websocket_client |
+| Anaconda | - | websocket_client |
+
+### Linux
+Most linux distributions have Python 3.6 or newer installed by default. Use the normal package manager to install the packages.
+
+### Windows
+Use Anaconda: https://www.anaconda.com/products/individual. Then use Anaconda Navigator to install `websocket_client`.
+
+### macOS
+On macOS use either Anaconda or Homebrew. The Anaconda procedure is the same as for Windows. 
+
+For Homebrew, install Python with `brew install python`, after which you can install the needed packages with pip, `pip3 install websocket_client`.
 
 ## Communicating with the CamillaDSP process
 This library provides an easy way to communicate with CamillaDSP via a websocket.
