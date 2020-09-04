@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="camilladsp",
-    version="0.2.2",
+    version="0.3.0",
     author="Henrik Enquist",
     author_email="henrik.enquist@gmail.com",
     description="A library for comminucating with CamillaDSP",
@@ -14,9 +14,5 @@ setuptools.setup(
     url="https://github.com/HEnquist/pycamilladsp",
     packages=setuptools.find_packages(),
     python_requires=">=3",
-    install_requires=["PyYAML", "websocket_client", "numpy", "matplotlib"],
-    entry_points = {
-        'console_scripts': ['plotcamillaconf=camilladsp.plotcamillaconf:main'],
-    }
-
+    install_requires=["PyYAML", "websocket_client"],
 )
