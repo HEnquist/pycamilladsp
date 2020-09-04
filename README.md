@@ -1,21 +1,37 @@
+![pyCamillaDSP](https://github.com/HEnquist/pycamilladsp/workflows/pyCamillaDSP/badge.svg)
+
 # pyCamillaDSP
 Companion Python library for CamillaDSP.
 Works with CamillaDSP version 0.3.2 and up.
 
-Install with 
+Download the library, either by `git clone` or by downloading a zip file of the code. Then unpack the files, go to the folder containing the `setup.py` file and run: 
 ```sh
 pip install .
 ```
+Note that on some systems the command is `pip3` instead of `pip`.
 
-## Plotting a configuration
-This library provides the console command `plotcamillaconf`. Once the library is installed, the command should be available in your terminal.
-To use it type:
-```sh
-plotcamillaconf /path/to/some/config.yml
-```
+## Dependencies
+pyCamillaDSP requires python 3.6 or newer and the package websocket-client.
 
-This will plot the frequency response of all the defined filters, and show a block diagram of the pipeline.
+These are the names of the packages needed:
+| Distribution | python | websocket-client |
+|--------------|--------|------------------|
+| Fedora | python3 | python3-websocket-client |
+| Debian/Raspbian | python3 | python3-websocket |
+| Arch | python | python-websocket-client |
+| pip | - | websocket_client |
+| Anaconda | - | websocket_client |
 
+### Linux
+Most linux distributions have Python 3.6 or newer installed by default. Use the normal package manager to install the packages.
+
+### Windows
+Use Anaconda: https://www.anaconda.com/products/individual. Then use Anaconda Navigator to install `websocket_client`.
+
+### macOS
+On macOS use either Anaconda or Homebrew. The Anaconda procedure is the same as for Windows. 
+
+For Homebrew, install Python with `brew install python`, after which you can install the needed packages with pip, `pip3 install websocket_client`.
 
 ## Communicating with the CamillaDSP process
 This library provides an easy way to communicate with CamillaDSP via a websocket.
@@ -91,20 +107,6 @@ The CamillaConnection class provides the following methods:
 |`read_config_file(path)` | Read a config file from `path`. Returns the loaded config with all optional fields filled with defaults. Raises a CamillaError on errors.|
 |`read_config(config)` | Read a config from yaml string and return the contents as an obect, with defaults filled out with their default values.|
 
-
-## Evaluating filters
-To plot the frequency response of a filter, use the function `plot_filter`. This is mostly meant for internal use by the `plotcamillaconf` command.
-```python
-plot_filter(filterconf, name=None, samplerate=44100, npoints=1000, toimage=False)
-```
-This will plot using PyPlot. The filter configuration `fiterconf` must be provided. The `samplerate` defaults to 44100 if not given. The filter `name` is used for labels. The number of points in the plot is set with `npoints`. If `toimage` is set to True, then it will instead return the plot as an svg image.
-
-## Plotting the pipeline
-To plot a block diagram of the pipeline, use the function `plot_pipeline`. This is mostly meant for internal use by the `plotcamillaconf` command.
-```python
-plot_pipeline(conf, toimage=False)
-```
-This takes a full CamillaDSP configuration, `conf`. It will then plot the pipeline using PyPlot. If `toimage` is set to True, then it will instead return the plot as an svg image.
 
 # Included examples:
 
