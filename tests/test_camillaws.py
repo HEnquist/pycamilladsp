@@ -1,6 +1,7 @@
 import pytest
 from unittest.mock import MagicMock, patch
 import camilladsp
+import json
 
 class DummyWS:
     def __init__(self):
@@ -9,26 +10,27 @@ class DummyWS:
         self.value = None
 
     responses = {
-        "getstate": "OK:GETSTATE:IDLE",
-        "getversion": "OK:GETVERSION:0.3.2",
-        "getsignalrange": "OK:GETSIGNALRANGE:0.2",
-        "getcapturerate": "OK:GETCAPTURERATE:88250",
-        "teststring": "OK:TESTSTRING:some:long_string\nwith:stuff",
-        "error": "ERROR:ERROR:badstuff",
-        "invalid": "ERROR:INVALID",
-        "nonsense": "abcdefgh",
-        "bug_in_ws": "OK:OTHER",
+        '"GetState"': json.dumps({"GetState": {"result": "Ok", "value": "IDLE"}}),
+        '"GetVersion"': json.dumps({"GetVersion": {"result": "Ok", "value": "0.3.2"}}),
+        '"GetSignalRange"': json.dumps({"GetSignalRange": {"result": "Ok", "value": "0.2"}}),
+        '"GetCaptureRate"': json.dumps({"GetCaptureRate": {"result": "Ok", "value": "88250"}}),
+        '"teststring"': "OK:TESTSTRING:some:long_string\nwith:stuff",
+        '"Error"': "ERROR:ERROR:badstuff",
+        '"Invalid"': "ERROR:INVALID",
+        '"nonsense"': "abcdefgh",
+        '"bug_in_ws"': "OK:OTHER",
     }
 
     def send(self, query):
         if query == "fail":
             raise IOError("not connected")
         self.query = query
-        if ":" in query:
-            query, val = query.split(":",1)
-            self.response = "OK:{}".format(query.upper())
-            self.value = val
-        elif query in self.responses:
+        #if ":" in query:
+        #    query, val = query.split(":",1)
+        #    self.response = "OK:{}".format(query.upper())
+        #    self.value = val
+        print(query)
+        if query in self.responses:
             self.response = self.responses[query]
         else:
             self.response = "ERROR:INVALID"
@@ -127,47 +129,44 @@ def test_query_setvalue(camilla_mockws):
     assert camilla_mockws.dummyws.response == "OK:SETSOMEVALUE"
     assert camilla_mockws.dummyws.value == "123"
 
-def test_parse_response(camilla):
-    assert camilla._parse_response("OK:DUMMY:5") == ("OK", 'dummy', '5')
-
 def test_queries(camilla_mockquery):
     camilla_mockquery.get_capture_rate()
-    camilla_mockquery._query.assert_called_with('getcapturerate')
+    camilla_mockquery._query.assert_called_with('GetCaptureRate')
     camilla_mockquery.get_capture_rate_raw()
-    camilla_mockquery._query.assert_called_with('getcapturerate')
+    camilla_mockquery._query.assert_called_with('GetCaptureRate')
     camilla_mockquery.get_signal_range()
-    camilla_mockquery._query.assert_called_with('getsignalrange')
+    camilla_mockquery._query.assert_called_with('GetSignalRange')
     camilla_mockquery.get_signal_range_dB()
-    camilla_mockquery._query.assert_called_with('getsignalrange')
+    camilla_mockquery._query.assert_called_with('GetSignalRange')
     camilla_mockquery.set_update_interval(1234)
-    camilla_mockquery._query.assert_called_with('setupdateinterval', arg=1234)
+    camilla_mockquery._query.assert_called_with('SetUpdateInterval', arg=1234)
     camilla_mockquery.get_update_interval()
-    camilla_mockquery._query.assert_called_with('getupdateinterval')
+    camilla_mockquery._query.assert_called_with('GetUpdateInterval')
     camilla_mockquery.stop()
-    camilla_mockquery._query.assert_called_with('stop')
+    camilla_mockquery._query.assert_called_with('Stop')
     camilla_mockquery.exit()
-    camilla_mockquery._query.assert_called_with('exit')
+    camilla_mockquery._query.assert_called_with('Exit')
     camilla_mockquery.reload()
-    camilla_mockquery._query.assert_called_with('reload')
+    camilla_mockquery._query.assert_called_with('Reload')
     camilla_mockquery.get_config_name()
-    camilla_mockquery._query.assert_called_with('getconfigname')
+    camilla_mockquery._query.assert_called_with('GetConfigName')
     camilla_mockquery.set_config_name("some/path")
-    camilla_mockquery._query.assert_called_with('setconfigname', arg="some/path")
+    camilla_mockquery._query.assert_called_with('SetConfigName', arg="some/path")
     camilla_mockquery.get_config_raw()
-    camilla_mockquery._query.assert_called_with('getconfig')
+    camilla_mockquery._query.assert_called_with('GetConfig')
     camilla_mockquery.set_config_raw("some:yaml")
-    camilla_mockquery._query.assert_called_with('setconfig', arg="some:yaml")
+    camilla_mockquery._query.assert_called_with('SetConfig', arg="some:yaml")
     camilla_mockquery.set_config({"some":"yaml"})
-    camilla_mockquery._query.assert_called_with('setconfig', arg='some: yaml\n')
+    camilla_mockquery._query.assert_called_with('SetConfig', arg='some: yaml\n')
     camilla_mockquery.get_rate_adjust()
-    camilla_mockquery._query.assert_called_with('getrateadjust')
+    camilla_mockquery._query.assert_called_with('GetRateAdjust')
 
 def test_queries_adv(camilla_mockquery_yaml):
     camilla_mockquery_yaml.read_config_file("some/path")
-    camilla_mockquery_yaml._query.assert_called_with('readconfigfile', arg="some/path")
+    camilla_mockquery_yaml._query.assert_called_with('ReadConfigFile', arg="some/path")
     camilla_mockquery_yaml.read_config("rawyaml")
-    camilla_mockquery_yaml._query.assert_called_with('readconfig', arg="rawyaml")
+    camilla_mockquery_yaml._query.assert_called_with('ReadConfig', arg="rawyaml")
     camilla_mockquery_yaml.validate_config({"some":"yaml"})
-    camilla_mockquery_yaml._query.assert_called_with('validateconfig', arg='some: yaml\n')
+    camilla_mockquery_yaml._query.assert_called_with('ValidateConfig', arg='some: yaml\n')
     camilla_mockquery_yaml.get_config()
-    camilla_mockquery_yaml._query.assert_called_with('getconfig')
+    camilla_mockquery_yaml._query.assert_called_with('GetConfig')
