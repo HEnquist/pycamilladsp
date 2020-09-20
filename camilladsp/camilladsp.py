@@ -81,16 +81,6 @@ class CamillaConnection:
         except json.JSONDecodeError:
             raise IOError("Invalid response received: {}".format(rawreply))
 
-    #def _parse_response(self, resp):
-    #    response = json.loads(resp)
-    #    if 
-    #    state = 
-    #    command = parts[1]
-    #    if len(parts) > 2:
-    #        return (state, command.lower(), parts[2])
-    #    else:
-    #        return (state, command.lower(), None)
-
     def _update_version(self, resp):
         self._version = tuple(resp.split(".", 3))
 
