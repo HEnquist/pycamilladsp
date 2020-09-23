@@ -183,6 +183,20 @@ class CamillaConnection:
         adj = self._query("GetRateAdjust")
         return float(adj)
 
+    def get_buffer_level(self):
+        """
+        Get current buffer level of the playback device.
+        """
+        level = self._query("GetBufferLevel")
+        return int(level)
+
+    def get_clipped_samples(self):
+        """
+        Get number of clipped samples since the config was loaded.
+        """
+        clipped = self._query("GetClippedSamples")
+        return int(clipped)
+
     def stop(self):
         """
         Stop processing and wait for new config if wait mode is active, else exit.

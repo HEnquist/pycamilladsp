@@ -163,6 +163,10 @@ def test_queries(camilla_mockquery):
     camilla_mockquery._query.assert_called_with('SetConfig', arg='some: yaml\n')
     camilla_mockquery.get_rate_adjust()
     camilla_mockquery._query.assert_called_with('GetRateAdjust')
+    camilla_mockquery.get_buffer_level()
+    camilla_mockquery._query.assert_called_with('GetBufferLevel')
+    camilla_mockquery.get_clipped_samples()
+    camilla_mockquery._query.assert_called_with('GetClippedSamples')
 
 def test_queries_adv(camilla_mockquery_yaml):
     camilla_mockquery_yaml.read_config_file("some/path")
