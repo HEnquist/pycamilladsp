@@ -1,4 +1,5 @@
 import yaml
+import json
 from websocket import create_connection
 import math
 from threading import Lock
@@ -46,9 +47,9 @@ class CamillaConnection:
     def _query(self, command, arg=None):
         if self._ws is not None:
             if arg:
-                query = "{}:{}".format(command, arg)
+                query = json.dumps({command: arg})
             else:
-                query = command
+                query = json.dumps(command)
             try:
                 with self._lock:
                     self._ws.send(query)
@@ -62,29 +63,23 @@ class CamillaConnection:
 
     def _handle_reply(self, command, rawreply):
         try:
-            state, cmd, reply = self._parse_response(rawreply)
-            if state == "OK" and cmd == command.lower():
-                if reply:
-                    return reply
-                return
-            elif state == "ERROR" and (cmd == command.lower() or cmd == "invalid"):
-                if reply:
-                    raise CamillaError(reply)
-                else:
+            reply = json.loads(rawreply)
+            value = None
+            if command in reply:
+                state = reply[command]["result"]
+                if "value" in reply[command]:
+                    value = reply[command]["value"]
+                if state == "Error" and value is not None:
+                    raise CamillaError(value)
+                elif state == "Error" and value is None:
                     raise CamillaError("Command returned an error")
+                elif state == "Ok" and value is not None:
+                    return value
+                return
             else:
                 raise IOError("Invalid response received: {}".format(rawreply))
-        except IndexError:
+        except json.JSONDecodeError:
             raise IOError("Invalid response received: {}".format(rawreply))
-
-    def _parse_response(self, resp):
-        parts = resp.split(":", 2)
-        state = parts[0]
-        command = parts[1]
-        if len(parts) > 2:
-            return (state, command.lower(), parts[2])
-        else:
-            return (state, command.lower(), None)
 
     def _update_version(self, resp):
         self._version = tuple(resp.split(".", 3))
@@ -98,7 +93,7 @@ class CamillaConnection:
                 self._ws = create_connection(
                     "ws://{}:{}".format(self._host, self._port)
                 )
-            rawvers = self._query("getversion")
+            rawvers = self._query("GetVersion")
             self._update_version(rawvers)
         except Exception as _e:
             self._ws = None
@@ -130,14 +125,14 @@ class CamillaConnection:
         """
         Get current processing state.
         """
-        state = self._query("getstate")
+        state = self._query("GetState")
         return state
 
     def get_signal_range(self):
         """
         Get current signal range. Maximum value is 2.0.
         """
-        sigrange = self._query("getsignalrange")
+        sigrange = self._query("GetSignalRange")
         return float(sigrange)
 
     def get_signal_range_dB(self):
@@ -155,7 +150,7 @@ class CamillaConnection:
         """
         Get current capture rate, raw value.
         """
-        rate = self._query("getcapturerate")
+        rate = self._query("GetCaptureRate")
         return int(rate)
 
     def get_capture_rate(self):
@@ -172,65 +167,79 @@ class CamillaConnection:
         """
         Get current update interval in ms.
         """
-        interval = self._query("getupdateinterval")
+        interval = self._query("GetUpdateInterval")
         return int(interval)
 
     def set_update_interval(self, value):
         """
         Set current update interval in ms.
         """
-        self._query("setupdateinterval", arg=value)
+        self._query("SetUpdateInterval", arg=value)
 
     def get_rate_adjust(self):
         """
         Get current value for rate adjust, 1.0 means 1:1 resampling.
         """
-        adj = self._query("getrateadjust")
+        adj = self._query("GetRateAdjust")
         return float(adj)
+
+    def get_buffer_level(self):
+        """
+        Get current buffer level of the playback device.
+        """
+        level = self._query("GetBufferLevel")
+        return int(level)
+
+    def get_clipped_samples(self):
+        """
+        Get number of clipped samples since the config was loaded.
+        """
+        clipped = self._query("GetClippedSamples")
+        return int(clipped)
 
     def stop(self):
         """
         Stop processing and wait for new config if wait mode is active, else exit.
         """
-        self._query("stop")
+        self._query("Stop")
 
     def exit(self):
         """
         Stop processing and exit.
         """
-        self._query("exit")
+        self._query("Exit")
 
     def reload(self):
         """
         Reload config from disk.
         """
-        self._query("reload")
+        self._query("Reload")
 
     def get_config_name(self):
         """
         Get path to current config file.
         """
-        name = self._query("getconfigname")
+        name = self._query("GetConfigName")
         return name
 
     def set_config_name(self, value):
         """
         Set path to config file.
         """
-        self._query("setconfigname", arg=value)
+        self._query("SetConfigName", arg=value)
 
     def get_config_raw(self):
         """
         Get the active configuation in yaml format as a string.
         """
-        config_string = self._query("getconfig")
+        config_string = self._query("GetConfig")
         return config_string
 
     def set_config_raw(self, config_string):
         """
         Upload a new configuation in yaml format as a string.
         """
-        self._query("setconfig", arg=config_string)
+        self._query("SetConfig", arg=config_string)
 
     def get_config(self):
         """
@@ -245,7 +254,7 @@ class CamillaConnection:
         Read a config from yaml string and return the contents 
         as a Python object, with defaults filled out with their default values.
         """
-        config_raw = self._query("readconfig", arg=config_string)
+        config_raw = self._query("ReadConfig", arg=config_string)
         config_object = yaml.safe_load(config_raw)
         return config_object
 
@@ -253,7 +262,7 @@ class CamillaConnection:
         """
         Read a config file from disk and return the contents as a Python object.
         """
-        config_raw = self._query("readconfigfile", arg=filename)
+        config_raw = self._query("ReadConfigFile", arg=filename)
         config = yaml.safe_load(config_raw)
         return config
 
@@ -271,7 +280,7 @@ class CamillaConnection:
         Raises a CamillaError on errors.
         """
         config_string = yaml.dump(config_object)
-        validated_string = self._query("validateconfig", arg=config_string)
+        validated_string = self._query("ValidateConfig", arg=config_string)
         validated_object = yaml.safe_load(validated_string)
         return validated_object
 

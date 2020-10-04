@@ -2,7 +2,7 @@
 
 # pyCamillaDSP
 Companion Python library for CamillaDSP.
-Works with CamillaDSP version 0.3.2 and up.
+Works with CamillaDSP version 0.4.0 and up.
 
 Download the library, either by `git clone` or by downloading a zip file of the code. Then unpack the files, go to the folder containing the `setup.py` file and run: 
 ```sh
