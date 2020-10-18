@@ -86,6 +86,7 @@ The CamillaConnection class provides the following methods:
 |`disconnect()` | Close the connection to the websocket.|
 |`is_connected()` | Is websocket connected? Returns True or False.|
 |`get_version()` | Read CamillaDSP version, returns a tuple with 3 elements|
+|`get_library_version()` | Read pyCamillaDSP version, returns a tuple with 3 elements|
 |`get_state()` | Get current processing state. Returns one of "RUNNING", "PAUSED" or "INACTIVE".|
 |`get_signal_range()` | Get current signal range.|
 |`get_signal_range_dB()` | Get current signal range in dB.|
