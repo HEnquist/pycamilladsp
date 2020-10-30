@@ -82,6 +82,7 @@ def test_connect(camilla_mockws):
     assert camilla_mockws.is_connected()
     assert camilla_mockws.get_state() == "IDLE"
     assert camilla_mockws.get_version() == ('0', '3', '2')
+    assert camilla_mockws.get_library_version() == camilladsp.camilladsp.VERSION
     camilla_mockws.disconnect()
     assert not camilla_mockws.is_connected()
 

@@ -4,7 +4,9 @@ from websocket import create_connection
 import math
 from threading import Lock
 
-standard_rates = [
+VERSION = (0, 4, 1)
+
+STANDARD_RATES = [
     8000,
     11025,
     16000,
@@ -121,6 +123,10 @@ class CamillaConnection:
         """Read CamillaDSP version, returns a tuple of (major, minor, patch)."""
         return self._version
 
+    def get_library_version(self):
+        """Read pycamilladsp version, returns a tuple of (major, minor, patch)."""
+        return VERSION
+
     def get_state(self):
         """
         Get current processing state.
@@ -158,8 +164,8 @@ class CamillaConnection:
         Get current capture rate. Returns the nearest common value.
         """
         rate = self.get_capture_rate_raw()
-        if 0.9 * standard_rates[0] < rate < 1.1 * standard_rates[-1]:
-            return min(standard_rates, key=lambda val: abs(val - rate))
+        if 0.9 * STANDARD_RATES[0] < rate < 1.1 * STANDARD_RATES[-1]:
+            return min(STANDARD_RATES, key=lambda val: abs(val - rate))
         else:
             return None
 
@@ -340,3 +346,5 @@ if __name__ == "__main__":  # pragma: no cover
         print("ValidateConfig OK:", valconf)
     except CamillaError as e:
         print("ValidateConfig Error:", e)
+    
+    #cdsp.disconnect()
