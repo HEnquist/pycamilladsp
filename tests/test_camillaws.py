@@ -13,6 +13,7 @@ class DummyWS:
         '"GetState"': json.dumps({"GetState": {"result": "Ok", "value": "IDLE"}}),
         '"GetVersion"': json.dumps({"GetVersion": {"result": "Ok", "value": "0.3.2"}}),
         '"GetSignalRange"': json.dumps({"GetSignalRange": {"result": "Ok", "value": "0.2"}}),
+        '"GetCaptureSignalRms"': json.dumps({"GetCaptureSignalRms": {"result": "Ok", "value": [0.1, 0.2]}}),
         '"GetCaptureRate"': json.dumps({"GetCaptureRate": {"result": "Ok", "value": "88250"}}),
         '"GetErrorValue"': json.dumps({"GetErrorValue": {"result": "Error", "value": "badstuff"}}),
         '"GetError"': json.dumps({"GetError": {"result": "Error"}}),
@@ -94,6 +95,10 @@ def test_signal_range(camilla_mockws):
     camilla_mockws.connect()
     assert camilla_mockws.get_signal_range() == 0.2
 
+def test_signal_rms(camilla_mockws):
+    camilla_mockws.connect()
+    assert camilla_mockws.get_capture_signal_rms() == [0.1, 0.2]
+
 def test_signal_range_dB(camilla_mockws):
     camilla_mockws.connect()
     assert camilla_mockws.get_signal_range_dB() == -20
@@ -168,6 +173,19 @@ def test_queries(camilla_mockquery):
     camilla_mockquery._query.assert_called_with('GetBufferLevel')
     camilla_mockquery.get_clipped_samples()
     camilla_mockquery._query.assert_called_with('GetClippedSamples')
+    camilla_mockquery.get_volume()
+    camilla_mockquery._query.assert_called_with('GetVolume')
+    camilla_mockquery.set_volume(-25.0)
+    camilla_mockquery._query.assert_called_with('SetVolume', arg=-25.0)
+    camilla_mockquery.get_capture_signal_rms()
+    camilla_mockquery._query.assert_called_with('GetCaptureSignalRms')
+    camilla_mockquery.get_capture_signal_peak()
+    camilla_mockquery._query.assert_called_with('GetCaptureSignalPeak')
+    camilla_mockquery.get_playback_signal_rms()
+    camilla_mockquery._query.assert_called_with('GetPlaybackSignalRms')
+    camilla_mockquery.get_playback_signal_peak()
+    camilla_mockquery._query.assert_called_with('GetPlaybackSignalPeak')
+
 
 def test_queries_adv(camilla_mockquery_yaml):
     camilla_mockquery_yaml.read_config_file("some/path")
