@@ -154,7 +154,7 @@ class CamillaConnection:
 
     def get_capture_signal_rms(self):
         """
-        Get capture signal level rms in dB. Full scale is 0 dB.
+        Get capture signal level rms in dB. Full scale is 0 dB. Returns a list with one element per channel.
         """
         sigrms = self._query("GetCaptureSignalRms")
         sigrms = [float(val) for val in sigrms]
@@ -162,7 +162,7 @@ class CamillaConnection:
 
     def get_playback_signal_rms(self):
         """
-        Get playback signal level rms in dB. Full scale is 0 dB.
+        Get playback signal level rms in dB. Full scale is 0 dB. Returns a list with one element per channel.
         """
         sigrms = self._query("GetPlaybackSignalRms")
         sigrms = [float(val) for val in sigrms]
@@ -170,7 +170,7 @@ class CamillaConnection:
 
     def get_capture_signal_peak(self):
         """
-        Get capture signal level peak in dB. Full scale is 0 dB.
+        Get capture signal level peak in dB. Full scale is 0 dB. Returns a list with one element per channel.
         """
         sigpeak = self._query("GetCaptureSignalPeak")
         sigpeak = [float(val) for val in sigpeak]
@@ -178,7 +178,7 @@ class CamillaConnection:
 
     def get_playback_signal_peak(self):
         """
-        Get playback signal level peak in dB. Full scale is 0 dB.
+        Get playback signal level peak in dB. Full scale is 0 dB. Returns a list with one element per channel.
         """
         sigpeak = self._query("GetPlaybackSignalPeak")
         sigpeak = [float(val) for val in sigpeak]

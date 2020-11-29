@@ -90,6 +90,12 @@ The CamillaConnection class provides the following methods:
 |`get_state()` | Get current processing state. Returns one of "RUNNING", "PAUSED" or "INACTIVE".|
 |`get_signal_range()` | Get current signal range.|
 |`get_signal_range_dB()` | Get current signal range in dB.|
+|`get_capture_signal_rms()` | Get capture signal level rms in dB. Full scale is 0 dB. Returns a list with one element per channel.|
+|`get_playback_signal_rms()` | Get playback signal level rms in dB. Full scale is 0 dB. Returns a list with one element per channel.|
+|`get_capture_signal_peak()` | Get capture signal level peak in dB. Full scale is 0 dB. Returns a list with one element per channel.|
+|`get_playback_signal_peak()` | Get playback signal level peak in dB. Full scale is 0 dB. Returns a list with one element per channel.|
+|`get_volume()` | Get current volume setting in dB.|
+|`set_volume(value)` | Set volume in dB.|
 |`get_capture_rate_raw()` | Get current capture rate, raw value.|
 |`get_capture_rate()` | Get current capture rate. Returns the nearest common value.|
 |`get_update_interval()` | Get current update interval in ms.|
