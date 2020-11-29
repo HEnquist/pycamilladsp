@@ -195,7 +195,7 @@ class CamillaConnection:
         """
         Set volume in dB.
         """
-        self._query("SetVolume", arg=value)   
+        self._query("SetVolume", arg=float(value))
 
     def get_capture_rate_raw(self):
         """
