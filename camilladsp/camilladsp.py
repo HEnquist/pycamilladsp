@@ -4,7 +4,7 @@ from websocket import create_connection
 import math
 from threading import Lock
 
-VERSION = (0, 4, 1)
+VERSION = (0, 5, 0)
 
 STANDARD_RATES = [
     8000,
@@ -48,7 +48,7 @@ class CamillaConnection:
 
     def _query(self, command, arg=None):
         if self._ws is not None:
-            if arg:
+            if arg is not None:
                 query = json.dumps({command: arg})
             else:
                 query = json.dumps(command)
@@ -151,6 +151,51 @@ class CamillaConnection:
         else:
             range_dB = -1000
         return range_dB
+
+    def get_capture_signal_rms(self):
+        """
+        Get capture signal level rms in dB. Full scale is 0 dB. Returns a list with one element per channel.
+        """
+        sigrms = self._query("GetCaptureSignalRms")
+        sigrms = [float(val) for val in sigrms]
+        return sigrms
+
+    def get_playback_signal_rms(self):
+        """
+        Get playback signal level rms in dB. Full scale is 0 dB. Returns a list with one element per channel.
+        """
+        sigrms = self._query("GetPlaybackSignalRms")
+        sigrms = [float(val) for val in sigrms]
+        return sigrms
+
+    def get_capture_signal_peak(self):
+        """
+        Get capture signal level peak in dB. Full scale is 0 dB. Returns a list with one element per channel.
+        """
+        sigpeak = self._query("GetCaptureSignalPeak")
+        sigpeak = [float(val) for val in sigpeak]
+        return sigpeak
+
+    def get_playback_signal_peak(self):
+        """
+        Get playback signal level peak in dB. Full scale is 0 dB. Returns a list with one element per channel.
+        """
+        sigpeak = self._query("GetPlaybackSignalPeak")
+        sigpeak = [float(val) for val in sigpeak]
+        return sigpeak
+
+    def get_volume(self):
+        """
+        Get current volume setting in dB.
+        """
+        vol = self._query("GetVolume")
+        return float(vol)
+
+    def set_volume(self, value):
+        """
+        Set volume in dB.
+        """
+        self._query("SetVolume", arg=float(value))
 
     def get_capture_rate_raw(self):
         """
