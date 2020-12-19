@@ -2,7 +2,7 @@
 
 # pyCamillaDSP
 Companion Python library for CamillaDSP.
-Works with CamillaDSP version 0.4.0 and up.
+Works with CamillaDSP version 0.5.0 and up.
 
 Download the library, either by `git clone` or by downloading a zip file of the code. Then unpack the files, go to the folder containing the `setup.py` file and run: 
 ```sh
@@ -78,7 +78,9 @@ except IOError as e:
 
 ## Methods
 
-The CamillaConnection class provides the following methods:
+The CamillaConnection class provides the following methods
+
+### Basics
 
 | Method   |  Description  |
 |----------|---------------|
@@ -88,15 +90,13 @@ The CamillaConnection class provides the following methods:
 |`get_version()` | Read CamillaDSP version, returns a tuple with 3 elements|
 |`get_library_version()` | Read pyCamillaDSP version, returns a tuple with 3 elements|
 |`get_state()` | Get current processing state. Returns one of "RUNNING", "PAUSED" or "INACTIVE".|
-|`get_signal_range()` | Get current signal range.|
-|`get_signal_range_dB()` | Get current signal range in dB.|
-|`get_capture_rate_raw()` | Get current capture rate, raw value.|
-|`get_capture_rate()` | Get current capture rate. Returns the nearest common value.|
-|`get_update_interval()` | Get current update interval in ms.|
-|`set_update_interval(value)` | Set current update interval in ms.|
-|`get_rate_adjust()` | Get current value for rate adjust.|
 |`stop()` | Stop processing and wait for new config if wait mode is active, else exit. |
 |`exit()` | Stop processing and exit.|
+
+
+### Config handling
+| Method   |  Description  |
+|----------|---------------|
 |`reload()` | Reload config from disk.|
 |`get_config_name()` | Get path to current config file.|
 |`set_config_name(value)` | Set path to config file.|
@@ -108,10 +108,46 @@ The CamillaConnection class provides the following methods:
 |`read_config_file(path)` | Read a config file from `path`. Returns the loaded config with all optional fields filled with defaults. Raises a CamillaError on errors.|
 |`read_config(config)` | Read a config from yaml string and return the contents as an obect, with defaults filled out with their default values.|
 
+### Reading status
+| Method   |  Description  |
+|----------|---------------|
+|`get_signal_range()` | Get current signal range.|
+|`get_signal_range_dB()` | Get current signal range in dB.|
+|`get_capture_signal_rms()` | Get capture signal level rms in dB. Full scale is 0 dB. Returns a list with one element per channel.|
+|`get_playback_signal_rms()` | Get playback signal level rms in dB. Full scale is 0 dB. Returns a list with one element per channel.|
+|`get_capture_signal_peak()` | Get capture signal level peak in dB. Full scale is 0 dB. Returns a list with one element per channel.|
+|`get_playback_signal_peak()` | Get playback signal level peak in dB. Full scale is 0 dB. Returns a list with one element per channel.|
+|`get_capture_rate_raw()` | Get current capture rate, raw value.|
+|`get_capture_rate()` | Get current capture rate. Returns the nearest common value.|
+|`get_update_interval()` | Get current update interval in ms.|
+|`set_update_interval(value)` | Set current update interval in ms.|
+|`get_rate_adjust()` | Get current value for rate adjust.|
+|`get_buffer_level()` | Get current buffer level of the playback device.|
+|`get_clipped_samples()` | Get number of clipped samples since the config was loaded.|
+
+### Volume control
+| Method   |  Description  |
+|----------|---------------|
+|`get_volume()` | Get current volume setting in dB.|
+|`set_volume(value)` | Set volume in dB.|
 
 # Included examples:
 
-play_wav: Play a wav file. This example reads a configuration from a file, updates the capture device fto point at a given .wav file, and sends this modified config to CamillaDSP.
+## read_rms
+Read the playback signal level continuously and print in the terminal, until stopped by Ctrl+c. 
+```sh
+python read_rms.py 1234
+```
+
+## set_volume
+Set the volume control to a new value. First argument is websocket port, second is new volume in dB.
+For this to work, CamillaDSP must be running a configuration that has Volume filters in the pipeline for every channel.
+```sh
+python set_volume.py 1234 -12.3
+```
+
+## play_wav
+Play a wav file. This example reads a configuration from a file, updates the capture device fto point at a given .wav file, and sends this modified config to CamillaDSP.
 Usage example:
 ```sh
 python play_wav.py 1234 /path/to/wavtest.yml /path/to/music.wav
