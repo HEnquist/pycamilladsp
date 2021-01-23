@@ -197,6 +197,20 @@ class CamillaConnection:
         """
         self._query("SetVolume", arg=float(value))
 
+    def get_mute(self):
+        """
+        Get current mute setting.
+        """
+        mute = self._query("GetMute")
+        return bool(mute)
+
+    def set_mute(self, value):
+        """
+        Set mute, true or false.
+        """
+        self._query("SetMute", arg=bool(value))
+
+
     def get_capture_rate_raw(self):
         """
         Get current capture rate, raw value.
@@ -334,62 +348,3 @@ class CamillaConnection:
         validated_string = self._query("ValidateConfig", arg=config_string)
         validated_object = yaml.safe_load(validated_string)
         return validated_object
-
-
-if __name__ == "__main__":  # pragma: no cover
-    """Testing area"""
-    print("\n---Connect---")
-    cdsp = CamillaConnection("127.0.0.1", 1234)
-    cdsp.connect()
-
-    print("\n---Read parameters---")
-    print("Version: {}".format(cdsp.get_version()))
-    print("State: {}".format(cdsp.get_state()))
-    print("ValueRange: {}".format(cdsp.get_signal_range()))
-    print("ValueRange dB: {}".format(cdsp.get_signal_range_dB()))
-    print("CaptureRate raw: {}".format(cdsp.get_capture_rate_raw()))
-    print("CaptureRate: {}".format(cdsp.get_capture_rate()))
-    print("RateAdjust: {}".format(cdsp.get_rate_adjust()))
-
-    print("\n---SetUpdateInterval 500---")
-    cdsp.set_update_interval(500)
-    print("UpdateInterval: {}".format(cdsp.get_update_interval()))
-
-    print("\n---SetUpdateInterval invalid value---")
-    try:
-        cdsp.set_update_interval(-500)
-    except Exception as e:
-        print("Reply:", e)
-
-    print("\n---ReadConfigFile---")
-    conf = cdsp.read_config_file(
-        "/home/henrik/rustfir/rustfir/exampleconfigs/simpleconfig.yml"
-    )
-    print(conf)
-
-    print("\n---ValidateConfig---")
-    try:
-        valconf = cdsp.validate_config(conf)
-        print("ValidateConfig OK:", valconf)
-    except CamillaError as e:
-        print("ValidateConfig Error:", e)
-
-    print("\n---ReadConfig---")
-    readconf = cdsp.read_config(yaml.dump(conf))
-    print(readconf)
-
-    print("\n---ReadConfigFile non-existing---")
-    try:
-        conf = cdsp.read_config_file("/some/bad/path.yml")
-    except Exception as e:
-        print("ReadConfigFile Error:", e)
-
-    print("\n---ValidateConfig broken config---")
-    conf["devices"]["capture"]["type"] = "Teapot"
-    try:
-        valconf = cdsp.validate_config(conf)
-        print("ValidateConfig OK:", valconf)
-    except CamillaError as e:
-        print("ValidateConfig Error:", e)
-    
-    #cdsp.disconnect()

@@ -130,6 +130,8 @@ The CamillaConnection class provides the following methods
 |----------|---------------|
 |`get_volume()` | Get current volume setting in dB.|
 |`set_volume(value)` | Set volume in dB.|
+|`get_mute()` | Get current mute setting.|
+|`set_mute(value)` | Set mute, true or false.|
 
 # Included examples:
 
