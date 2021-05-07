@@ -123,6 +123,14 @@ class CamillaConnection:
         """Read CamillaDSP version, returns a tuple of (major, minor, patch)."""
         return self._version
 
+    def get_supported_device_types(self):
+        """
+        Read what device types the running CamillaDSP process supports. 
+        Returns a tuple with two lists of device types, the first for playback and the second for capture.
+        """
+        (playback, capture) = self._query("GetSupportedDeviceTypes")
+        return (playback, capture)
+
     def get_library_version(self):
         """Read pycamilladsp version, returns a tuple of (major, minor, patch)."""
         return VERSION

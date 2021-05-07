@@ -12,6 +12,7 @@ class DummyWS:
     responses = {
         '"GetState"': json.dumps({"GetState": {"result": "Ok", "value": "IDLE"}}),
         '"GetVersion"': json.dumps({"GetVersion": {"result": "Ok", "value": "0.3.2"}}),
+        '"GetSupportedDeviceTypes"': json.dumps({"GetSupportedDeviceTypes": {"result": "Ok", "value": [["a", "b"], ["c", "d"]]}}),
         '"GetSignalRange"': json.dumps({"GetSignalRange": {"result": "Ok", "value": "0.2"}}),
         '"GetCaptureSignalRms"': json.dumps({"GetCaptureSignalRms": {"result": "Ok", "value": [0.1, 0.2]}}),
         '"GetCaptureRate"': json.dumps({"GetCaptureRate": {"result": "Ok", "value": "88250"}}),
@@ -90,6 +91,10 @@ def test_connect(camilla_mockws):
 def test_connect_fail(camilla):
     with pytest.raises(IOError):
         camilla.connect()
+
+def test_device_types(camilla_mockws):
+    camilla_mockws.connect()
+    assert camilla_mockws.get_supported_device_types() == (["a", "b"], ["c", "d"])
 
 def test_signal_range(camilla_mockws):
     camilla_mockws.connect()

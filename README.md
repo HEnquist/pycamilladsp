@@ -90,6 +90,7 @@ The CamillaConnection class provides the following methods
 |`get_version()` | Read CamillaDSP version, returns a tuple with 3 elements|
 |`get_library_version()` | Read pyCamillaDSP version, returns a tuple with 3 elements|
 |`get_state()` | Get current processing state. Returns one of "RUNNING", "PAUSED" or "INACTIVE".|
+|`def get_supported_device_types()`| Read what device types the running CamillaDSP process supports. Returns a tuple with two lists of device types, the first for playback and the second for capture. |
 |`stop()` | Stop processing and wait for new config if wait mode is active, else exit. |
 |`exit()` | Stop processing and exit.|
 
