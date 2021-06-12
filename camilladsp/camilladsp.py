@@ -3,6 +3,7 @@ import json
 from websocket import create_connection
 import math
 from threading import Lock
+from enum import Enum, auto
 
 VERSION = (0, 5, 1)
 
@@ -21,6 +22,48 @@ STANDARD_RATES = [
     352800,
     384000,
 ]
+
+class ProcessingState(Enum):
+    RUNNING = auto()
+    PAUSED = auto()
+    INACTIVE = auto()
+    STARTING = auto()
+
+def _state_from_string(value):
+    if value == "Running":
+        return ProcessingState.RUNNING
+    elif value == "Paused":
+        return ProcessingState.PAUSED
+    elif value == "Inactive":
+        return ProcessingState.INACTIVE
+    elif value == "Starting":
+        return ProcessingState.STARTING
+    return None
+
+
+class StopReason(Enum):
+    NONE = auto()
+    DONE = auto()
+    CAPTUREERROR = auto()
+    PLAYBACKERROR = auto()
+    CAPTUREFORMATCHANGE = auto()
+    PLAYBACKFORMATCHANGE = auto()
+
+def _reason_from_string(value):
+    if value == "None":
+        return StopReason.NONE
+    elif value == "Done":
+        return StopReason.DONE
+    elif value == "CaptureError":
+        return StopReason.CAPTUREERROR
+    elif value == "PlaybackError":
+        return StopReason.PLAYBACKERROR
+    elif value == "CaptureFormatChange":
+        return StopReason.CAPTUREFORMATCHANGE
+    elif value == "PlaybackFormatChange":
+        return StopReason.PLAYBACKFORMATCHANGE
+    return None
+
 
 
 class CamillaError(ValueError):
@@ -140,7 +183,14 @@ class CamillaConnection:
         Get current processing state.
         """
         state = self._query("GetState")
-        return state
+        return _state_from_string(state)
+
+    def get_stop_reason(self):
+        """
+        Get current processing state.
+        """
+        reason = self._query("GetStopReason")
+        return _reason_from_string(reason)
 
     def get_signal_range(self):
         """
@@ -319,6 +369,14 @@ class CamillaConnection:
         Get the active configuation as a Python object.
         """
         config_string = self.get_config_raw()
+        config_object = yaml.safe_load(config_string)
+        return config_object
+
+    def get_previous_config(self):
+        """
+        Get the previously active configuation as a Python object.
+        """
+        config_string = self._query("GetPreviousConfig")
         config_object = yaml.safe_load(config_string)
         return config_object
 

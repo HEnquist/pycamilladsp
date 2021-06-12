@@ -10,7 +10,7 @@ class DummyWS:
         self.value = None
 
     responses = {
-        '"GetState"': json.dumps({"GetState": {"result": "Ok", "value": "IDLE"}}),
+        '"GetState"': json.dumps({"GetState": {"result": "Ok", "value": "Inactive"}}),
         '"GetVersion"': json.dumps({"GetVersion": {"result": "Ok", "value": "0.3.2"}}),
         '"GetSupportedDeviceTypes"': json.dumps({"GetSupportedDeviceTypes": {"result": "Ok", "value": [["a", "b"], ["c", "d"]]}}),
         '"GetSignalRange"': json.dumps({"GetSignalRange": {"result": "Ok", "value": "0.2"}}),
@@ -82,7 +82,7 @@ def test_connect(camilla_mockws):
         camilla_mockws.get_state()
     camilla_mockws.connect()
     assert camilla_mockws.is_connected()
-    assert camilla_mockws.get_state() == "IDLE"
+    assert camilla_mockws.get_state() == camilladsp.ProcessingState.INACTIVE
     assert camilla_mockws.get_version() == ('0', '3', '2')
     assert camilla_mockws.get_library_version() == camilladsp.camilladsp.VERSION
     camilla_mockws.disconnect()
@@ -138,10 +138,11 @@ def test_query(camilla_mockws):
     with pytest.raises(IOError):
         camilla_mockws._query("fail")
 
-def test_query_setvalue(camilla_mockws):
+def test_query_mockedws(camilla_mockws):
     camilla_mockws.connect()
     assert camilla_mockws._query("SetSomeValue", arg=123) is None
     assert camilla_mockws.dummyws.query == json.dumps({"SetSomeValue": 123})
+    assert camilla_mockws.get_supported_device_types() == (["a", "b"], ["c", "d"])
 
 def test_queries(camilla_mockquery):
     camilla_mockquery.get_capture_rate()
@@ -194,6 +195,8 @@ def test_queries(camilla_mockquery):
     camilla_mockquery._query.assert_called_with('GetPlaybackSignalRms')
     camilla_mockquery.get_playback_signal_peak()
     camilla_mockquery._query.assert_called_with('GetPlaybackSignalPeak')
+    camilla_mockquery.get_stop_reason()
+    camilla_mockquery._query.assert_called_with('GetStopReason')
 
 
 def test_queries_adv(camilla_mockquery_yaml):
@@ -205,3 +208,5 @@ def test_queries_adv(camilla_mockquery_yaml):
     camilla_mockquery_yaml._query.assert_called_with('ValidateConfig', arg='some: yaml\n')
     camilla_mockquery_yaml.get_config()
     camilla_mockquery_yaml._query.assert_called_with('GetConfig')
+    camilla_mockquery_yaml.get_previous_config()
+    camilla_mockquery_yaml._query.assert_called_with('GetPreviousConfig')

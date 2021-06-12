@@ -2,7 +2,7 @@
 
 # pyCamillaDSP
 Companion Python library for CamillaDSP.
-Works with CamillaDSP version 0.5.0 and up.
+Works with CamillaDSP version 0.6.0 and up.
 
 Download the library, either by `git clone` or by downloading a zip file of the code. Then unpack the files, go to the folder containing the `setup.py` file and run: 
 ```sh
@@ -87,9 +87,10 @@ The CamillaConnection class provides the following methods
 |`connect()` | Connect to the Websocket server. Must be called before any other method can be used.|
 |`disconnect()` | Close the connection to the websocket.|
 |`is_connected()` | Is websocket connected? Returns True or False.|
-|`get_version()` | Read CamillaDSP version, returns a tuple with 3 elements|
-|`get_library_version()` | Read pyCamillaDSP version, returns a tuple with 3 elements|
-|`get_state()` | Get current processing state. Returns one of "RUNNING", "PAUSED" or "INACTIVE".|
+|`get_version()` | Read CamillaDSP version, returns a tuple with 3 elements.|
+|`get_library_version()` | Read pyCamillaDSP version, returns a tuple with 3 elements.|
+|`get_state()` | Get current processing state. Returns a ProcessingState enum value, see "Enums" below.|
+|`get_stop_reason()` | Get the reason that processing stopped. Returns a StopReason enum value, see "Enums" below. |
 |`def get_supported_device_types()`| Read what device types the running CamillaDSP process supports. Returns a tuple with two lists of device types, the first for playback and the second for capture. |
 |`stop()` | Stop processing and wait for new config if wait mode is active, else exit. |
 |`exit()` | Stop processing and exit.|
@@ -101,13 +102,14 @@ The CamillaConnection class provides the following methods
 |`reload()` | Reload config from disk.|
 |`get_config_name()` | Get path to current config file.|
 |`set_config_name(value)` | Set path to config file.|
-|`get_config_raw()` | Get the active configuation in yaml format as a string.|
-|`set_config_raw(value)` | Upload a new configuation in yaml format as a string.|
-|`get_config()` | Get the active configuation as an object.|
-|`set_config(config)` | Upload a new configuation from an object.|
+|`get_config_raw()` | Get the active configuration in yaml format as a string.|
+|`set_config_raw(value)` | Upload a new configuration in yaml format as a string.|
+|`get_config()` | Get the active configuration as an object.|
+|`get_previous_config()` | Get the previously active configuration as an object.|
+|`set_config(config)` | Upload a new configuration from an object.|
 |`validate_config(config)` | Validate a configuration object. Returns the validated config with all optional fields filled with defaults. Raises a CamillaError on errors.|
 |`read_config_file(path)` | Read a config file from `path`. Returns the loaded config with all optional fields filled with defaults. Raises a CamillaError on errors.|
-|`read_config(config)` | Read a config from yaml string and return the contents as an obect, with defaults filled out with their default values.|
+|`read_config(config)` | Read a config from yaml string and return the contents as an object, with defaults filled out with their default values.|
 
 ### Reading status
 | Method   |  Description  |
@@ -133,6 +135,24 @@ The CamillaConnection class provides the following methods
 |`set_volume(value)` | Set volume in dB.|
 |`get_mute()` | Get current mute setting.|
 |`set_mute(value)` | Set mute, true or false.|
+
+
+## Enums
+
+ProcessingState
+- RUNNING: Processing is running.
+- PAUSED: Processing is paused.
+- INACTIVE: CamillaDSP is inactive, and waiting for a new config to be supplied.
+- STARTING: The processing is being set up.
+
+StopReason
+- NONE: Processing hasn't stopped yet. 
+- DONE: The capture device reached the end of the stream.
+- CAPTUREERROR: The capture device encountered an error.
+- PLAYBACKERROR: The playback device encountered an error.
+- CAPTUREFORMATCHANGE: The sample format of the capture device changed. 
+- PLAYBACKFORMATCHANGE: The sample format of the capture device changed. 
+
 
 # Included examples:
 
