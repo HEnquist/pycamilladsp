@@ -121,7 +121,7 @@ The CamillaConnection class provides the following methods
 |`get_capture_signal_peak()` | Get capture signal level peak in dB. Full scale is 0 dB. Returns a list with one element per channel.|
 |`get_playback_signal_peak()` | Get playback signal level peak in dB. Full scale is 0 dB. Returns a list with one element per channel.|
 |`get_capture_rate_raw()` | Get current capture rate, raw value.|
-|`get_capture_rate()` | Get current capture rate. Returns the nearest common value.|
+|`get_capture_rate()` | Get current capture rate. Returns the nearest common rate, as long as it's within +-4% of the measured value.|
 |`get_update_interval()` | Get current update interval in ms.|
 |`set_update_interval(value)` | Set current update interval in ms.|
 |`get_rate_adjust()` | Get current value for rate adjust.|
@@ -160,6 +160,12 @@ StopReason
 Read the playback signal level continuously and print in the terminal, until stopped by Ctrl+c. 
 ```sh
 python read_rms.py 1234
+```
+
+## get_config
+Read the configuration and print some parameters. 
+```sh
+python get_config.py 1234
 ```
 
 ## set_volume

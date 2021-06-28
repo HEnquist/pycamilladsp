@@ -278,13 +278,14 @@ class CamillaConnection:
 
     def get_capture_rate(self):
         """
-        Get current capture rate. Returns the nearest common value.
+        Get current capture rate. Returns the nearest common rate, as long as it's within +-4% of the measured value.
         """
         rate = self.get_capture_rate_raw()
-        if 0.9 * STANDARD_RATES[0] < rate < 1.1 * STANDARD_RATES[-1]:
-            return min(STANDARD_RATES, key=lambda val: abs(val - rate))
-        else:
-            return None
+        if 0.96 * STANDARD_RATES[0] < rate < 1.04 * STANDARD_RATES[-1]:
+            nearest = min(STANDARD_RATES, key=lambda val: abs(val - rate))
+            if 0.96 < rate/nearest < 1.04:
+                return nearest
+        return None
 
     def get_update_interval(self):
         """
