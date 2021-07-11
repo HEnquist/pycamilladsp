@@ -49,20 +49,42 @@ class StopReason(Enum):
     CAPTUREFORMATCHANGE = auto()
     PLAYBACKFORMATCHANGE = auto()
 
-def _reason_from_string(value):
-    if value == "None":
-        return StopReason.NONE
-    elif value == "Done":
-        return StopReason.DONE
-    elif value == "CaptureError":
-        return StopReason.CAPTUREERROR
-    elif value == "PlaybackError":
-        return StopReason.PLAYBACKERROR
-    elif value == "CaptureFormatChange":
-        return StopReason.CAPTUREFORMATCHANGE
-    elif value == "PlaybackFormatChange":
-        return StopReason.PLAYBACKFORMATCHANGE
-    return None
+    def __new__(cls, value):
+        obj = object.__new__(cls)
+        obj._value_ = value
+        obj._data = None
+        return obj
+
+    def set_data(self, value):
+        self._data = value
+
+    @property
+    def data(self):
+        return self._data
+
+def _reason_from_reply(value):
+    if isinstance(value, dict):
+        reason, data = next(iter(value.items()))
+    else:
+        reason = value
+        data = None
+
+    if reason == "None":
+        reasonenum = StopReason.NONE
+    elif reason == "Done":
+        reasonenum = StopReason.DONE
+    elif reason == "CaptureError":
+        reasonenum = StopReason.CAPTUREERROR
+    elif reason == "PlaybackError":
+        reasonenum = StopReason.PLAYBACKERROR
+    elif reason == "CaptureFormatChange":
+        reasonenum = StopReason.CAPTUREFORMATCHANGE
+    elif reason == "PlaybackFormatChange":
+        reasonenum = StopReason.PLAYBACKFORMATCHANGE
+    else:
+        raise ValueError(f"Invalid value for StopReason: {value}")
+    reasonenum.set_data(data)
+    return reasonenum
 
 
 
@@ -190,7 +212,7 @@ class CamillaConnection:
         Get current processing state.
         """
         reason = self._query("GetStopReason")
-        return _reason_from_string(reason)
+        return _reason_from_reply(reason)
 
     def get_signal_range(self):
         """

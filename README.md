@@ -139,19 +139,31 @@ The CamillaConnection class provides the following methods
 
 ## Enums
 
-ProcessingState
+### ProcessingState
 - RUNNING: Processing is running.
 - PAUSED: Processing is paused.
 - INACTIVE: CamillaDSP is inactive, and waiting for a new config to be supplied.
 - STARTING: The processing is being set up.
 
-StopReason
+### StopReason
 - NONE: Processing hasn't stopped yet. 
 - DONE: The capture device reached the end of the stream.
 - CAPTUREERROR: The capture device encountered an error.
 - PLAYBACKERROR: The playback device encountered an error.
 - CAPTUREFORMATCHANGE: The sample format of the capture device changed. 
 - PLAYBACKFORMATCHANGE: The sample format of the capture device changed. 
+
+The StopReason enums also carry additional data:
+- CAPTUREERROR and PLAYBACKERROR: Carries the error message as a string.
+- CAPTUREFORMATCHANGE and PLAYBACKFORMATCHANGE: Carries the estimated new sample rate as an integer. A value of 0 means the new rate is unknown.
+
+The additional data can be accessed by reading the `data` property:
+```python
+reason = cdsp.get_stop_reason()
+if reason == StopReason.CAPTUREERROR:
+    error_msg = reason.data
+    print(f"Capture failed, error: {error_msg})
+```
 
 
 # Included examples:
