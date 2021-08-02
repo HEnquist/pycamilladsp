@@ -4,7 +4,7 @@ from websocket import create_connection
 import math
 from threading import Lock
 
-VERSION = (0, 5, 0)
+VERSION = (0, 5, 1)
 
 STANDARD_RATES = [
     8000,
