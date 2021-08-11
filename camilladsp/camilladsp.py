@@ -3,8 +3,9 @@ import json
 from websocket import create_connection
 import math
 from threading import Lock
+from enum import Enum, auto
 
-VERSION = (0, 5, 1)
+VERSION = (0, 6, 0)
 
 STANDARD_RATES = [
     8000,
@@ -21,6 +22,70 @@ STANDARD_RATES = [
     352800,
     384000,
 ]
+
+class ProcessingState(Enum):
+    RUNNING = auto()
+    PAUSED = auto()
+    INACTIVE = auto()
+    STARTING = auto()
+
+def _state_from_string(value):
+    if value == "Running":
+        return ProcessingState.RUNNING
+    elif value == "Paused":
+        return ProcessingState.PAUSED
+    elif value == "Inactive":
+        return ProcessingState.INACTIVE
+    elif value == "Starting":
+        return ProcessingState.STARTING
+    return None
+
+
+class StopReason(Enum):
+    NONE = auto()
+    DONE = auto()
+    CAPTUREERROR = auto()
+    PLAYBACKERROR = auto()
+    CAPTUREFORMATCHANGE = auto()
+    PLAYBACKFORMATCHANGE = auto()
+
+    def __new__(cls, value):
+        obj = object.__new__(cls)
+        obj._value_ = value
+        obj._data = None
+        return obj
+
+    def set_data(self, value):
+        self._data = value
+
+    @property
+    def data(self):
+        return self._data
+
+def _reason_from_reply(value):
+    if isinstance(value, dict):
+        reason, data = next(iter(value.items()))
+    else:
+        reason = value
+        data = None
+
+    if reason == "None":
+        reasonenum = StopReason.NONE
+    elif reason == "Done":
+        reasonenum = StopReason.DONE
+    elif reason == "CaptureError":
+        reasonenum = StopReason.CAPTUREERROR
+    elif reason == "PlaybackError":
+        reasonenum = StopReason.PLAYBACKERROR
+    elif reason == "CaptureFormatChange":
+        reasonenum = StopReason.CAPTUREFORMATCHANGE
+    elif reason == "PlaybackFormatChange":
+        reasonenum = StopReason.PLAYBACKFORMATCHANGE
+    else:
+        raise ValueError(f"Invalid value for StopReason: {value}")
+    reasonenum.set_data(data)
+    return reasonenum
+
 
 
 class CamillaError(ValueError):
@@ -123,6 +188,14 @@ class CamillaConnection:
         """Read CamillaDSP version, returns a tuple of (major, minor, patch)."""
         return self._version
 
+    def get_supported_device_types(self):
+        """
+        Read what device types the running CamillaDSP process supports. 
+        Returns a tuple with two lists of device types, the first for playback and the second for capture.
+        """
+        (playback, capture) = self._query("GetSupportedDeviceTypes")
+        return (playback, capture)
+
     def get_library_version(self):
         """Read pycamilladsp version, returns a tuple of (major, minor, patch)."""
         return VERSION
@@ -132,7 +205,14 @@ class CamillaConnection:
         Get current processing state.
         """
         state = self._query("GetState")
-        return state
+        return _state_from_string(state)
+
+    def get_stop_reason(self):
+        """
+        Get current processing state.
+        """
+        reason = self._query("GetStopReason")
+        return _reason_from_reply(reason)
 
     def get_signal_range(self):
         """
@@ -220,13 +300,14 @@ class CamillaConnection:
 
     def get_capture_rate(self):
         """
-        Get current capture rate. Returns the nearest common value.
+        Get current capture rate. Returns the nearest common rate, as long as it's within +-4% of the measured value.
         """
         rate = self.get_capture_rate_raw()
-        if 0.9 * STANDARD_RATES[0] < rate < 1.1 * STANDARD_RATES[-1]:
-            return min(STANDARD_RATES, key=lambda val: abs(val - rate))
-        else:
-            return None
+        if 0.96 * STANDARD_RATES[0] < rate < 1.04 * STANDARD_RATES[-1]:
+            nearest = min(STANDARD_RATES, key=lambda val: abs(val - rate))
+            if 0.96 < rate/nearest < 1.04:
+                return nearest
+        return None
 
     def get_update_interval(self):
         """
@@ -311,6 +392,14 @@ class CamillaConnection:
         Get the active configuation as a Python object.
         """
         config_string = self.get_config_raw()
+        config_object = yaml.safe_load(config_string)
+        return config_object
+
+    def get_previous_config(self):
+        """
+        Get the previously active configuation as a Python object.
+        """
+        config_string = self._query("GetPreviousConfig")
         config_object = yaml.safe_load(config_string)
         return config_object
 

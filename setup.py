@@ -5,10 +5,10 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="camilladsp",
-    version="0.5.1",
+    version="0.6.0",
     author="Henrik Enquist",
     author_email="henrik.enquist@gmail.com",
-    description="A library for comminucating with CamillaDSP",
+    description="A library for communicating with CamillaDSP",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/HEnquist/pycamilladsp",
