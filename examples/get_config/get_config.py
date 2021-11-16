@@ -1,4 +1,4 @@
-# play wav
+# get config
 from camilladsp import CamillaConnection
 import sys
 import time
