@@ -1,4 +1,4 @@
-# play wav
+# set volume
 from camilladsp import CamillaConnection
 import sys
 import time
