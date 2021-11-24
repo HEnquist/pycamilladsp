@@ -7,7 +7,7 @@ from enum import Enum, auto
 
 VERSION = (0, 6, 0)
 
-STANDARD_RATES = [
+STANDARD_RATES = (
     8000,
     11025,
     16000,
@@ -21,13 +21,14 @@ STANDARD_RATES = [
     192000,
     352800,
     384000,
-]
+)
 
 class ProcessingState(Enum):
     RUNNING = auto()
     PAUSED = auto()
     INACTIVE = auto()
     STARTING = auto()
+    STALLED = auto()
 
 def _state_from_string(value):
     if value == "Running":
@@ -38,6 +39,8 @@ def _state_from_string(value):
         return ProcessingState.INACTIVE
     elif value == "Starting":
         return ProcessingState.STARTING
+    elif value == "Stalled":
+        return ProcessingState.STALLED
     return None
 
 

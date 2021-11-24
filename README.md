@@ -2,7 +2,7 @@
 
 # pyCamillaDSP
 Companion Python library for CamillaDSP.
-Works with CamillaDSP version 0.6.0 and up.
+Works with CamillaDSP version 1.0.0 and up.
 
 Download the library, either by `git clone` or by downloading a zip file of the code. Then unpack the files, go to the folder containing the `setup.py` file and run: 
 ```sh
@@ -14,13 +14,14 @@ Note that on some systems the command is `pip3` instead of `pip`.
 pyCamillaDSP requires python 3.6 or newer and the package websocket-client.
 
 These are the names of the packages needed:
-| Distribution | python | websocket-client |
-|--------------|--------|------------------|
-| Fedora | python3 | python3-websocket-client |
-| Debian/Raspbian | python3 | python3-websocket |
-| Arch | python | python-websocket-client |
-| pip | - | websocket_client |
-| Anaconda | - | websocket_client |
+
+| Distribution    | python  | websocket-client         |
+|-----------------|---------|--------------------------|
+| Fedora          | python3 | python3-websocket-client |
+| Debian/Raspbian | python3 | python3-websocket        |
+| Arch            | python  | python-websocket-client  |
+| pip             | -       | websocket_client         |
+| Anaconda        | -       | websocket_client         |
 
 ### Linux
 Most linux distributions have Python 3.6 or newer installed by default. Use the normal package manager to install the packages.
@@ -144,6 +145,7 @@ The CamillaConnection class provides the following methods
 - PAUSED: Processing is paused.
 - INACTIVE: CamillaDSP is inactive, and waiting for a new config to be supplied.
 - STARTING: The processing is being set up.
+- STALLED: The processing is stalled because the capture device isn't providing any data.
 
 ### StopReason
 - NONE: Processing hasn't stopped yet. 
