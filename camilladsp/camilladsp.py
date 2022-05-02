@@ -21,7 +21,9 @@ STANDARD_RATES = (
     192000,
     352800,
     384000,
-)
+    705600,
+    768000,
+]
 
 class ProcessingState(Enum):
     RUNNING = auto()

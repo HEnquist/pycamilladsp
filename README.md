@@ -153,7 +153,7 @@ The CamillaConnection class provides the following methods
 - CAPTUREERROR: The capture device encountered an error.
 - PLAYBACKERROR: The playback device encountered an error.
 - CAPTUREFORMATCHANGE: The sample format of the capture device changed. 
-- PLAYBACKFORMATCHANGE: The sample format of the capture device changed. 
+- PLAYBACKFORMATCHANGE: The sample format of the playback device changed. 
 
 The StopReason enums also carry additional data:
 - CAPTUREERROR and PLAYBACKERROR: Carries the error message as a string.

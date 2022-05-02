@@ -1,4 +1,4 @@
-# play wav
+# read rms
 from camilladsp import CamillaConnection
 import sys
 import time
