@@ -5,7 +5,7 @@ import math
 from threading import Lock
 from enum import Enum, auto
 
-VERSION = (0, 6, 0)
+VERSION = (1, 0, 0)
 
 STANDARD_RATES = (
     8000,
