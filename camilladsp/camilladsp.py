@@ -348,6 +348,13 @@ class CamillaConnection:
         clipped = self._query("GetClippedSamples")
         return int(clipped)
 
+    def get_processing_load(self):
+        """
+        Get processing load in percent.
+        """
+        load = self._query("GetProcessingLoad")
+        return float(load)
+
     def stop(self):
         """
         Stop processing and wait for new config if wait mode is active, else exit.
