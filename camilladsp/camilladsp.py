@@ -8,11 +8,11 @@ import math
 from typing import Optional
 from threading import Lock
 import yaml
-from websocket import create_connection
+from websocket import create_connection, WebSocket  # type: ignore
 
-VERSION = (2, 0, 0)
+_VERSION = ("2", "0", "0")
 
-STANDARD_RATES = (
+_STANDARD_RATES = (
     8000,
     11025,
     16000,
@@ -134,8 +134,8 @@ class CamillaConnection:
         """
         self._host = host
         self._port = int(port)
-        self._ws = None
-        self._version = None
+        self._ws: Optional[WebSocket] = None
+        self._version: Optional[tuple[str, str, str]] = None
         self._lock = Lock()
 
     def _query(self, command: str, arg=None):
@@ -174,7 +174,10 @@ class CamillaConnection:
             raise IOError(f"Invalid response received: {rawreply}") from err
 
     def _update_version(self, resp: str):
-        self._version = tuple(resp.split(".", 3))
+        version = resp.split(".", 3)
+        if len(version) < 3:
+            version.extend([""] * (3 - len(version)))
+        self._version = (version[0], version[1], version[2])
 
     # ========================= Connection management =========================
 
@@ -224,13 +227,13 @@ class CamillaConnection:
         (playback, capture) = self._query("GetSupportedDeviceTypes")
         return (playback, capture)
 
-    def get_library_version(self) -> tuple[int]:
+    def get_library_version(self) -> tuple[str, str, str]:
         """Read pycamilladsp version, returns a tuple of (major, minor, patch)."""
-        return VERSION
+        return _VERSION
 
     # ========================= CamillaDSP state =========================
 
-    def get_state(self) -> ProcessingState:
+    def get_state(self) -> Optional[ProcessingState]:
         """
         Get current processing state.
         """
@@ -584,8 +587,8 @@ class CamillaConnection:
         Returns the nearest common rate, as long as it's within +-4% of the measured value.
         """
         rate = self.get_capture_rate_raw()
-        if 0.96 * STANDARD_RATES[0] < rate < 1.04 * STANDARD_RATES[-1]:
-            nearest = min(STANDARD_RATES, key=lambda val: abs(val - rate))
+        if 0.96 * _STANDARD_RATES[0] < rate < 1.04 * _STANDARD_RATES[-1]:
+            nearest = min(_STANDARD_RATES, key=lambda val: abs(val - rate))
             if 0.96 < rate / nearest < 1.04:
                 return nearest
         return None
@@ -623,6 +626,8 @@ class CamillaConnection:
         Get the active configuation as a Python object.
         """
         config_string = self.get_config_raw()
+        if config_string is None:
+            return None
         config_object = yaml.safe_load(config_string)
         return config_object
 
