@@ -59,8 +59,21 @@ def _state_from_string(value: str) -> Optional[ProcessingState]:
 
 class StopReason(Enum):
     """
-    An enum representing the possible reasons why CamillaDSP
-    stopped processing.
+    An enum representing the possible reasons why CamillaDSP stopped processing.
+    The StopReason enums carry additional data:
+    - CAPTUREERROR and PLAYBACKERROR:
+      Carries the error message as a string.
+    - CAPTUREFORMATCHANGE and PLAYBACKFORMATCHANGE:
+      Carries the estimated new sample rate as an integer.
+      A value of 0 means the new rate is unknown.
+
+    The additional data can be accessed by reading the `data` property:
+    ```python
+    reason = cdsp.get_stop_reason()
+    if reason == StopReason.CAPTUREERROR:
+        error_msg = reason.data
+        print(f"Capture failed, error: {error_msg}")
+    ```
     """
 
     NONE = auto()
