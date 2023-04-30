@@ -208,7 +208,10 @@ class CamillaConnection:
 
     def is_connected(self):
         """
-        Is websocket connected? Returns True or False.
+        Is websocket connected?
+
+        Returns:
+            bool: True if connected, False otherwise.
         """
         return self._ws is not None
 
@@ -223,6 +226,10 @@ class CamillaConnection:
         Read what device types the running CamillaDSP process supports.
         Returns a tuple with two lists of device types,
         the first for playback and the second for capture.
+
+        Returns:
+            tuple[list[str], list[str]]: A tuple containing two lists,
+                with the supported capture and playback device types.
         """
         (playback, capture) = self._query("GetSupportedDeviceTypes")
         return (playback, capture)
@@ -236,13 +243,19 @@ class CamillaConnection:
     def get_state(self) -> Optional[ProcessingState]:
         """
         Get current processing state.
+
+        Returns:
+            ProcessingState | None: Current processing state.
         """
         state = self._query("GetState")
         return _state_from_string(state)
 
     def get_stop_reason(self) -> StopReason:
         """
-        Get current processing state.
+        Get reason why processing stopped.
+
+        Returns:
+            StopReason: Stop reason enum variant.
         """
         reason = self._query("GetStopReason")
         return _reason_from_reply(reason)
@@ -272,6 +285,9 @@ class CamillaConnection:
     def get_update_interval(self) -> int:
         """
         Get current update interval in ms.
+
+        Returns:
+            int: Current update interval.
         """
         interval = self._query("GetUpdateInterval")
         return int(interval)
@@ -279,6 +295,9 @@ class CamillaConnection:
     def set_update_interval(self, value: int):
         """
         Set current update interval in ms.
+
+        Args:
+            value (int): New update interval.
         """
         self._query("SetUpdateInterval", arg=value)
 
@@ -287,6 +306,9 @@ class CamillaConnection:
     def get_rate_adjust(self) -> float:
         """
         Get current value for rate adjust, 1.0 means 1:1 resampling.
+
+        Returns:
+            float: Rate adjust value.
         """
         adj = self._query("GetRateAdjust")
         return float(adj)
@@ -294,6 +316,9 @@ class CamillaConnection:
     def get_buffer_level(self) -> int:
         """
         Get current buffer level of the playback device.
+
+        Returns:
+            int: Buffer level in frames.
         """
         level = self._query("GetBufferLevel")
         return int(level)
@@ -301,6 +326,9 @@ class CamillaConnection:
     def get_clipped_samples(self) -> int:
         """
         Get number of clipped samples since the config was loaded.
+
+        Returns:
+            int: Number of clipped samples.
         """
         clipped = self._query("GetClippedSamples")
         return int(clipped)
@@ -308,6 +336,9 @@ class CamillaConnection:
     def get_processing_load(self) -> float:
         """
         Get processing load in percent.
+
+        Returns:
+            float: Current load.
         """
         load = self._query("GetProcessingLoad")
         return float(load)
@@ -369,6 +400,9 @@ class CamillaConnection:
         """
         Get playback signal level peak in dB for the last `interval` seconds.
         Full scale is 0 dB. Returns a list with one element per channel.
+
+        Args:
+            interval (float): Length of interval in seconds.
         """
         sigpeak = self._query("GetPlaybackSignalPeakSince", arg=float(interval))
         return sigpeak
@@ -377,6 +411,9 @@ class CamillaConnection:
         """
         Get playback signal level rms in dB for the last `interval` seconds.
         Full scale is 0 dB. Returns a list with one element per channel.
+
+        Args:
+            interval (float): Length of interval in seconds.
         """
         sigrms = self._query("GetPlaybackSignalRmsSince", arg=float(interval))
         return sigrms
@@ -385,6 +422,9 @@ class CamillaConnection:
         """
         Get capture signal level peak in dB for the last `interval` seconds.
         Full scale is 0 dB. Returns a list with one element per channel.
+
+        Args:
+            interval (float): Length of interval in seconds.
         """
         sigpeak = self._query("GetCaptureSignalPeakSince", arg=float(interval))
         return sigpeak
@@ -393,6 +433,9 @@ class CamillaConnection:
         """
         Get capture signal level rms in dB for the last `interval` seconds.
         Full scale is 0 dB. Returns a list with one element per channel.
+
+        Args:
+            interval (float): Length of interval in seconds.
         """
         sigrms = self._query("GetCaptureSignalRmsSince", arg=float(interval))
         return sigrms
@@ -447,6 +490,9 @@ class CamillaConnection:
         The values are returned as a json object with keys
         `playback_peak`, `playback_rms`, `capture_peak` and `capture_rms`.
         Each dict item is a list with one element per channel.
+
+        Args:
+            interval (float): Length of interval in seconds.
         """
         siglevels = self._query("GetSignalLevelsSince", arg=float(interval))
         return siglevels
@@ -482,6 +528,9 @@ class CamillaConnection:
         """
         Get current main volume setting in dB.
         Equivalent to calling `get_fader_volume()` with `fader=0`.
+
+        Returns:
+            float: Current volume setting.
         """
         vol = self._query("GetVolume")
         return float(vol)
@@ -490,6 +539,9 @@ class CamillaConnection:
         """
         Set main volume in dB.
         Equivalent to calling `set_fader_volume()` with `fader=0`.
+
+        Args:
+            value (float): New volume in dB.
         """
         self._query("SetVolume", arg=float(value))
 
@@ -497,6 +549,9 @@ class CamillaConnection:
         """
         Get current main mute setting.
         Equivalent to calling `get_fader_mute()` with `fader=0`.
+
+        Returns:
+            bool: True if muted, False otherwise.
         """
         mute = self._query("GetMute")
         return bool(mute)
@@ -505,14 +560,22 @@ class CamillaConnection:
         """
         Set main mute, true or false.
         Equivalent to calling `set_fader_mute()` with `fader=0`.
+
+        Args:
+            value (bool): New mute setting.
         """
         self._query("SetMute", arg=bool(value))
 
     def get_fader_volume(self, fader: int) -> float:
         """
         Get current volume setting for the given fader in dB.
-        The faders are selected using an integer,
-        0 for `Main` and 1 to 4 for `Aux1` to `Aux4`.
+
+        Args:
+            fader (int): Fader to read.
+                Selected using an integer, 0 for `Main` and 1 to 4 for `Aux1` to `Aux4`.
+
+        Returns:
+            float: Current volume setting.
         """
         _fader, vol = self._query("GetFaderVolume", arg=int(fader))
         return float(vol)
@@ -520,8 +583,11 @@ class CamillaConnection:
     def set_fader_volume(self, fader: int, vol: float):
         """
         Set volume for the given fader in dB.
-        The faders are selected using an integer,
-        0 for `Main` and 1 to 4 for `Aux1` to `Aux4`.
+
+        Args:
+            fader (int): Fader to control.
+                Selected using an integer, 0 for `Main` and 1 to 4 for `Aux1` to `Aux4`.
+            vol (float): New volume setting.
         """
         _fader = self._query("SetFaderVolume", arg=(int(fader), float(vol)))
 
@@ -530,44 +596,67 @@ class CamillaConnection:
         Special command for setting the volume when a Loudness filter
         is being combined with an external volume control (without a Volume filter).
         Set volume for the given fader in dB.
-        The faders are selected using an integer, 1 to 4 for `Aux1` to `Aux4`.
+
+        Args:
+            fader (int): Fader to control.
+                Selected using an integer, 0 for `Main` and 1 to 4 for `Aux1` to `Aux4`.
+            vol (float): New volume setting.
         """
         _fader = self._query("SetFaderExternalVolume", arg=(int(fader), float(vol)))
 
-    def adjust_fader_volume(self, fader: int, vol: float) -> float:
+    def adjust_fader_volume(self, fader: int, value: float) -> float:
         """
         Adjust volume for the given fader in dB.
         Positive values increase the volume, negative decrease.
-        The faders are selected using an integer,
-        0 for `Main` and 1 to 4 for `Aux1` to `Aux4`.
-        Returns the new value.
+
+        Args:
+            fader (int): Fader to control.
+                Selected using an integer, 0 for `Main` and 1 to 4 for `Aux1` to `Aux4`.
+            value (float): Volume adjustment in dB.
+
+        Returns:
+            float: New volume setting.
         """
-        _fader, new_vol = self._query("AdjustFaderVolume", arg=(int(fader), float(vol)))
+        _fader, new_vol = self._query(
+            "AdjustFaderVolume", arg=(int(fader), float(value))
+        )
         return float(new_vol)
 
     def get_fader_mute(self, fader: int) -> bool:
         """
         Get current mute setting for a fader.
-        The faders are selected using an integer,
-        0 for `Main` and 1 to 4 for `Aux1` to `Aux4`.
+
+        Args:
+            fader (int): Fader to read.
+                Selected using an integer, 0 for `Main` and 1 to 4 for `Aux1` to `Aux4`.
+
+        Returns:
+            bool: True if muted, False otherwise.
         """
         _fader, mute = self._query("GetFaderMute", arg=int(fader))
         return bool(mute)
 
-    def set_fader_mute(self, fader: int, value: float):
+    def set_fader_mute(self, fader: int, value: bool):
         """
         Set mute status for a fader, true or false.
-        The faders are selected using an integer,
-        0 for `Main` and 1 to 4 for `Aux1` to `Aux4`.
+
+        Args:
+            fader (int): Fader to control.
+                Selected using an integer, 0 for `Main` and 1 to 4 for `Aux1` to `Aux4`.
+            value (bool): New mute setting.
         """
         _fader = self._query("SetFaderMute", arg=(int(fader), bool(value)))
 
     def toggle_fader_mute(self, fader: int) -> bool:
         """
         Toggle mute status for a fader.
-        The faders are selected using an integer,
-        0 for `Main` and 1 to 4 for `Aux1` to `Aux4`.
-        Returns the new muting status.
+
+        Args:
+            fader (int): Fader to control.
+                Selected using an integer, 0 for `Main` and 1 to 4 for `Aux1` to `Aux4`.
+
+        Returns:
+            bool: True if the new status is muted, False otherwise.
         """
         _fader, new_mute = self._query("SetFaderMute", arg=int(fader))
         return new_mute
@@ -577,6 +666,9 @@ class CamillaConnection:
     def get_capture_rate_raw(self) -> int:
         """
         Get current capture rate, raw value.
+
+        Returns:
+            int: The current raw capture rate.
         """
         rate = self._query("GetCaptureRate")
         return int(rate)
@@ -585,6 +677,9 @@ class CamillaConnection:
         """
         Get current capture rate.
         Returns the nearest common rate, as long as it's within +-4% of the measured value.
+
+        Returns:
+            int: The current capture rate.
         """
         rate = self.get_capture_rate_raw()
         if 0.96 * _STANDARD_RATES[0] < rate < 1.04 * _STANDARD_RATES[-1]:
@@ -598,6 +693,9 @@ class CamillaConnection:
     def get_config_name(self) -> Optional[str]:
         """
         Get path to current config file.
+
+        Returns:
+            str | None: Path to config file, or None.
         """
         name = self._query("GetConfigName")
         return name
@@ -605,12 +703,18 @@ class CamillaConnection:
     def set_config_name(self, value: str):
         """
         Set path to config file.
+
+        Args:
+            value (str): Path to config file.
         """
         self._query("SetConfigName", arg=value)
 
     def get_config_raw(self) -> Optional[str]:
         """
         Get the active configuation in yaml format as a string.
+
+        Returns:
+            str | None: Current config as a raw yaml string, or None.
         """
         config_string = self._query("GetConfig")
         return config_string
@@ -618,12 +722,18 @@ class CamillaConnection:
     def set_config_raw(self, config_string: str):
         """
         Upload a new configuation in yaml format as a string.
+
+        Args:
+            config_string (str): Config as yaml string.
         """
         self._query("SetConfig", arg=config_string)
 
     def get_config(self) -> Optional[dict]:
         """
         Get the active configuation as a Python object.
+
+        Returns:
+            dict | None: Current config as a Python dict, or None.
         """
         config_string = self.get_config_raw()
         if config_string is None:
@@ -634,6 +744,9 @@ class CamillaConnection:
     def get_previous_config(self) -> Optional[dict]:
         """
         Get the previously active configuation as a Python object.
+
+        Returns:
+            dict | None: Previous config as a Python dict, or None.
         """
         config_string = self._query("GetPreviousConfig")
         config_object = yaml.safe_load(config_string)
@@ -643,6 +756,12 @@ class CamillaConnection:
         """
         Read a config from yaml string and return the contents
         as a Python object, with defaults filled out with their default values.
+
+        Args:
+            config_string (str): A config as raw yaml string.
+
+        Returns:
+            dict | None: Parsed config as a Python dict.
         """
         config_raw = self._query("ReadConfig", arg=config_string)
         config_object = yaml.safe_load(config_raw)
@@ -651,6 +770,12 @@ class CamillaConnection:
     def read_config_file(self, filename: str) -> dict:
         """
         Read a config file from disk and return the contents as a Python object.
+
+        Args:
+            filename (str): Path to a config file.
+
+        Returns:
+            dict | None: Parsed config as a Python dict.
         """
         config_raw = self._query("ReadConfigFile", arg=filename)
         config = yaml.safe_load(config_raw)
@@ -659,6 +784,9 @@ class CamillaConnection:
     def set_config(self, config_object: dict):
         """
         Upload a new configuation from a Python object.
+
+        Args:
+            config_object (dict): A configuration as a Python dict.
         """
         config_raw = yaml.dump(config_object)
         self.set_config_raw(config_raw)
@@ -668,22 +796,34 @@ class CamillaConnection:
         Validate a configuration object.
         Returns the validated config with all optional fields filled with defaults.
         Raises a CamillaError on errors.
+
+        Args:
+            config_object (dict): A configuration as a Python dict.
+
+        Returns:
+            dict | None: Validated config as a Python dict.
         """
         config_string = yaml.dump(config_object)
         validated_string = self._query("ValidateConfig", arg=config_string)
         validated_object = yaml.safe_load(validated_string)
         return validated_object
 
-    def get_config_title(self) -> str:
+    def get_config_title(self) -> Optional[str]:
         """
         Get the title of the current configuration.
+
+        Returns:
+            str | None: Config title if defined, else None.
         """
         title = self._query("GetConfigTitle")
         return title
 
-    def get_config_description(self) -> str:
+    def get_config_description(self) -> Optional[str]:
         """
         Get the title of the current configuration.
+
+        Returns:
+            str | None: Config description if defined, else None.
         """
         desc = self._query("GetConfigDescription")
         return desc
