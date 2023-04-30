@@ -108,11 +108,11 @@ def test_signal_rms(camilla_mockws):
     camilla_mockws.connect()
     assert camilla_mockws.get_capture_signal_rms() == [0.1, 0.2]
 
-def test_signal_range_db(camilla_mockws):
+def test_signal_range_decibel(camilla_mockws):
     camilla_mockws.connect()
-    assert camilla_mockws.get_signal_range_db() == -20
+    assert camilla_mockws.get_signal_range_decibel() == -20
     camilla_mockws.dummyws.responses['"GetSignalRange"'] = json.dumps({"GetSignalRange": {"result": "Ok", "value": "0.0"}})
-    assert camilla_mockws.get_signal_range_db() == -1000
+    assert camilla_mockws.get_signal_range_decibel() == -1000
 
 def test_disconnect_fail(camilla_mockws):
     camilla_mockws.connect()
@@ -167,7 +167,7 @@ def test_queries(camilla_mockquery):
     camilla_mockquery._query.assert_called_with('GetCaptureRate')
     camilla_mockquery.get_signal_range()
     camilla_mockquery._query.assert_called_with('GetSignalRange')
-    camilla_mockquery.get_signal_range_db()
+    camilla_mockquery.get_signal_range_decibel()
     camilla_mockquery._query.assert_called_with('GetSignalRange')
     camilla_mockquery.set_update_interval(1234)
     camilla_mockquery._query.assert_called_with('SetUpdateInterval', arg=1234)

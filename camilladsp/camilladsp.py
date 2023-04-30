@@ -365,17 +365,17 @@ class CamillaConnection:
         sigrange = self._query("GetSignalRange")
         return float(sigrange)
 
-    def get_signal_range_db(self) -> float:
+    def get_signal_range_decibel(self) -> float:
         """
         Get current signal range in dB for the last processed chunk.
         Full scale is 0 dB.
         """
         sigrange = self.get_signal_range()
         if sigrange > 0.0:
-            range_db = 20.0 * math.log10(sigrange / 2.0)
+            range_decibel = 20.0 * math.log10(sigrange / 2.0)
         else:
-            range_db = -1000
-        return range_db
+            range_decibel = -1000
+        return range_decibel
 
     def get_capture_signal_rms(self) -> list[float]:
         """
