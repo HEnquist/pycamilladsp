@@ -5,7 +5,7 @@ import math
 from threading import Lock
 from enum import Enum, auto
 
-VERSION = (1, 0, 0)
+VERSION = (2, 0, 0)
 
 STANDARD_RATES = (
     8000,
@@ -106,6 +106,9 @@ class CamillaConnection:
     Class for communicating with CamillaDSP.
     """
 
+
+    # ========================= Internal use =========================
+
     def __init__(self, host, port):
         """
         Connect to CamillaDSP on the specified host and port.
@@ -156,6 +159,9 @@ class CamillaConnection:
     def _update_version(self, resp):
         self._version = tuple(resp.split(".", 3))
 
+
+    # ========================= Connection management =========================
+
     def connect(self):
         """
         Connect to the websocket of CamillaDSP.
@@ -189,6 +195,9 @@ class CamillaConnection:
         """
         return self._ws is not None
 
+
+    # ========================= General info =========================
+
     def get_version(self):
         """Read CamillaDSP version, returns a tuple of (major, minor, patch)."""
         return self._version
@@ -205,6 +214,9 @@ class CamillaConnection:
         """Read pycamilladsp version, returns a tuple of (major, minor, patch)."""
         return VERSION
 
+
+    # ========================= CamillaDSP state =========================
+
     def get_state(self):
         """
         Get current processing state.
@@ -219,100 +231,29 @@ class CamillaConnection:
         reason = self._query("GetStopReason")
         return _reason_from_reply(reason)
 
-    def get_signal_range(self):
-        """
-        Get current signal range. Maximum value is 2.0.
-        """
-        sigrange = self._query("GetSignalRange")
-        return float(sigrange)
 
-    def get_signal_range_dB(self):
-        """
-        Get current signal range in dB. Full scale is 0 dB.
-        """
-        sigrange = self.get_signal_range()
-        if sigrange > 0.0:
-            range_dB = 20.0 * math.log10(sigrange / 2.0)
-        else:
-            range_dB = -1000
-        return range_dB
+    # ========================= Basic commands =========================
 
-    def get_capture_signal_rms(self):
+    def stop(self):
         """
-        Get capture signal level rms in dB. Full scale is 0 dB. Returns a list with one element per channel.
+        Stop processing and wait for new config if wait mode is active, else exit.
         """
-        sigrms = self._query("GetCaptureSignalRms")
-        sigrms = [float(val) for val in sigrms]
-        return sigrms
+        self._query("Stop")
 
-    def get_playback_signal_rms(self):
+    def exit(self):
         """
-        Get playback signal level rms in dB. Full scale is 0 dB. Returns a list with one element per channel.
+        Stop processing and exit.
         """
-        sigrms = self._query("GetPlaybackSignalRms")
-        sigrms = [float(val) for val in sigrms]
-        return sigrms
+        self._query("Exit")
 
-    def get_capture_signal_peak(self):
+    def reload(self):
         """
-        Get capture signal level peak in dB. Full scale is 0 dB. Returns a list with one element per channel.
+        Reload config from disk.
         """
-        sigpeak = self._query("GetCaptureSignalPeak")
-        sigpeak = [float(val) for val in sigpeak]
-        return sigpeak
-
-    def get_playback_signal_peak(self):
-        """
-        Get playback signal level peak in dB. Full scale is 0 dB. Returns a list with one element per channel.
-        """
-        sigpeak = self._query("GetPlaybackSignalPeak")
-        sigpeak = [float(val) for val in sigpeak]
-        return sigpeak
-
-    def get_volume(self):
-        """
-        Get current volume setting in dB.
-        """
-        vol = self._query("GetVolume")
-        return float(vol)
-
-    def set_volume(self, value):
-        """
-        Set volume in dB.
-        """
-        self._query("SetVolume", arg=float(value))
-
-    def get_mute(self):
-        """
-        Get current mute setting.
-        """
-        mute = self._query("GetMute")
-        return bool(mute)
-
-    def set_mute(self, value):
-        """
-        Set mute, true or false.
-        """
-        self._query("SetMute", arg=bool(value))
+        self._query("Reload")
 
 
-    def get_capture_rate_raw(self):
-        """
-        Get current capture rate, raw value.
-        """
-        rate = self._query("GetCaptureRate")
-        return int(rate)
-
-    def get_capture_rate(self):
-        """
-        Get current capture rate. Returns the nearest common rate, as long as it's within +-4% of the measured value.
-        """
-        rate = self.get_capture_rate_raw()
-        if 0.96 * STANDARD_RATES[0] < rate < 1.04 * STANDARD_RATES[-1]:
-            nearest = min(STANDARD_RATES, key=lambda val: abs(val - rate))
-            if 0.96 < rate/nearest < 1.04:
-                return nearest
-        return None
+    # ========================= Status parameter update interval =========================
 
     def get_update_interval(self):
         """
@@ -326,6 +267,9 @@ class CamillaConnection:
         Set current update interval in ms.
         """
         self._query("SetUpdateInterval", arg=value)
+
+
+    # ========================= Getters for status parameters =========================
 
     def get_rate_adjust(self):
         """
@@ -355,23 +299,272 @@ class CamillaConnection:
         load = self._query("GetProcessingLoad")
         return float(load)
 
-    def stop(self):
-        """
-        Stop processing and wait for new config if wait mode is active, else exit.
-        """
-        self._query("Stop")
 
-    def exit(self):
-        """
-        Stop processing and exit.
-        """
-        self._query("Exit")
+    # ========================= Signal level monitoring =========================
 
-    def reload(self):
+    def get_signal_range(self):
         """
-        Reload config from disk.
+        Get signal range for the last processed chunk. Full scale is 2.0.
         """
-        self._query("Reload")
+        sigrange = self._query("GetSignalRange")
+        return float(sigrange)
+
+    def get_signal_range_dB(self):
+        """
+        Get current signal range in dB for the last processed chunk. Full scale is 0 dB.
+        """
+        sigrange = self.get_signal_range()
+        if sigrange > 0.0:
+            range_dB = 20.0 * math.log10(sigrange / 2.0)
+        else:
+            range_dB = -1000
+        return range_dB
+
+    def get_capture_signal_rms(self):
+        """
+        Get capture signal level rms in dB for the last processed chunk. Full scale is 0 dB. Returns a list with one element per channel.
+        """
+        sigrms = self._query("GetCaptureSignalRms")
+        sigrms = [float(val) for val in sigrms]
+        return sigrms
+
+    def get_playback_signal_rms(self):
+        """
+        Get playback signal level rms in dB for the last processed chunk. Full scale is 0 dB. Returns a list with one element per channel.
+        """
+        sigrms = self._query("GetPlaybackSignalRms")
+        sigrms = [float(val) for val in sigrms]
+        return sigrms
+
+    def get_capture_signal_peak(self):
+        """
+        Get capture signal level peak in dB for the last processed chunk. Full scale is 0 dB. Returns a list with one element per channel.
+        """
+        sigpeak = self._query("GetCaptureSignalPeak")
+        sigpeak = [float(val) for val in sigpeak]
+        return sigpeak
+
+    def get_playback_signal_peak(self):
+        """
+        Get playback signal level peak in dB for the last processed chunk. Full scale is 0 dB. Returns a list with one element per channel.
+        """
+        sigpeak = self._query("GetPlaybackSignalPeak")
+        sigpeak = [float(val) for val in sigpeak]
+        return sigpeak
+
+    def get_playback_signal_peak_since(self, interval):
+        """
+        Get playback signal level peak in dB for the last `interval` seconds. Full scale is 0 dB. Returns a list with one element per channel.
+        """
+        sigpeak = self._query("GetPlaybackSignalPeakSince", arg=float(interval))
+        sigpeak = [float(val) for val in sigpeak]
+        return sigpeak
+
+    def get_playback_signal_rms_since(self, interval):
+        """
+        Get playback signal level rms in dB for the last `interval` seconds. Full scale is 0 dB. Returns a list with one element per channel.
+        """
+        sigrms = self._query("GetPlaybackSignalRmsSince", arg=float(interval))
+        sigrms = [float(val) for val in sigrms]
+        return sigrms
+
+    def get_capture_signal_peak_since(self, interval):
+        """
+        Get capture signal level peak in dB for the last `interval` seconds. Full scale is 0 dB. Returns a list with one element per channel.
+        """
+        sigpeak = self._query("GetCaptureSignalPeakSince", arg=float(interval))
+        sigpeak = [float(val) for val in sigpeak]
+        return sigpeak
+
+    def get_capture_signal_rms_since(self, interval):
+        """
+        Get capture signal level rms in dB for the last `interval` seconds. Full scale is 0 dB. Returns a list with one element per channel.
+        """
+        sigrms = self._query("GetCaptureSignalRmsSince", arg=float(interval))
+        sigrms = [float(val) for val in sigrms]
+        return sigrms
+
+    def get_playback_signal_peak_since_last(self):
+        """
+        Get playback signal level peak in dB since the last read by the same client. Full scale is 0 dB. Returns a list with one element per channel.
+        """
+        sigpeak = self._query("GetPlaybackSignalPeakSinceLast")
+        sigpeak = [float(val) for val in sigpeak]
+        return sigpeak
+
+    def get_playback_signal_rms_since_last(self):
+        """
+        Get playback signal level rms in dB since the last read by the same client. Full scale is 0 dB. Returns a list with one element per channel.
+        """
+        sigrms = self._query("GetPlaybackSignalRmsSinceLast")
+        sigrms = [float(val) for val in sigrms]
+        return sigrms
+
+    def get_capture_signal_peak_since_last(self):
+        """
+        Get capture signal level peak in dB since the last read by the same client. Full scale is 0 dB. Returns a list with one element per channel.
+        """
+        sigpeak = self._query("GetCaptureSignalPeakSinceLast")
+        sigpeak = [float(val) for val in sigpeak]
+        return sigpeak
+
+    def get_capture_signal_rms_since_last(self):
+        """
+        Get capture signal level rms in dB since the last read by the same client. Full scale is 0 dB. Returns a list with one element per channel.
+        """
+        sigrms = self._query("GetCaptureSignalRmsSinceLast")
+        #sigrms = [float(val) for val in sigrms]
+        return sigrms
+
+    def get_signal_levels(self, interval):
+        """
+        Get all signal levels in dB for the last processed chunk. Full scale is 0 dB.
+        The values are returned as a json object with keys `playback_peak`, `playback_rms`, `capture_peak` and `capture_rms`.
+        Each dict item is a list with one element per channel.
+        """
+        siglevels = self._query("GetSignalLevels", arg=float(interval))
+        return siglevels
+
+    def get_signal_levels_since(self, interval):
+        """
+        Get all signal levels in dB for the last `interval` seconds. Full scale is 0 dB.
+        The values are returned as a json object with keys `playback_peak`, `playback_rms`, `capture_peak` and `capture_rms`.
+        Each dict item is a list with one element per channel.
+        """
+        siglevels = self._query("GetSignalLevelsSince", arg=float(interval))
+        return siglevels
+
+    def get_signal_levels_since_last(self):
+        """
+        Get all signal levels in dB since the last read by the same client. Full scale is 0 dB.
+        The values are returned as a json object with keys `playback_peak`, `playback_rms`, `capture_peak` and `capture_rms`.
+        Each dict item is a list with one element per channel.
+        """
+        siglevels = self._query("GetSignalLevelsSinceLast")
+        return siglevels
+
+    def get_signal_peaks_since_start(self):
+        """
+        Get the playback and capture peak level since processing started. The values are returned as a json object with keys `playback` and `capture`.
+        """
+        peaks = self._query("GetSignalPeaksSinceStart")
+        return peaks
+
+    def reset_signal_peaks_since_start(self):
+        """
+        Get capture signal level rms in dB since the last read by the same client. Full scale is 0 dB. Returns a list with one element per channel.
+        """
+        self._query("ResetSignalPeaksSinceStart")
+    
+ 
+
+    # ========================= Volume and mute control =========================
+
+    def get_volume(self):
+        """
+        Get current main volume setting in dB. Equivalent to calling `get_fader_volume()` with `fader=0`.
+        """
+        vol = self._query("GetVolume")
+        return float(vol)
+
+    def set_volume(self, value):
+        """
+        Set main volume in dB. Equivalent to calling `set_fader_volume()` with `fader=0`.
+        """
+        self._query("SetVolume", arg=float(value))
+
+    def get_mute(self):
+        """
+        Get current main mute setting. Equivalent to calling `get_fader_mute()` with `fader=0`.
+        """
+        mute = self._query("GetMute")
+        return bool(mute)
+
+    def set_mute(self, value):
+        """
+        Set main mute, true or false. Equivalent to calling `set_fader_mute()` with `fader=0`.
+        """
+        self._query("SetMute", arg=bool(value))
+
+    def get_fader_volume(self, fader):
+        """
+        Get current volume setting for the given fader in dB.
+        The faders are selected using an integer, 0 for `Main` and 1 to 4 for `Aux1` to `Aux4`.
+        """
+        _fader, vol = self._query("GetFaderVolume", arg=int(fader))
+        return float(vol)
+
+    def set_fader_volume(self, fader, vol):
+        """
+        Set volume for the given fader in dB.
+        The faders are selected using an integer, 0 for `Main` and 1 to 4 for `Aux1` to `Aux4`.
+        """
+        _fader = self._query("SetFaderVolume", arg=(int(fader), float(vol)))
+
+    def set_fader_external_volume(self, fader, vol):
+        """
+        Special command for setting the volume when a Loudness filter is being combined with an external volume control (without a Volume filter).
+        Set volume for the given fader in dB.
+        The faders are selected using an integer, 1 to 4 for `Aux1` to `Aux4`.
+        """
+        _fader = self._query("SetFaderExternalVolume", arg=(int(fader), float(vol)))
+
+    def adjust_fader_volume(self, fader, vol):
+        """
+        Adjust volume for the given fader in dB. Positive values increase the volume, negative decrease.
+        The faders are selected using an integer, 0 for `Main` and 1 to 4 for `Aux1` to `Aux4`.
+        Returns the new value.
+        """
+        _fader, new_vol = self._query("AdjustFaderVolume", arg=(int(fader), float(vol)))
+        return float(new_vol)
+
+    def get_fader_mute(self, fader):
+        """
+        Get current mute setting for a fader.
+        The faders are selected using an integer, 0 for `Main` and 1 to 4 for `Aux1` to `Aux4`.
+        """
+        mute = self._query("GetFaderMute", arg=int(fader))
+        return bool(mute)
+
+    def set_fader_mute(self, fader, value):
+        """
+        Set mute status for a fader, true or false.
+        The faders are selected using an integer, 0 for `Main` and 1 to 4 for `Aux1` to `Aux4`.
+        """
+        self._query("SetFaderMute", arg=(int(fader), bool(value)))
+
+    def toggle_fader_mute(self, fader):
+        """
+        Toggle mute status for a fader.
+        The faders are selected using an integer, 0 for `Main` and 1 to 4 for `Aux1` to `Aux4`.
+        Returns the new muting status.
+        """
+        new_mute = self._query("SetFaderMute", arg=int(fader))
+        return new_mute
+
+
+    # ========================= Sample rate monitoring =========================
+
+    def get_capture_rate_raw(self):
+        """
+        Get current capture rate, raw value.
+        """
+        rate = self._query("GetCaptureRate")
+        return int(rate)
+
+    def get_capture_rate(self):
+        """
+        Get current capture rate. Returns the nearest common rate, as long as it's within +-4% of the measured value.
+        """
+        rate = self.get_capture_rate_raw()
+        if 0.96 * STANDARD_RATES[0] < rate < 1.04 * STANDARD_RATES[-1]:
+            nearest = min(STANDARD_RATES, key=lambda val: abs(val - rate))
+            if 0.96 < rate/nearest < 1.04:
+                return nearest
+        return None
+
+
+    # ========================= Configuration management =========================
 
     def get_config_name(self):
         """
@@ -449,3 +642,19 @@ class CamillaConnection:
         validated_string = self._query("ValidateConfig", arg=config_string)
         validated_object = yaml.safe_load(validated_string)
         return validated_object
+    
+    def get_config_title(self):
+        """
+        Get the title of the current configuration.
+        """
+        title = self._query("GetConfigTitle")
+        return title
+
+    def get_config_description(self):
+        """
+        Get the title of the current configuration.
+        """
+        desc = self._query("GetConfigDescription")
+        return desc
+
+

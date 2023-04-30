@@ -2,12 +2,13 @@
 
 # pyCamillaDSP
 Companion Python library for CamillaDSP.
-Works with CamillaDSP version 1.0.0 and up.
+Works with CamillaDSP version 2.0.0 and up.
 
 Download the library, either by `git clone` or by downloading a zip file of the code. Then unpack the files, go to the folder containing the `setup.py` file and run: 
 ```sh
 pip install .
 ```
+TODO smarter command with pip git
 Note that on some systems the command is `pip3` instead of `pip`.
 
 ## Dependencies
@@ -24,6 +25,7 @@ These are the names of the packages needed:
 | Anaconda        | -       | websocket_client         |
 
 ### Linux
+TODO add something about new pip --break-system-thing
 Most linux distributions have Python 3.6 or newer installed by default. Use the normal package manager to install the packages.
 
 ### Windows
