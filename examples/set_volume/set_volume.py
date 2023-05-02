@@ -1,5 +1,5 @@
 # set volume
-from camilladsp import CamillaConnection
+from camilladsp import CamillaClient
 import sys
 import time
 
@@ -14,11 +14,11 @@ except:
     print("> python read_rms.py 4321 -12.3")
     sys.exit()
 
-cdsp = CamillaConnection("127.0.0.1", port)
+cdsp = CamillaClient("127.0.0.1", port)
 cdsp.connect()
 
-current_vol = cdsp.get_volume()
+current_vol = cdsp.volume.main()
 print(f"Current volume: {current_vol} dB")
 print(f"Changing volume to: {new_vol} dB")
-cdsp.set_volume(new_vol)
+cdsp.volume.set_main(new_vol)
 

@@ -30,10 +30,15 @@ class ProcessingState(Enum):
     """
 
     RUNNING = auto()
+    """Processing is running"""
     PAUSED = auto()
+    """Processing is paused"""
     INACTIVE = auto()
+    """CamillaDSP is inactive, and waiting for a new config to be supplie"""
     STARTING = auto()
+    """The processing is being set up"""
     STALLED = auto()
+    """The processing is stalled because the capture device isn't providing any data"""
 
 
 def _state_from_string(value: str) -> Optional[ProcessingState]:
@@ -61,14 +66,26 @@ class StopReason(Enum):
       A value of 0 means the new rate is unknown.
 
     The additional data can be accessed by reading the `data` property.
+    ```python
+    reason = cdsp.get_stop_reason()
+    if reason == StopReason.CAPTUREERROR:
+        error_msg = reason.data
+        print(f"Capture failed, error: {error_msg}")
+    ```
     """
 
     NONE = auto()
+    """Processing is running and hasn't stopped yet."""
     DONE = auto()
+    """The capture device reached the end of the stream."""
     CAPTUREERROR = auto()
+    """The capture device encountered an error."""
     PLAYBACKERROR = auto()
+    """The playback device encountered an error."""
     CAPTUREFORMATCHANGE = auto()
+    """The sample format or rate of the capture device changed. """
     PLAYBACKFORMATCHANGE = auto()
+    """The sample format or rate of the playback device changed."""
 
     def __new__(cls, value):
         obj = object.__new__(cls)

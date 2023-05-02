@@ -1,5 +1,5 @@
 # read rms
-from camilladsp import CamillaConnection
+from camilladsp import CamillaClient
 import sys
 import time
 
@@ -12,11 +12,11 @@ except:
     print("> python read_rms.py 4321")
     sys.exit()
 
-cdsp = CamillaConnection("127.0.0.1", port)
+cdsp = CamillaClient("127.0.0.1", port)
 cdsp.connect()
 
 print("Reading playback signal RMS, press Ctrl+c to stop")
 while True:
-    print(cdsp.get_playback_signal_rms())
+    print(cdsp.levels.playback_rms())
     time.sleep(1)
 

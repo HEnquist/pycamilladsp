@@ -49,7 +49,7 @@ print("Version: {}".format(cdsp.get_version()))
 ```
 
 ### Classes
-All communication functionality is provided by the class CamillaConnection. The contructor accepts two arguments: host and port.
+All communication functionality is provided by the class CamillaC. The contructor accepts two arguments: host and port.
 ```
 CamillaConnection(host, port)
 ```
@@ -208,6 +208,12 @@ black camilladsp
 pytest
 
 deps:
-pip install lazydocs 
 conda install pytest pylint black mypy
 mypy --install-types
+
+conda install mkdocs
+pip install mkdocs-material
+pip install mkdocstrings
+
+preview: mkdocs serve
+deploy: mkdocs gh-deploy
