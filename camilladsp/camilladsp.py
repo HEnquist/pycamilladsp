@@ -1,5 +1,14 @@
 """
 Python library for communicating with CamillaDSP.
+
+The main component is the `CamillaClient` class.
+This class handles the communication over websocket with the CamillaDSP process.
+
+The various commands are grouped on helper classes that are instantiated
+by the CamillaClient class.
+For example volume controls are handled by the `Volume` class.
+These methods are accessible via the `volume` property of the CamillaClient.
+Reading the main volume is then done by calling `my_client.volume.main()`.
 """
 
 
@@ -11,9 +20,9 @@ import yaml
 from websocket import create_connection, WebSocket  # type: ignore
 
 from .datastructures import (
-    _STANDARD_RATES,
     ProcessingState,
     StopReason,
+    _STANDARD_RATES,
     _state_from_string,
     _reason_from_reply,
 )
@@ -368,7 +377,7 @@ class Levels(_CommandGroup):
         self.client.query("ResetSignalPeaksSinceStart")
 
 
-class ConfigManagment(_CommandGroup):
+class Config(_CommandGroup):
     """
     Collection of methods for configuration management
     """
@@ -832,7 +841,7 @@ class CamillaClient(_CamillaWS):
         self._mute = Mute(self)
         self._rate = RateMonitor(self)
         self._levels = Levels(self)
-        self._config = ConfigManagment(self)
+        self._config = Config(self)
         self._status = Status(self)
         self._settings = Settings(self)
         self._general = General(self)
@@ -867,9 +876,9 @@ class CamillaClient(_CamillaWS):
         return self._levels
 
     @property
-    def config(self) -> ConfigManagment:
+    def config(self) -> Config:
         """
-        A `ConfigManagement` instance for config management commands.
+        A `Config` instance for config management commands.
         """
         return self._config
 

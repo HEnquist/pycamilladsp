@@ -172,7 +172,7 @@ if reason == StopReason.CAPTUREERROR:
 ```
 
 
-# Included examples:
+# Included examples: TODO update!
 
 ## read_rms
 Read the playback signal level continuously and print in the terminal, until stopped by Ctrl+c. 
@@ -199,3 +199,15 @@ Usage example:
 ```sh
 python play_wav.py 1234 /path/to/wavtest.yml /path/to/music.wav
 ```
+
+
+quality:
+pylint camilladsp
+mypy camilladsp 
+black camilladsp
+pytest
+
+deps:
+pip install lazydocs 
+conda install pytest pylint black mypy
+mypy --install-types
