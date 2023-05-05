@@ -9,17 +9,15 @@
       
       
       
-        <link rel="prev" href="../rate/">
+        <link rel="prev" href="../errors/">
       
-      
-        <link rel="next" href="../versions/">
       
       <link rel="icon" href="../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.1.9">
     
     
       
-        <title>Server settings - pyCamillaDSP</title>
+        <title>Installation instructions - pyCamillaDSP</title>
       
     
     
@@ -63,7 +61,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#server-settings" class="md-skip">
+        <a href="#installation-instructions" class="md-skip">
           Skip to content
         </a>
       
@@ -98,7 +96,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Server settings
+              Installation instructions
             
           </span>
         </div>
@@ -308,73 +306,11 @@
 
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          Server settings
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../settings/" class="md-nav__link">
         Server settings
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#class-settings" class="md-nav__link">
-    class: Settings
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#camilladsp.camilladsp.Settings" class="md-nav__link">
-    camilladsp.camilladsp.Settings
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#camilladsp.camilladsp.Settings.get_update_interval" class="md-nav__link">
-    get_update_interval()
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#camilladsp.camilladsp.Settings.set_update_interval" class="md-nav__link">
-    set_update_interval()
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -430,11 +366,140 @@
 
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../install/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Installation instructions
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         Installation instructions
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#dependencies" class="md-nav__link">
+    Dependencies
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#about-python-environments" class="md-nav__link">
+    About Python environments
+  </a>
+  
+    <nav class="md-nav" aria-label="About Python environments">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#conda" class="md-nav__link">
+    conda
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#venv" class="md-nav__link">
+    venv
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recommendations-for-different-operating-systems" class="md-nav__link">
+    Recommendations for different operating systems
+  </a>
+  
+    <nav class="md-nav" aria-label="Recommendations for different operating systems">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#linux" class="md-nav__link">
+    Linux
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#windows" class="md-nav__link">
+    Windows
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#macos" class="md-nav__link">
+    macOS
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#installing" class="md-nav__link">
+    Installing
+  </a>
+  
+    <nav class="md-nav" aria-label="Installing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#directly-from-github" class="md-nav__link">
+    Directly from Github
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#install-from-downloaded-files" class="md-nav__link">
+    Install from downloaded files
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -466,30 +531,97 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#class-settings" class="md-nav__link">
-    class: Settings
+  <a href="#dependencies" class="md-nav__link">
+    Dependencies
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#camilladsp.camilladsp.Settings" class="md-nav__link">
-    camilladsp.camilladsp.Settings
+  <a href="#about-python-environments" class="md-nav__link">
+    About Python environments
   </a>
+  
+    <nav class="md-nav" aria-label="About Python environments">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#conda" class="md-nav__link">
+    conda
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#venv" class="md-nav__link">
+    venv
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#camilladsp.camilladsp.Settings.get_update_interval" class="md-nav__link">
-    get_update_interval()
+  <a href="#recommendations-for-different-operating-systems" class="md-nav__link">
+    Recommendations for different operating systems
   </a>
+  
+    <nav class="md-nav" aria-label="Recommendations for different operating systems">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#linux" class="md-nav__link">
+    Linux
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#windows" class="md-nav__link">
+    Windows
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#macos" class="md-nav__link">
+    macOS
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#camilladsp.camilladsp.Settings.set_update_interval" class="md-nav__link">
-    set_update_interval()
+  <a href="#installing" class="md-nav__link">
+    Installing
   </a>
+  
+    <nav class="md-nav" aria-label="Installing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#directly-from-github" class="md-nav__link">
+    Directly from Github
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#install-from-downloaded-files" class="md-nav__link">
+    Install from downloaded files
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -511,211 +643,144 @@
   
 
 
-<h1 id="server-settings">Server settings</h1>
-<p>This class is accessed via the <code>settings</code> property on a <code>CamillaClient</code> instance.</p>
-<p>It provides methods for reading and writing settings of the websocket server.</p>
-<h2 id="class-settings">class: <code>Settings</code></h2>
-
-
-<div class="doc doc-object doc-class">
-
-
-<a id="camilladsp.camilladsp.Settings"></a>
-  <div class="doc doc-contents first">
-      <p class="doc doc-class-bases">
-        Bases: <code><span title="camilladsp.camilladsp._CommandGroup">_CommandGroup</span></code></p>
-
-  
-      <p>Methods for various settings</p>
-
-
-        <details class="quote">
-          <summary>Source code in <code>camilladsp/camilladsp.py</code></summary>
-          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">707</span>
-<span class="normal">708</span>
-<span class="normal">709</span>
-<span class="normal">710</span>
-<span class="normal">711</span>
-<span class="normal">712</span>
-<span class="normal">713</span>
-<span class="normal">714</span>
-<span class="normal">715</span>
-<span class="normal">716</span>
-<span class="normal">717</span>
-<span class="normal">718</span>
-<span class="normal">719</span>
-<span class="normal">720</span>
-<span class="normal">721</span>
-<span class="normal">722</span>
-<span class="normal">723</span>
-<span class="normal">724</span>
-<span class="normal">725</span>
-<span class="normal">726</span>
-<span class="normal">727</span>
-<span class="normal">728</span>
-<span class="normal">729</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">Settings</span><span class="p">(</span><span class="n">_CommandGroup</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Methods for various settings</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="k">def</span> <span class="nf">get_update_interval</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Get current update interval in ms.</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            int: Current update interval.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">interval</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;GetUpdateInterval&quot;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">interval</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="nf">set_update_interval</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Set current update interval in ms.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            value (int): New update interval.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;SetUpdateInterval&quot;</span><span class="p">,</span> <span class="n">arg</span><span class="o">=</span><span class="n">value</span><span class="p">)</span>
-</code></pre></div></td></tr></table></div>
-        </details>
-
-  
-
-  <div class="doc doc-children">
-
-
-
-
-
-
-
-
-
-<div class="doc doc-object doc-function">
-
-
-
-<h2 id="camilladsp.camilladsp.Settings.get_update_interval" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">get_update_interval</span><span class="p">()</span></code>
-
-</h2>
-
-
-  <div class="doc doc-contents ">
-  
-      <p>Get current update interval in ms.</p>
-
-  <p><strong>Returns:</strong></p>
-  <table>
-    <thead>
-      <tr>
-<th>Name</th>        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-        <tr>
-<td><code>int</code></td>          <td>
-                <code>int</code>
-          </td>
-          <td><p>Current update interval.</p></td>
-        </tr>
-    </tbody>
-  </table>
-
-      <details class="quote">
-        <summary>Source code in <code>camilladsp/camilladsp.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">712</span>
-<span class="normal">713</span>
-<span class="normal">714</span>
-<span class="normal">715</span>
-<span class="normal">716</span>
-<span class="normal">717</span>
-<span class="normal">718</span>
-<span class="normal">719</span>
-<span class="normal">720</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_update_interval</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Get current update interval in ms.</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        int: Current update interval.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">interval</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;GetUpdateInterval&quot;</span><span class="p">)</span>
-    <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">interval</span><span class="p">)</span>
-</code></pre></div></td></tr></table></div>
-      </details>
-  </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-
-<h2 id="camilladsp.camilladsp.Settings.set_update_interval" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">set_update_interval</span><span class="p">(</span><span class="n">value</span><span class="p">)</span></code>
-
-</h2>
-
-
-  <div class="doc doc-contents ">
-  
-      <p>Set current update interval in ms.</p>
-
-  <p><strong>Parameters:</strong></p>
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Type</th>
-        <th>Description</th>
-        <th>Default</th>
-      </tr>
-    </thead>
-    <tbody>
-        <tr>
-          <td><code>value</code></td>
-          <td>
-                <code>int</code>
-          </td>
-          <td><p>New update interval.</p></td>
-          <td>
-              <em>required</em>
-          </td>
-        </tr>
-    </tbody>
-  </table>
-
-      <details class="quote">
-        <summary>Source code in <code>camilladsp/camilladsp.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">722</span>
-<span class="normal">723</span>
-<span class="normal">724</span>
-<span class="normal">725</span>
-<span class="normal">726</span>
-<span class="normal">727</span>
-<span class="normal">728</span>
-<span class="normal">729</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">set_update_interval</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Set current update interval in ms.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        value (int): New update interval.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;SetUpdateInterval&quot;</span><span class="p">,</span> <span class="n">arg</span><span class="o">=</span><span class="n">value</span><span class="p">)</span>
-</code></pre></div></td></tr></table></div>
-      </details>
-  </div>
-
-</div>
-
-
-
-  </div>
-
-  </div>
-
-</div>
+<h1 id="installation-instructions">Installation instructions</h1>
+<p>As the name suggests, pyCamillaDSP is a Python library. It is installed using the <code>pip</code> package manager.</p>
+<h2 id="dependencies">Dependencies</h2>
+<p>pyCamillaDSP only requires the <code>websocket-client</code> library.
+The package is named slightly differently in different distributions:</p>
+<table>
+<thead>
+<tr>
+<th>Distribution</th>
+<th>Package name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Fedora</td>
+<td>python3-websocket-client</td>
+</tr>
+<tr>
+<td>Debian/Raspbian</td>
+<td>python3-websocket</td>
+</tr>
+<tr>
+<td>Arch</td>
+<td>python-websocket-client</td>
+</tr>
+<tr>
+<td>pypi.org (pip)</td>
+<td>websocket_client</td>
+</tr>
+<tr>
+<td>conda</td>
+<td>websocket_client</td>
+</tr>
+</tbody>
+</table>
+<h2 id="about-python-environments">About Python environments</h2>
+<p>In all cases it is recommended to create an isolated Python environment.
+This ensures that the installation of the CamillaDSP libraries does not interfere with
+the environment managed by the system package manager.
+This is mainly an issue on Linux, where the default Python environment is managed by
+the system package manager (for example <code>apt</code> on Debian and <code>dnf</code> on Fedora).
+Letting pip install packages into this environment is not recommended
+and may corrupt the system.
+Recent versions of pip will refuse to do this unless started with the flag <code>--break-system-packages</code>.</p>
+<p>There are several tools to set up Python environments.
+For the sake of simplicity, this readme only deals with <a href="#conda">conda</a> and <a href="#venv">venv</a>.</p>
+<h3 id="conda">conda</h3>
+<p>The <code>conda</code> package manager is used in the popular Anaconda Python distribution.
+It's possible to use the full Anaconda package, but it includes much more than needed.
+Instead it's recommended to use the miniconda package.
+Download it from https://docs.conda.io/en/latest/miniconda.html</p>
+<p>Alternatively use miniforge from https://github.com/conda-forge/miniforge</p>
+<p>Conda creates a default <code>base</code> environment, but don't install any packages there.
+It's better to create a specific environment.</p>
+<p>To do that open a terminal and type:</p>
+<pre><code class="language-console">conda create --name camilladsp
+</code></pre>
+<p>Before an environment can be used, either for install packages into it,
+or for running some application, it must be activated.</p>
+<p>The command for that is: </p>
+<pre><code class="language-console">&gt; conda activate camilladsp
+</code></pre>
+<p>Now install the websocket-client library:</p>
+<pre><code class="language-console">&gt; conda install websocket_client
+</code></pre>
+<p>Finally install pyCamillaDSP with pip, see <a href="#installing">Installing</a>).</p>
+<h3 id="venv">venv</h3>
+<p>The standard Python library includes the <code>venv</code> tool that is used to create virtual Python environments.
+This allows installing packages using pip separately, and prevents any issues from conflicts with the system package manager.
+By default, all packages installed in the system environment are also available in the virtual environment.
+See https://docs.python.org/3/library/venv.html for more details.</p>
+<p>Create a new venv, located in <code>camilladsp/.venv</code> in the user home directory:</p>
+<pre><code class="language-console">&gt; python -m venv ~/camilladsp/.venv
+</code></pre>
+<p>Activate the new environment:</p>
+<ul>
+<li>
+<p>Linux &amp; MacOS
+  ```console</p>
+<blockquote>
+<p>source ~/camilladsp/.venv/bin/activate
+  ```</p>
+</blockquote>
+</li>
+<li>
+<p>Windows</p>
+</li>
+</ul>
+<p>cmd.exe:
+  ```console</p>
+<blockquote>
+<p>%USERPROFILE%\camilladsp.venv\Scripts\activate.bat
+  ```</p>
+</blockquote>
+<p>PowerShell:
+  ```console</p>
+<blockquote>
+<p>$env:userprofile\camilladsp.venv\Scripts\Activate.ps1
+  ```</p>
+</blockquote>
+<p>Finally install pyCamillaDSP with pip, see <a href="#installing">Installing</a>).</p>
+<p>Once the environment is ready, it's possible to use it without first activating.
+This is done by simply using the python interpreter of the environment:</p>
+<pre><code class="language-console">&gt; ~/camilladsp/.venv/bin/python some_script.py
+</code></pre>
+<h2 id="recommendations-for-different-operating-systems">Recommendations for different operating systems</h2>
+<p>The way to set up a Python environment and install pyCamillaDSP depends on what operating system is used.
+Linux normally comes with Python preinstalled, while Windows does not.
+MacOS is somewhere in between in that it comes with a limited Python . </p>
+<h3 id="linux">Linux</h3>
+<p>Most linux distributions have the required Python 3.6 or newer installed by default.
+Use the normal package manager to install python if required,
+and then create a <a href="#venv">virtual environment</a> for pyCamillaDSP.</p>
+<p>It is also possible to use <a href="#conda">Conda</a>.</p>
+<h3 id="windows">Windows</h3>
+<p>Use Anaconda, miniconda, or miniforge. See <a href="#conda">Conda</a>.</p>
+<h3 id="macos">macOS</h3>
+<p>On macOS use either <a href="#conda">conda</a>, or Homebrew optionally with a <a href="#venv">virtual environment</a>. </p>
+<p>For Homebrew, install Python with <code>brew install python</code>, after which you can install the needed packages with pip, <code>pip3 install websocket_client</code>.</p>
+<h2 id="installing">Installing</h2>
+<p>Once a suitable environment has been set up, use <code>pip</code> to install pyCamillaDSP.</p>
+<p>The <code>pip</code> package manager is normally installed by default together with Python.
+The command is usually <code>pip</code>, but on some systems it's instead <code>pip3</code>.</p>
+<h3 id="directly-from-github">Directly from Github</h3>
+<p>The easiest way to install is to let pip fetch the files directly from Github.</p>
+<p>The command for that is:</p>
+<pre><code class="language-console">pip install git+https://github.com/HEnquist/pycamilladsp.git
+</code></pre>
+<p>This installs the current version in the default branch <code>master</code>.</p>
+<p>To install from another branch, or a tagged version, add <code>@</code> and the branch or tag name at the end.</p>
+<p>To install the tagged version 2.0.0 the command is:</p>
+<pre><code class="language-console">pip install git+https://github.com/HEnquist/pycamilladsp.git@v2.0.0
+</code></pre>
+<h3 id="install-from-downloaded-files">Install from downloaded files</h3>
+<p>Download the library, either by <code>git clone</code> or by downloading a zip file of the code.
+Then unpack the files, go to the folder containing the <code>setup.py</code> file and run: </p>
+<pre><code class="language-console">pip install .
+</code></pre>
 
 
 
