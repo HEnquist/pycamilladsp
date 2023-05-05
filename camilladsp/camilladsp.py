@@ -382,17 +382,17 @@ class Config(_CommandGroup):
     Collection of methods for configuration management
     """
 
-    def path(self) -> Optional[str]:
+    def file_path(self) -> Optional[str]:
         """
         Get path to current config file.
 
         Returns:
             str | None: Path to config file, or None.
         """
-        name = self.client.query("GetConfigName")
+        name = self.client.query("GetConfigFilePath")
         return name
 
-    def set_path(self, value: str):
+    def set_file_path(self, value: str):
         """
         Set path to config file, without loading it.
         Call `reload()` to apply the new config file.
@@ -400,7 +400,7 @@ class Config(_CommandGroup):
         Args:
             value (str): Path to config file.
         """
-        self.client.query("SetConfigName", arg=value)
+        self.client.query("SetConfigFilePath", arg=value)
 
     def active_raw(self) -> Optional[str]:
         """
