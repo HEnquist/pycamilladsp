@@ -789,6 +789,26 @@ class General(_CommandGroup):
         (playback, capture) = self.client.query("GetSupportedDeviceTypes")
         return (playback, capture)
 
+    def state_file_path(self) -> Optional[str]:
+        """
+        Get path to current state file.
+
+        Returns:
+            str | None: Path to state file, or None.
+        """
+        path = self.client.query("GetStateFilePath")
+        return path
+
+    def state_file_updated(self) -> bool:
+        """
+        Check if all changes have been saved to the state file.
+
+        Returns:
+            bool: True if all changes are saved.
+        """
+        updated = self.client.query("GetStateFileUpdated")
+        return updated
+
 
 class Versions(_CommandGroup):
     """
