@@ -274,6 +274,20 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#camilladsp.camilladsp.General.state_file_path" class="md-nav__link">
+    state_file_path()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#camilladsp.camilladsp.General.state_file_updated" class="md-nav__link">
+    state_file_updated()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#camilladsp.camilladsp.General.stop" class="md-nav__link">
     stop()
   </a>
@@ -529,6 +543,20 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#camilladsp.camilladsp.General.state_file_path" class="md-nav__link">
+    state_file_path()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#camilladsp.camilladsp.General.state_file_updated" class="md-nav__link">
+    state_file_updated()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#camilladsp.camilladsp.General.stop" class="md-nav__link">
     stop()
   </a>
@@ -645,7 +673,27 @@
 <span class="normal">787</span>
 <span class="normal">788</span>
 <span class="normal">789</span>
-<span class="normal">790</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">General</span><span class="p">(</span><span class="n">_CommandGroup</span><span class="p">):</span>
+<span class="normal">790</span>
+<span class="normal">791</span>
+<span class="normal">792</span>
+<span class="normal">793</span>
+<span class="normal">794</span>
+<span class="normal">795</span>
+<span class="normal">796</span>
+<span class="normal">797</span>
+<span class="normal">798</span>
+<span class="normal">799</span>
+<span class="normal">800</span>
+<span class="normal">801</span>
+<span class="normal">802</span>
+<span class="normal">803</span>
+<span class="normal">804</span>
+<span class="normal">805</span>
+<span class="normal">806</span>
+<span class="normal">807</span>
+<span class="normal">808</span>
+<span class="normal">809</span>
+<span class="normal">810</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">General</span><span class="p">(</span><span class="n">_CommandGroup</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Basic commands</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -704,6 +752,26 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="p">(</span><span class="n">playback</span><span class="p">,</span> <span class="n">capture</span><span class="p">)</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;GetSupportedDeviceTypes&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="p">(</span><span class="n">playback</span><span class="p">,</span> <span class="n">capture</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">state_file_path</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get path to current state file.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str | None: Path to state file, or None.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;GetStateFilePath&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">path</span>
+
+    <span class="k">def</span> <span class="nf">state_file_updated</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Check if all changes have been saved to the state file.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True if all changes are saved.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">updated</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;GetStateFileUpdated&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">updated</span>
 </code></pre></div></td></tr></table></div>
         </details>
 
@@ -832,6 +900,120 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;GetState&quot;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">_state_from_string</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="camilladsp.camilladsp.General.state_file_path" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">state_file_path</span><span class="p">()</span></code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Get path to current state file.</p>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code><span title="typing.Optional">Optional</span>[str]</code>
+          </td>
+          <td><p>str | None: Path to state file, or None.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+      <details class="quote">
+        <summary>Source code in <code>camilladsp/camilladsp.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">792</span>
+<span class="normal">793</span>
+<span class="normal">794</span>
+<span class="normal">795</span>
+<span class="normal">796</span>
+<span class="normal">797</span>
+<span class="normal">798</span>
+<span class="normal">799</span>
+<span class="normal">800</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">state_file_path</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get path to current state file.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        str | None: Path to state file, or None.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;GetStateFilePath&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">path</span>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="camilladsp.camilladsp.General.state_file_updated" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">state_file_updated</span><span class="p">()</span></code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Check if all changes have been saved to the state file.</p>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+<th>Name</th>        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+<td><code>bool</code></td>          <td>
+                <code>bool</code>
+          </td>
+          <td><p>True if all changes are saved.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+      <details class="quote">
+        <summary>Source code in <code>camilladsp/camilladsp.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">802</span>
+<span class="normal">803</span>
+<span class="normal">804</span>
+<span class="normal">805</span>
+<span class="normal">806</span>
+<span class="normal">807</span>
+<span class="normal">808</span>
+<span class="normal">809</span>
+<span class="normal">810</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">state_file_updated</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Check if all changes have been saved to the state file.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        bool: True if all changes are saved.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">updated</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;GetStateFileUpdated&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">updated</span>
 </code></pre></div></td></tr></table></div>
       </details>
   </div>
