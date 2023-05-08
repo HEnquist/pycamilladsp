@@ -35,10 +35,11 @@ For the sake of simplicity, this readme only deals with [conda](#conda) and [ven
 
 The `conda` package manager is used in the popular Anaconda Python distribution.
 It's possible to use the full Anaconda package, but it includes much more than needed.
-Instead it's recommended to use the miniconda package.
-Download it from https://docs.conda.io/en/latest/miniconda.html
+Instead it's recommended to use the Miniconda package.
 
-Alternatively use miniforge from https://github.com/conda-forge/miniforge
+Download Miniconda from https://docs.conda.io/en/latest/miniconda.html
+
+Alternatively use Miniforge from https://github.com/conda-forge/miniforge
 
 Conda creates a default `base` environment, but don't install any packages there.
 It's better to create a specific environment.
@@ -112,7 +113,7 @@ This is done by simply using the python interpreter of the environment:
 
 The way to set up a Python environment and install pyCamillaDSP depends on what operating system is used.
 Linux normally comes with Python preinstalled, while Windows does not.
-MacOS is somewhere in between in that it comes with a limited Python . 
+MacOS is somewhere in between in that it comes with a limited Python installation.
 
 ### Linux
 Most linux distributions have the required Python 3.6 or newer installed by default.
@@ -146,7 +147,7 @@ This installs the current version in the default branch `master`.
 
 To install from another branch, or a tagged version, add `@` and the branch or tag name at the end.
 
-To install the tagged version 2.0.0 the command is:
+To install the version tagged with `v2.0.0`, the command is:
 ```console
 pip install git+https://github.com/HEnquist/pycamilladsp.git@v2.0.0
 ```

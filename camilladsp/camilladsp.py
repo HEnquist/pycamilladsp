@@ -404,7 +404,7 @@ class Config(_CommandGroup):
 
     def active_raw(self) -> Optional[str]:
         """
-        Get the active configuation in raw yaml format (as a string).
+        Get the active configuration in raw yaml format (as a string).
 
         Returns:
             str | None: Current config as a raw yaml string, or None.
@@ -414,7 +414,7 @@ class Config(_CommandGroup):
 
     def set_active_raw(self, config_string: str):
         """
-        Upload and apply a new configuation in raw yaml format (as a string).
+        Upload and apply a new configuration in raw yaml format (as a string).
 
         Args:
             config_string (str): Config as yaml string.
@@ -423,7 +423,7 @@ class Config(_CommandGroup):
 
     def active(self) -> Optional[dict]:
         """
-        Get the active configuation as a Python object.
+        Get the active configuration as a Python object.
 
         Returns:
             dict | None: Current config as a Python dict, or None.
@@ -436,7 +436,7 @@ class Config(_CommandGroup):
 
     def previous(self) -> Optional[dict]:
         """
-        Get the previously active configuation as a Python object.
+        Get the previously active configuration as a Python object.
 
         Returns:
             dict | None: Previous config as a Python dict, or None.
@@ -476,7 +476,7 @@ class Config(_CommandGroup):
 
     def set_active(self, config_object: dict):
         """
-        Upload and apply a new configuation from a Python object.
+        Upload and apply a new configuration from a Python object.
 
         Args:
             config_object (dict): A configuration as a Python dict.
@@ -575,8 +575,8 @@ class Volume(_CommandGroup):
 
     def set_fader_external(self, fader: int, vol: float):
         """
-        Special command for setting the volume when a Loudness filter
-        is being combined with an external volume control (without a Volume filter).
+        Special command for setting the volume when a "Loudness" filter
+        is being combined with an external volume control (without a "Volume" filter).
         Set volume for the given fader in dB.
 
         Args:

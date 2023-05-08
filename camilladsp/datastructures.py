@@ -34,7 +34,7 @@ class ProcessingState(Enum):
     PAUSED = auto()
     """Processing is paused"""
     INACTIVE = auto()
-    """CamillaDSP is inactive, and waiting for a new config to be supplie"""
+    """CamillaDSP is inactive, and waiting for a new config to be supplied"""
     STARTING = auto()
     """The processing is being set up"""
     STALLED = auto()
