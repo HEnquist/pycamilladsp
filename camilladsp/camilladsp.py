@@ -571,7 +571,7 @@ class Volume(_CommandGroup):
                 Selected using an integer, 0 for `Main` and 1 to 4 for `Aux1` to `Aux4`.
             vol (float): New volume setting.
         """
-        _fader = self.client.query("SetFaderVolume", arg=(int(fader), float(vol)))
+        self.client.query("SetFaderVolume", arg=(int(fader), float(vol)))
 
     def set_fader_external(self, fader: int, vol: float):
         """
@@ -584,7 +584,7 @@ class Volume(_CommandGroup):
                 Selected using an integer, 0 for `Main` and 1 to 4 for `Aux1` to `Aux4`.
             vol (float): New volume setting.
         """
-        _fader = self.client.query(
+        self.client.query(
             "SetFaderExternalVolume", arg=(int(fader), float(vol))
         )
 
@@ -656,7 +656,7 @@ class Mute(_CommandGroup):
                 Selected using an integer, 0 for `Main` and 1 to 4 for `Aux1` to `Aux4`.
             value (bool): New mute setting.
         """
-        _fader = self.client.query("SetFaderMute", arg=(int(fader), bool(value)))
+        self.client.query("SetFaderMute", arg=(int(fader), bool(value)))
 
     def toggle_fader(self, fader: int) -> bool:
         """

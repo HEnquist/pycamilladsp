@@ -17,6 +17,7 @@ class DummyWS:
         '"GetSignalRange"': json.dumps({"GetSignalRange": {"result": "Ok", "value": "0.2"}}),
         '"GetCaptureSignalRms"': json.dumps({"GetCaptureSignalRms": {"result": "Ok", "value": [0.1, 0.2]}}),
         '"GetCaptureRate"': json.dumps({"GetCaptureRate": {"result": "Ok", "value": "88250"}}),
+        '{"GetFaderVolume": 1}': json.dumps({"GetFaderVolume": {"result": "Ok", "value": [1, -1.23]}}),
         '"GetErrorValue"': json.dumps({"GetErrorValue": {"result": "Error", "value": "badstuff"}}),
         '"GetError"': json.dumps({"GetError": {"result": "Error"}}),
         '"Invalid"': json.dumps({"Invalid": {"result": "Error", "value": "badstuff"}}),
@@ -159,6 +160,7 @@ def test_query_mockedws(camilla_mockws):
     assert camilla_mockws.query("SetSomeValue", arg=123) is None
     assert camilla_mockws.dummyws.query == json.dumps({"SetSomeValue": 123})
     assert camilla_mockws.general.supported_device_types() == (["a", "b"], ["c", "d"])
+    assert camilla_mockws.volume.fader(1) == -1.23
 
 def test_queries(camilla_mockquery):
     camilla_mockquery.rate.capture()
@@ -211,6 +213,8 @@ def test_queries(camilla_mockquery):
     camilla_mockquery.query.assert_called_with('GetPlaybackSignalRms')
     camilla_mockquery.levels.playback_peak()
     camilla_mockquery.query.assert_called_with('GetPlaybackSignalPeak')
+    camilla_mockquery.volume.set_fader(1, -1.23)
+    camilla_mockquery.query.assert_called_with('SetFaderVolume', arg=(1, -1.23))
 
 
 def test_queries_adv(camilla_mockquery_yaml):
