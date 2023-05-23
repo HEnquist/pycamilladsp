@@ -173,7 +173,7 @@ def test_queries(camilla_mockquery):
     camilla_mockquery.query.assert_called_with('GetSignalRange')
     camilla_mockquery.settings.set_update_interval(1234)
     camilla_mockquery.query.assert_called_with('SetUpdateInterval', arg=1234)
-    camilla_mockquery.settings.get_update_interval()
+    camilla_mockquery.settings.update_interval()
     camilla_mockquery.query.assert_called_with('GetUpdateInterval')
     camilla_mockquery.general.stop()
     camilla_mockquery.query.assert_called_with('Stop')
