@@ -709,7 +709,7 @@ class Settings(_CommandGroup):
     Methods for various settings
     """
 
-    def get_update_interval(self) -> int:
+    def update_interval(self) -> int:
         """
         Get current update interval in ms.
 
