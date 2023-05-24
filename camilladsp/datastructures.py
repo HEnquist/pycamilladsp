@@ -67,7 +67,7 @@ class StopReason(Enum):
 
     The additional data can be accessed by reading the `data` property.
     ```python
-    reason = cdsp.get_stop_reason()
+    reason = cdsp.general.stop_reason()
     if reason == StopReason.CAPTUREERROR:
         error_msg = reason.data
         print(f"Capture failed, error: {error_msg}")
