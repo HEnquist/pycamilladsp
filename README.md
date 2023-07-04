@@ -78,5 +78,5 @@ mkdocs serve
 
 Publish to Github pages:
 ```console
-deploy: mkdocs gh-deploy
+mkdocs gh-deploy
 ```

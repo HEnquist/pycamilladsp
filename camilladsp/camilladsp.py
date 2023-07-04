@@ -584,9 +584,7 @@ class Volume(_CommandGroup):
                 Selected using an integer, 0 for `Main` and 1 to 4 for `Aux1` to `Aux4`.
             vol (float): New volume setting.
         """
-        self.client.query(
-            "SetFaderExternalVolume", arg=(int(fader), float(vol))
-        )
+        self.client.query("SetFaderExternalVolume", arg=(int(fader), float(vol)))
 
     def adjust_fader(self, fader: int, value: float) -> float:
         """
@@ -808,6 +806,34 @@ class General(_CommandGroup):
         """
         updated = self.client.query("GetStateFileUpdated")
         return updated
+
+    def list_playback_devices(self, value: str) -> list[tuple[str, str]]:
+        """
+        List the available playback devices for a given backend.
+        Returns a list of tuples. Returns the system name and
+        a descriptive name for each device.
+        For some backends, those two names are identical.
+
+        Returns:
+            list[tuple[str, str]: A list containing tuples of two strings,
+                with system device name and a descriptive name.
+        """
+        devs = self.client.query("GetAvailablePlaybackDevices", arg=value)
+        return devs
+
+    def list_capture_devices(self, value: str) -> list[tuple[str, str]]:
+        """
+        List the available capture devices for a given backend.
+        Returns a list of tuples. Returns the system name and
+        a descriptive name for each device.
+        For some backends, those two names are identical.
+
+        Returns:
+            list[tuple[str, str]: A list containing tuples of two strings,
+                with system device name and a descriptive name.
+        """
+        devs = self.client.query("GetAvailableCaptureDevices", arg=value)
+        return devs
 
 
 class Versions(_CommandGroup):
