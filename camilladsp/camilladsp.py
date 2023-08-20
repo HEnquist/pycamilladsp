@@ -782,7 +782,7 @@ class General(_CommandGroup):
 
         Returns:
             tuple[list[str], list[str]]: A tuple containing two lists,
-                with the supported capture and playback device types.
+                with the supported playback and capture device types.
         """
         (playback, capture) = self.client.query("GetSupportedDeviceTypes")
         return (playback, capture)
