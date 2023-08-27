@@ -43,10 +43,10 @@ This library uses the following tools to ensure code quality:
 - black
 - pytest
 
-Set up the development environment in conda:
+Check out the code and install the optional development depenencies with pip:
 
 ```console
-conda install pytest pylint black mypy
+pip install ".[dev]"
 mypy --install-types
 ```
 
