@@ -29,6 +29,7 @@ from .datastructures import (
 
 VERSION = "2.0.0-alpha2"
 
+
 class CamillaError(ValueError):
     """
     A class representing errors returned by CamillaDSP.
@@ -858,8 +859,8 @@ class Versions(_CommandGroup):
             Tuple[List[str], List[str]] | None: A tuple containing the pyCamillaDSP version,
                 as (major, minor, patch).
         """
-        v = VERSION.split(".")
-        return (v[0], v[1], v[2])
+        ver = VERSION.split(".")
+        return (ver[0], ver[1], ver[2])
 
 
 class CamillaClient(_CamillaWS):
