@@ -29,6 +29,7 @@ from .datastructures import (
 
 VERSION = "2.0.0-alpha2"
 
+
 class CamillaError(ValueError):
     """
     A class representing errors returned by CamillaDSP.

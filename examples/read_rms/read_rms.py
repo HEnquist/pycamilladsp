@@ -19,4 +19,3 @@ print("Reading playback signal RMS, press Ctrl+c to stop")
 while True:
     print(cdsp.levels.playback_rms())
     time.sleep(1)
-

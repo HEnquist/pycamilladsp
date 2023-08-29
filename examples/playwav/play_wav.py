@@ -37,7 +37,7 @@ capt_device = {
 cfg["devices"]["capture_samplerate"] = wav_info["SampleRate"]
 cfg["devices"]["enable_rate_adjust"] = False
 if cfg["devices"]["samplerate"] != cfg["devices"]["capture_samplerate"]:
-    cfg["devices"]["resampler"] = { "type": "Synchronous" }
+    cfg["devices"]["resampler"] = {"type": "Synchronous"}
 else:
     cfg["devices"]["resampler"] = None
 cfg["devices"]["capture"] = capt_device
