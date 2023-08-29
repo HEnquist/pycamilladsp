@@ -23,13 +23,12 @@ jobs:
         pip install pytest
         pip install pytest-cov
         pytest --cov=camilladsp --cov-report=html
-    - name: Lint (types)
+    - name: pylint
       run: |
         pylint camilladsp
     - name: Lint types
       run: |
-        mypy --install-types
-        mypy camilladsp 
+        mypy --install-types --non-interactive camilladsp
     - name: Lint formatting
       run: |
         black . --check --verbose
