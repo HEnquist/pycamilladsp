@@ -14,7 +14,7 @@ Reading the main volume is then done by calling `my_client.volume.main()`.
 
 import json
 import math
-from typing import Optional
+from typing import Dict, Tuple, List, Optional
 from threading import Lock
 import yaml
 from websocket import create_connection, WebSocket  # type: ignore
@@ -47,7 +47,7 @@ class _CamillaWS:
         self._host = host
         self._port = int(port)
         self._ws: Optional[WebSocket] = None
-        self.cdsp_version: Optional[tuple[str, str, str]] = None
+        self.cdsp_version: Optional[Tuple[str, str, str]] = None
         self._lock = Lock()
 
     def query(self, command: str, arg=None):
@@ -217,7 +217,7 @@ class Levels(_CommandGroup):
             range_decibel = -1000
         return range_decibel
 
-    def capture_rms(self) -> list[float]:
+    def capture_rms(self) -> List[float]:
         """
         Get capture signal level rms in dB for the last processed chunk.
         Full scale is 0 dB. Returns a list with one element per channel.
@@ -225,7 +225,7 @@ class Levels(_CommandGroup):
         sigrms = self.client.query("GetCaptureSignalRms")
         return sigrms
 
-    def playback_rms(self) -> list[float]:
+    def playback_rms(self) -> List[float]:
         """
         Get playback signal level rms in dB for the last processed chunk.
         Full scale is 0 dB. Returns a list with one element per channel.
@@ -233,7 +233,7 @@ class Levels(_CommandGroup):
         sigrms = self.client.query("GetPlaybackSignalRms")
         return sigrms
 
-    def capture_peak(self) -> list[float]:
+    def capture_peak(self) -> List[float]:
         """
         Get capture signal level peak in dB for the last processed chunk.
         Full scale is 0 dB. Returns a list with one element per channel.
@@ -241,7 +241,7 @@ class Levels(_CommandGroup):
         sigpeak = self.client.query("GetCaptureSignalPeak")
         return sigpeak
 
-    def playback_peak(self) -> list[float]:
+    def playback_peak(self) -> List[float]:
         """
         Get playback signal level peak in dB for the last processed chunk.
         Full scale is 0 dB. Returns a list with one element per channel.
@@ -249,7 +249,7 @@ class Levels(_CommandGroup):
         sigpeak = self.client.query("GetPlaybackSignalPeak")
         return sigpeak
 
-    def playback_peak_since(self, interval: float) -> list[float]:
+    def playback_peak_since(self, interval: float) -> List[float]:
         """
         Get playback signal level peak in dB for the last `interval` seconds.
         Full scale is 0 dB. Returns a list with one element per channel.
@@ -260,7 +260,7 @@ class Levels(_CommandGroup):
         sigpeak = self.client.query("GetPlaybackSignalPeakSince", arg=float(interval))
         return sigpeak
 
-    def playback_rms_since(self, interval: float) -> list[float]:
+    def playback_rms_since(self, interval: float) -> List[float]:
         """
         Get playback signal level rms in dB for the last `interval` seconds.
         Full scale is 0 dB. Returns a list with one element per channel.
@@ -271,7 +271,7 @@ class Levels(_CommandGroup):
         sigrms = self.client.query("GetPlaybackSignalRmsSince", arg=float(interval))
         return sigrms
 
-    def capture_peak_since(self, interval: float) -> list[float]:
+    def capture_peak_since(self, interval: float) -> List[float]:
         """
         Get capture signal level peak in dB for the last `interval` seconds.
         Full scale is 0 dB. Returns a list with one element per channel.
@@ -282,7 +282,7 @@ class Levels(_CommandGroup):
         sigpeak = self.client.query("GetCaptureSignalPeakSince", arg=float(interval))
         return sigpeak
 
-    def capture_rms_since(self, interval: float) -> list[float]:
+    def capture_rms_since(self, interval: float) -> List[float]:
         """
         Get capture signal level rms in dB for the last `interval` seconds.
         Full scale is 0 dB. Returns a list with one element per channel.
@@ -293,7 +293,7 @@ class Levels(_CommandGroup):
         sigrms = self.client.query("GetCaptureSignalRmsSince", arg=float(interval))
         return sigrms
 
-    def playback_peak_since_last(self) -> list[float]:
+    def playback_peak_since_last(self) -> List[float]:
         """
         Get playback signal level peak in dB since the last read by the same client.
         Full scale is 0 dB. Returns a list with one element per channel.
@@ -301,7 +301,7 @@ class Levels(_CommandGroup):
         sigpeak = self.client.query("GetPlaybackSignalPeakSinceLast")
         return sigpeak
 
-    def playback_rms_since_last(self) -> list[float]:
+    def playback_rms_since_last(self) -> List[float]:
         """
         Get playback signal level rms in dB since the last read by the same client.
         Full scale is 0 dB. Returns a list with one element per channel.
@@ -309,7 +309,7 @@ class Levels(_CommandGroup):
         sigrms = self.client.query("GetPlaybackSignalRmsSinceLast")
         return sigrms
 
-    def capture_peak_since_last(self) -> list[float]:
+    def capture_peak_since_last(self) -> List[float]:
         """
         Get capture signal level peak in dB since the last read by the same client.
         Full scale is 0 dB. Returns a list with one element per channel.
@@ -317,7 +317,7 @@ class Levels(_CommandGroup):
         sigpeak = self.client.query("GetCaptureSignalPeakSinceLast")
         return sigpeak
 
-    def capture_rms_since_last(self) -> list[float]:
+    def capture_rms_since_last(self) -> List[float]:
         """
         Get capture signal level rms in dB since the last read by the same client.
         Full scale is 0 dB. Returns a list with one element per channel.
@@ -325,7 +325,7 @@ class Levels(_CommandGroup):
         sigrms = self.client.query("GetCaptureSignalRmsSinceLast")
         return sigrms
 
-    def levels(self) -> dict[str, list[float]]:
+    def levels(self) -> Dict[str, List[float]]:
         """
         Get all signal levels in dB for the last processed chunk.
         Full scale is 0 dB.
@@ -336,7 +336,7 @@ class Levels(_CommandGroup):
         siglevels = self.client.query("GetSignalLevels")
         return siglevels
 
-    def levels_since(self, interval: float) -> dict[str, list[float]]:
+    def levels_since(self, interval: float) -> Dict[str, List[float]]:
         """
         Get all signal levels in dB for the last `interval` seconds.
         Full scale is 0 dB.
@@ -350,7 +350,7 @@ class Levels(_CommandGroup):
         siglevels = self.client.query("GetSignalLevelsSince", arg=float(interval))
         return siglevels
 
-    def levels_since_last(self) -> dict[str, list[float]]:
+    def levels_since_last(self) -> Dict[str, List[float]]:
         """
         Get all signal levels in dB since the last read by the same client.
         Full scale is 0 dB.
@@ -361,7 +361,7 @@ class Levels(_CommandGroup):
         siglevels = self.client.query("GetSignalLevelsSinceLast")
         return siglevels
 
-    def peaks_since_start(self) -> dict[str, list[float]]:
+    def peaks_since_start(self) -> Dict[str, List[float]]:
         """
         Get the playback and capture peak level since processing started.
         The values are returned as a json object with keys `playback` and `capture`.
@@ -420,12 +420,12 @@ class Config(_CommandGroup):
         """
         self.client.query("SetConfig", arg=config_string)
 
-    def active(self) -> Optional[dict]:
+    def active(self) -> Optional[Dict]:
         """
         Get the active configuration as a Python object.
 
         Returns:
-            dict | None: Current config as a Python dict, or None.
+            Dict | None: Current config as a Python dict, or None.
         """
         config_string = self.active_raw()
         if config_string is None:
@@ -433,18 +433,18 @@ class Config(_CommandGroup):
         config_object = yaml.safe_load(config_string)
         return config_object
 
-    def previous(self) -> Optional[dict]:
+    def previous(self) -> Optional[Dict]:
         """
         Get the previously active configuration as a Python object.
 
         Returns:
-            dict | None: Previous config as a Python dict, or None.
+            Dict | None: Previous config as a Python dict, or None.
         """
         config_string = self.client.query("GetPreviousConfig")
         config_object = yaml.safe_load(config_string)
         return config_object
 
-    def parse_yaml(self, config_string: str) -> dict:
+    def parse_yaml(self, config_string: str) -> Dict:
         """
         Parse a config from yaml string and return the contents
         as a Python object, with defaults filled out with their default values.
@@ -453,13 +453,13 @@ class Config(_CommandGroup):
             config_string (str): A config as raw yaml string.
 
         Returns:
-            dict | None: Parsed config as a Python dict.
+            Dict | None: Parsed config as a Python dict.
         """
         config_raw = self.client.query("ReadConfig", arg=config_string)
         config_object = yaml.safe_load(config_raw)
         return config_object
 
-    def read_and_parse_file(self, filename: str) -> dict:
+    def read_and_parse_file(self, filename: str) -> Dict:
         """
         Read and parse a config file from disk and return the contents as a Python object.
 
@@ -467,33 +467,33 @@ class Config(_CommandGroup):
             filename (str): Path to a config file.
 
         Returns:
-            dict | None: Parsed config as a Python dict.
+            Dict | None: Parsed config as a Python dict.
         """
         config_raw = self.client.query("ReadConfigFile", arg=filename)
         config = yaml.safe_load(config_raw)
         return config
 
-    def set_active(self, config_object: dict):
+    def set_active(self, config_object: Dict):
         """
         Upload and apply a new configuration from a Python object.
 
         Args:
-            config_object (dict): A configuration as a Python dict.
+            config_object (Dict): A configuration as a Python dict.
         """
         config_raw = yaml.dump(config_object)
         self.set_active_raw(config_raw)
 
-    def validate(self, config_object: dict) -> dict:
+    def validate(self, config_object: Dict) -> Dict:
         """
         Validate a configuration object.
         Returns the validated config with all optional fields filled with defaults.
         Raises a CamillaError on errors.
 
         Args:
-            config_object (dict): A configuration as a Python dict.
+            config_object (Dict): A configuration as a Python dict.
 
         Returns:
-            dict | None: Validated config as a Python dict.
+            Dict | None: Validated config as a Python dict.
         """
         config_string = yaml.dump(config_object)
         validated_string = self.client.query("ValidateConfig", arg=config_string)
@@ -773,14 +773,14 @@ class General(_CommandGroup):
         """
         self.client.query("Reload")
 
-    def supported_device_types(self) -> tuple[list[str], list[str]]:
+    def supported_device_types(self) -> Tuple[List[str], List[str]]:
         """
         Read what device types the running CamillaDSP process supports.
         Returns a tuple with two lists of device types,
         the first for playback and the second for capture.
 
         Returns:
-            tuple[list[str], list[str]]: A tuple containing two lists,
+            Tuple[List[str], List[str]]: A tuple containing two lists,
                 with the supported playback and capture device types.
         """
         (playback, capture) = self.client.query("GetSupportedDeviceTypes")
@@ -806,7 +806,7 @@ class General(_CommandGroup):
         updated = self.client.query("GetStateFileUpdated")
         return updated
 
-    def list_playback_devices(self, value: str) -> list[tuple[str, str]]:
+    def list_playback_devices(self, value: str) -> List[Tuple[str, str]]:
         """
         List the available playback devices for a given backend.
         Returns a list of tuples. Returns the system name and
@@ -814,13 +814,13 @@ class General(_CommandGroup):
         For some backends, those two names are identical.
 
         Returns:
-            list[tuple[str, str]: A list containing tuples of two strings,
+            List[Tuple[str, str]: A list containing tuples of two strings,
                 with system device name and a descriptive name.
         """
         devs = self.client.query("GetAvailablePlaybackDevices", arg=value)
         return devs
 
-    def list_capture_devices(self, value: str) -> list[tuple[str, str]]:
+    def list_capture_devices(self, value: str) -> List[Tuple[str, str]]:
         """
         List the available capture devices for a given backend.
         Returns a list of tuples. Returns the system name and
@@ -828,7 +828,7 @@ class General(_CommandGroup):
         For some backends, those two names are identical.
 
         Returns:
-            list[tuple[str, str]: A list containing tuples of two strings,
+            List[Tuple[str, str]: A list containing tuples of two strings,
                 with system device name and a descriptive name.
         """
         devs = self.client.query("GetAvailableCaptureDevices", arg=value)
@@ -840,25 +840,26 @@ class Versions(_CommandGroup):
     Version info
     """
 
-    def camilladsp(self) -> Optional[tuple[str, str, str]]:
+    def camilladsp(self) -> Optional[Tuple[str, str, str]]:
         """
         Read CamillaDSP version.
 
         Returns:
-            tuple[list[str], list[str]] | None: A tuple containing the CamillaDSP version,
+            Tuple[List[str], List[str]] | None: A tuple containing the CamillaDSP version,
                 as (major, minor, patch).
         """
         return self.client.cdsp_version
 
-    def library(self) -> tuple[str, str, str]:
+    def library(self) -> Tuple[str, str, str]:
         """
         Read pyCamillaDSP library version.
 
         Returns:
-            tuple[list[str], list[str]] | None: A tuple containing the pyCamillaDSP version,
+            Tuple[List[str], List[str]] | None: A tuple containing the pyCamillaDSP version,
                 as (major, minor, patch).
         """
-        return VERSION.split(".")
+        v = VERSION.split(".")
+        return (v[0], v[1], v[2])
 
 
 class CamillaClient(_CamillaWS):
