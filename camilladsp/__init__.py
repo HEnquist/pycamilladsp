@@ -7,5 +7,3 @@ from camilladsp.datastructures import (
     ProcessingState,
     StopReason,
 )
-
-VERSION = "2.0.0-alpha2"
