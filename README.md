@@ -22,14 +22,13 @@ python get_config.py 1234
 ```
 
 ## set_volume
-Set the volume control to a new value. First argument is websocket port, second is new volume in dB.
-For this to work, CamillaDSP must be running a configuration that has Volume filters in the pipeline for every channel.
+Set the main volume control to a new value. First argument is websocket port, second is new volume in dB.
 ```sh
 python set_volume.py 1234 -12.3
 ```
 
 ## play_wav
-Play a wav file. This example reads a configuration from a file, updates the capture device fto point at a given .wav file, and sends this modified config to CamillaDSP.
+Play a wav file. This example reads a configuration from a file, updates the capture device to point at a given .wav file, and sends this modified config to CamillaDSP.
 Usage example:
 ```sh
 python play_wav.py 1234 /path/to/wavtest.yml /path/to/music.wav
