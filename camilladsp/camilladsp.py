@@ -14,7 +14,7 @@ Reading the main volume is then done by calling `my_client.volume.main()`.
 
 import json
 import math
-from typing import Dict, Tuple, List, Optional
+from typing import Dict, Tuple, List, Optional, Union
 from threading import Lock
 import yaml
 from websocket import create_connection, WebSocket  # type: ignore
@@ -77,7 +77,7 @@ class _CamillaWS:
             raise IOError("Lost connection to CamillaDSP") from err
         return self._handle_reply(command, rawrepl)
 
-    def _handle_reply(self, command: str, rawreply: str|bytes):
+    def _handle_reply(self, command: str, rawreply: Union[str, bytes]):
         try:
             reply = json.loads(rawreply)
             value = None
