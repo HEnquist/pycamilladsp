@@ -248,6 +248,20 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#camilladsp.camilladsp.General.list_capture_devices" class="md-nav__link">
+    list_capture_devices()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#camilladsp.camilladsp.General.list_playback_devices" class="md-nav__link">
+    list_playback_devices()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#camilladsp.camilladsp.General.reload" class="md-nav__link">
     reload()
   </a>
@@ -773,18 +787,18 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#camilladsp.camilladsp.Settings.get_update_interval" class="md-nav__link">
-    get_update_interval()
+  <a href="#camilladsp.camilladsp.Settings.set_update_interval" class="md-nav__link">
+    set_update_interval()
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#camilladsp.camilladsp.Settings.set_update_interval" class="md-nav__link">
-    set_update_interval()
+  <a href="#camilladsp.camilladsp.Settings.update_interval" class="md-nav__link">
+    update_interval()
   </a>
   
-    <nav class="md-nav" aria-label="set_update_interval()">
+    <nav class="md-nav" aria-label="update_interval()">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1091,6 +1105,20 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#camilladsp.camilladsp.General.list_capture_devices" class="md-nav__link">
+    list_capture_devices()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#camilladsp.camilladsp.General.list_playback_devices" class="md-nav__link">
+    list_playback_devices()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#camilladsp.camilladsp.General.reload" class="md-nav__link">
     reload()
   </a>
@@ -1616,18 +1644,18 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#camilladsp.camilladsp.Settings.get_update_interval" class="md-nav__link">
-    get_update_interval()
+  <a href="#camilladsp.camilladsp.Settings.set_update_interval" class="md-nav__link">
+    set_update_interval()
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#camilladsp.camilladsp.Settings.set_update_interval" class="md-nav__link">
-    set_update_interval()
+  <a href="#camilladsp.camilladsp.Settings.update_interval" class="md-nav__link">
+    update_interval()
   </a>
   
-    <nav class="md-nav" aria-label="set_update_interval()">
+    <nav class="md-nav" aria-label="update_interval()">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1802,6 +1830,48 @@ property of a <a class="autorefs autorefs-internal" href="client/#camilladsp.Cam
   <div class="doc doc-contents ">
   
       <p>Stop processing and exit.</p>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="camilladsp.camilladsp.General.list_capture_devices" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">list_capture_devices</span><span class="p">(</span><span class="n">value</span><span class="p">)</span></code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>List the available capture devices for a given backend.
+Returns a list of tuples. Returns the system name and
+a descriptive name for each device.
+For some backends, those two names are identical.</p>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="camilladsp.camilladsp.General.list_playback_devices" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">list_playback_devices</span><span class="p">(</span><span class="n">value</span><span class="p">)</span></code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>List the available playback devices for a given backend.
+Returns a list of tuples. Returns the system name and
+a descriptive name for each device.
+For some backends, those two names are identical.</p>
 
   </div>
 
@@ -3086,24 +3156,6 @@ property of a <a class="autorefs autorefs-internal" href="client/#camilladsp.Cam
 
 
 
-<h2 id="camilladsp.camilladsp.Settings.get_update_interval" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">get_update_interval</span><span class="p">()</span></code>
-
-</h2>
-
-
-  <div class="doc doc-contents ">
-  
-      <p>Get current update interval in ms.</p>
-
-  </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-
 <h2 id="camilladsp.camilladsp.Settings.set_update_interval" class="doc doc-heading">
 <code class="highlight language-python"><span class="n">set_update_interval</span><span class="p">(</span><span class="n">value</span><span class="p">)</span></code>
 
@@ -3113,6 +3165,24 @@ property of a <a class="autorefs autorefs-internal" href="client/#camilladsp.Cam
   <div class="doc doc-contents ">
   
       <p>Set current update interval in ms.</p>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="camilladsp.camilladsp.Settings.update_interval" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">update_interval</span><span class="p">()</span></code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Get current update interval in ms.</p>
 
   </div>
 
@@ -3142,53 +3212,55 @@ property of a <a class="autorefs autorefs-internal" href="client/#camilladsp.Cam
 
         <details class="quote">
           <summary>Source code in <code>camilladsp/camilladsp.py</code></summary>
-          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">813</span>
-<span class="normal">814</span>
-<span class="normal">815</span>
-<span class="normal">816</span>
-<span class="normal">817</span>
-<span class="normal">818</span>
-<span class="normal">819</span>
-<span class="normal">820</span>
-<span class="normal">821</span>
-<span class="normal">822</span>
-<span class="normal">823</span>
-<span class="normal">824</span>
-<span class="normal">825</span>
-<span class="normal">826</span>
-<span class="normal">827</span>
-<span class="normal">828</span>
-<span class="normal">829</span>
-<span class="normal">830</span>
-<span class="normal">831</span>
-<span class="normal">832</span>
-<span class="normal">833</span>
-<span class="normal">834</span>
-<span class="normal">835</span>
-<span class="normal">836</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">Versions</span><span class="p">(</span><span class="n">_CommandGroup</span><span class="p">):</span>
+          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">839</span>
+<span class="normal">840</span>
+<span class="normal">841</span>
+<span class="normal">842</span>
+<span class="normal">843</span>
+<span class="normal">844</span>
+<span class="normal">845</span>
+<span class="normal">846</span>
+<span class="normal">847</span>
+<span class="normal">848</span>
+<span class="normal">849</span>
+<span class="normal">850</span>
+<span class="normal">851</span>
+<span class="normal">852</span>
+<span class="normal">853</span>
+<span class="normal">854</span>
+<span class="normal">855</span>
+<span class="normal">856</span>
+<span class="normal">857</span>
+<span class="normal">858</span>
+<span class="normal">859</span>
+<span class="normal">860</span>
+<span class="normal">861</span>
+<span class="normal">862</span>
+<span class="normal">863</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">Versions</span><span class="p">(</span><span class="n">_CommandGroup</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Version info</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">camilladsp</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]:</span>
+    <span class="k">def</span> <span class="nf">camilladsp</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Read CamillaDSP version.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            tuple[list[str], list[str]] | None: A tuple containing the CamillaDSP version,</span>
+<span class="sd">            Tuple[List[str], List[str]] | None: A tuple containing the CamillaDSP version,</span>
 <span class="sd">                as (major, minor, patch).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">cdsp_version</span>
 
-    <span class="k">def</span> <span class="nf">library</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+    <span class="k">def</span> <span class="nf">library</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Read pyCamillaDSP library version.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            tuple[list[str], list[str]] | None: A tuple containing the pyCamillaDSP version,</span>
+<span class="sd">            Tuple[List[str], List[str]] | None: A tuple containing the pyCamillaDSP version,</span>
 <span class="sd">                as (major, minor, patch).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">_VERSION</span>
+        <span class="n">ver</span> <span class="o">=</span> <span class="n">VERSION</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">ver</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">ver</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">ver</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
 </code></pre></div></td></tr></table></div>
         </details>
 
@@ -3220,20 +3292,20 @@ property of a <a class="autorefs autorefs-internal" href="client/#camilladsp.Cam
 
       <details class="quote">
         <summary>Source code in <code>camilladsp/camilladsp.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">818</span>
-<span class="normal">819</span>
-<span class="normal">820</span>
-<span class="normal">821</span>
-<span class="normal">822</span>
-<span class="normal">823</span>
-<span class="normal">824</span>
-<span class="normal">825</span>
-<span class="normal">826</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">camilladsp</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]:</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">844</span>
+<span class="normal">845</span>
+<span class="normal">846</span>
+<span class="normal">847</span>
+<span class="normal">848</span>
+<span class="normal">849</span>
+<span class="normal">850</span>
+<span class="normal">851</span>
+<span class="normal">852</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">camilladsp</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Read CamillaDSP version.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        tuple[list[str], list[str]] | None: A tuple containing the CamillaDSP version,</span>
+<span class="sd">        Tuple[List[str], List[str]] | None: A tuple containing the CamillaDSP version,</span>
 <span class="sd">            as (major, minor, patch).</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">cdsp_version</span>
@@ -3259,23 +3331,25 @@ property of a <a class="autorefs autorefs-internal" href="client/#camilladsp.Cam
 
       <details class="quote">
         <summary>Source code in <code>camilladsp/camilladsp.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">828</span>
-<span class="normal">829</span>
-<span class="normal">830</span>
-<span class="normal">831</span>
-<span class="normal">832</span>
-<span class="normal">833</span>
-<span class="normal">834</span>
-<span class="normal">835</span>
-<span class="normal">836</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">library</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">854</span>
+<span class="normal">855</span>
+<span class="normal">856</span>
+<span class="normal">857</span>
+<span class="normal">858</span>
+<span class="normal">859</span>
+<span class="normal">860</span>
+<span class="normal">861</span>
+<span class="normal">862</span>
+<span class="normal">863</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">library</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Read pyCamillaDSP library version.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        tuple[list[str], list[str]] | None: A tuple containing the pyCamillaDSP version,</span>
+<span class="sd">        Tuple[List[str], List[str]] | None: A tuple containing the pyCamillaDSP version,</span>
 <span class="sd">            as (major, minor, patch).</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">_VERSION</span>
+    <span class="n">ver</span> <span class="o">=</span> <span class="n">VERSION</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">ver</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">ver</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">ver</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
 </code></pre></div></td></tr></table></div>
       </details>
   </div>

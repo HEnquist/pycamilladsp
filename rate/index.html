@@ -531,7 +531,9 @@
 
         <details class="quote">
           <summary>Source code in <code>camilladsp/camilladsp.py</code></summary>
-          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">676</span>
+          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">674</span>
+<span class="normal">675</span>
+<span class="normal">676</span>
 <span class="normal">677</span>
 <span class="normal">678</span>
 <span class="normal">679</span>
@@ -557,9 +559,7 @@
 <span class="normal">699</span>
 <span class="normal">700</span>
 <span class="normal">701</span>
-<span class="normal">702</span>
-<span class="normal">703</span>
-<span class="normal">704</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">RateMonitor</span><span class="p">(</span><span class="n">_CommandGroup</span><span class="p">):</span>
+<span class="normal">702</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">RateMonitor</span><span class="p">(</span><span class="n">_CommandGroup</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Methods for rate monitoring</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -638,7 +638,9 @@ Returns the nearest common rate, as long as it's within +-4% of the measured val
 
       <details class="quote">
         <summary>Source code in <code>camilladsp/camilladsp.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">691</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">689</span>
+<span class="normal">690</span>
+<span class="normal">691</span>
 <span class="normal">692</span>
 <span class="normal">693</span>
 <span class="normal">694</span>
@@ -649,9 +651,7 @@ Returns the nearest common rate, as long as it's within +-4% of the measured val
 <span class="normal">699</span>
 <span class="normal">700</span>
 <span class="normal">701</span>
-<span class="normal">702</span>
-<span class="normal">703</span>
-<span class="normal">704</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">capture</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+<span class="normal">702</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">capture</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Get current capture rate.</span>
 <span class="sd">    Returns the nearest common rate, as long as it&#39;s within +-4% of the measured value.</span>
@@ -705,15 +705,15 @@ Returns the nearest common rate, as long as it's within +-4% of the measured val
 
       <details class="quote">
         <summary>Source code in <code>camilladsp/camilladsp.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">681</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">679</span>
+<span class="normal">680</span>
+<span class="normal">681</span>
 <span class="normal">682</span>
 <span class="normal">683</span>
 <span class="normal">684</span>
 <span class="normal">685</span>
 <span class="normal">686</span>
-<span class="normal">687</span>
-<span class="normal">688</span>
-<span class="normal">689</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">capture_raw</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="normal">687</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">capture_raw</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Get current capture rate, raw value.</span>
 

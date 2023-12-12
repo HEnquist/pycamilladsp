@@ -260,6 +260,20 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#camilladsp.camilladsp.General.list_capture_devices" class="md-nav__link">
+    list_capture_devices()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#camilladsp.camilladsp.General.list_playback_devices" class="md-nav__link">
+    list_playback_devices()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#camilladsp.camilladsp.General.reload" class="md-nav__link">
     reload()
   </a>
@@ -529,6 +543,20 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#camilladsp.camilladsp.General.list_capture_devices" class="md-nav__link">
+    list_capture_devices()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#camilladsp.camilladsp.General.list_playback_devices" class="md-nav__link">
+    list_playback_devices()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#camilladsp.camilladsp.General.reload" class="md-nav__link">
     reload()
   </a>
@@ -615,7 +643,9 @@
 
         <details class="quote">
           <summary>Source code in <code>camilladsp/camilladsp.py</code></summary>
-          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">732</span>
+          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">730</span>
+<span class="normal">731</span>
+<span class="normal">732</span>
 <span class="normal">733</span>
 <span class="normal">734</span>
 <span class="normal">735</span>
@@ -693,7 +723,33 @@
 <span class="normal">807</span>
 <span class="normal">808</span>
 <span class="normal">809</span>
-<span class="normal">810</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">General</span><span class="p">(</span><span class="n">_CommandGroup</span><span class="p">):</span>
+<span class="normal">810</span>
+<span class="normal">811</span>
+<span class="normal">812</span>
+<span class="normal">813</span>
+<span class="normal">814</span>
+<span class="normal">815</span>
+<span class="normal">816</span>
+<span class="normal">817</span>
+<span class="normal">818</span>
+<span class="normal">819</span>
+<span class="normal">820</span>
+<span class="normal">821</span>
+<span class="normal">822</span>
+<span class="normal">823</span>
+<span class="normal">824</span>
+<span class="normal">825</span>
+<span class="normal">826</span>
+<span class="normal">827</span>
+<span class="normal">828</span>
+<span class="normal">829</span>
+<span class="normal">830</span>
+<span class="normal">831</span>
+<span class="normal">832</span>
+<span class="normal">833</span>
+<span class="normal">834</span>
+<span class="normal">835</span>
+<span class="normal">836</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">General</span><span class="p">(</span><span class="n">_CommandGroup</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Basic commands</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -740,15 +796,15 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;Reload&quot;</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">supported_device_types</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
+    <span class="k">def</span> <span class="nf">supported_device_types</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Read what device types the running CamillaDSP process supports.</span>
 <span class="sd">        Returns a tuple with two lists of device types,</span>
 <span class="sd">        the first for playback and the second for capture.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            tuple[list[str], list[str]]: A tuple containing two lists,</span>
-<span class="sd">                with the supported capture and playback device types.</span>
+<span class="sd">            Tuple[List[str], List[str]]: A tuple containing two lists,</span>
+<span class="sd">                with the supported playback and capture device types.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="p">(</span><span class="n">playback</span><span class="p">,</span> <span class="n">capture</span><span class="p">)</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;GetSupportedDeviceTypes&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="p">(</span><span class="n">playback</span><span class="p">,</span> <span class="n">capture</span><span class="p">)</span>
@@ -772,6 +828,34 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">updated</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;GetStateFileUpdated&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">updated</span>
+
+    <span class="k">def</span> <span class="nf">list_playback_devices</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        List the available playback devices for a given backend.</span>
+<span class="sd">        Returns a list of tuples. Returns the system name and</span>
+<span class="sd">        a descriptive name for each device.</span>
+<span class="sd">        For some backends, those two names are identical.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            List[Tuple[str, str]: A list containing tuples of two strings,</span>
+<span class="sd">                with system device name and a descriptive name.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">devs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;GetAvailablePlaybackDevices&quot;</span><span class="p">,</span> <span class="n">arg</span><span class="o">=</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">devs</span>
+
+    <span class="k">def</span> <span class="nf">list_capture_devices</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        List the available capture devices for a given backend.</span>
+<span class="sd">        Returns a list of tuples. Returns the system name and</span>
+<span class="sd">        a descriptive name for each device.</span>
+<span class="sd">        For some backends, those two names are identical.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            List[Tuple[str, str]: A list containing tuples of two strings,</span>
+<span class="sd">                with system device name and a descriptive name.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">devs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;GetAvailableCaptureDevices&quot;</span><span class="p">,</span> <span class="n">arg</span><span class="o">=</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">devs</span>
 </code></pre></div></td></tr></table></div>
         </details>
 
@@ -803,15 +887,153 @@
 
       <details class="quote">
         <summary>Source code in <code>camilladsp/camilladsp.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">767</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">765</span>
+<span class="normal">766</span>
+<span class="normal">767</span>
 <span class="normal">768</span>
-<span class="normal">769</span>
-<span class="normal">770</span>
-<span class="normal">771</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">exit</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="normal">769</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">exit</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Stop processing and exit.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;Exit&quot;</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="camilladsp.camilladsp.General.list_capture_devices" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">list_capture_devices</span><span class="p">(</span><span class="n">value</span><span class="p">)</span></code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>List the available capture devices for a given backend.
+Returns a list of tuples. Returns the system name and
+a descriptive name for each device.
+For some backends, those two names are identical.</p>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code><span title="typing.List">List</span>[<span title="typing.Tuple">Tuple</span>[str, str]]</code>
+          </td>
+          <td><p>List[Tuple[str, str]: A list containing tuples of two strings,
+with system device name and a descriptive name.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+      <details class="quote">
+        <summary>Source code in <code>camilladsp/camilladsp.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">824</span>
+<span class="normal">825</span>
+<span class="normal">826</span>
+<span class="normal">827</span>
+<span class="normal">828</span>
+<span class="normal">829</span>
+<span class="normal">830</span>
+<span class="normal">831</span>
+<span class="normal">832</span>
+<span class="normal">833</span>
+<span class="normal">834</span>
+<span class="normal">835</span>
+<span class="normal">836</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">list_capture_devices</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    List the available capture devices for a given backend.</span>
+<span class="sd">    Returns a list of tuples. Returns the system name and</span>
+<span class="sd">    a descriptive name for each device.</span>
+<span class="sd">    For some backends, those two names are identical.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        List[Tuple[str, str]: A list containing tuples of two strings,</span>
+<span class="sd">            with system device name and a descriptive name.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">devs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;GetAvailableCaptureDevices&quot;</span><span class="p">,</span> <span class="n">arg</span><span class="o">=</span><span class="n">value</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">devs</span>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="camilladsp.camilladsp.General.list_playback_devices" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">list_playback_devices</span><span class="p">(</span><span class="n">value</span><span class="p">)</span></code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>List the available playback devices for a given backend.
+Returns a list of tuples. Returns the system name and
+a descriptive name for each device.
+For some backends, those two names are identical.</p>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code><span title="typing.List">List</span>[<span title="typing.Tuple">Tuple</span>[str, str]]</code>
+          </td>
+          <td><p>List[Tuple[str, str]: A list containing tuples of two strings,
+with system device name and a descriptive name.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+      <details class="quote">
+        <summary>Source code in <code>camilladsp/camilladsp.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">810</span>
+<span class="normal">811</span>
+<span class="normal">812</span>
+<span class="normal">813</span>
+<span class="normal">814</span>
+<span class="normal">815</span>
+<span class="normal">816</span>
+<span class="normal">817</span>
+<span class="normal">818</span>
+<span class="normal">819</span>
+<span class="normal">820</span>
+<span class="normal">821</span>
+<span class="normal">822</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">list_playback_devices</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    List the available playback devices for a given backend.</span>
+<span class="sd">    Returns a list of tuples. Returns the system name and</span>
+<span class="sd">    a descriptive name for each device.</span>
+<span class="sd">    For some backends, those two names are identical.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        List[Tuple[str, str]: A list containing tuples of two strings,</span>
+<span class="sd">            with system device name and a descriptive name.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">devs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;GetAvailablePlaybackDevices&quot;</span><span class="p">,</span> <span class="n">arg</span><span class="o">=</span><span class="n">value</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">devs</span>
 </code></pre></div></td></tr></table></div>
       </details>
   </div>
@@ -834,11 +1056,11 @@
 
       <details class="quote">
         <summary>Source code in <code>camilladsp/camilladsp.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">773</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">771</span>
+<span class="normal">772</span>
+<span class="normal">773</span>
 <span class="normal">774</span>
-<span class="normal">775</span>
-<span class="normal">776</span>
-<span class="normal">777</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">reload</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="normal">775</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">reload</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Reload config from disk.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -883,15 +1105,15 @@
 
       <details class="quote">
         <summary>Source code in <code>camilladsp/camilladsp.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">739</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">737</span>
+<span class="normal">738</span>
+<span class="normal">739</span>
 <span class="normal">740</span>
 <span class="normal">741</span>
 <span class="normal">742</span>
 <span class="normal">743</span>
 <span class="normal">744</span>
-<span class="normal">745</span>
-<span class="normal">746</span>
-<span class="normal">747</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">state</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ProcessingState</span><span class="p">]:</span>
+<span class="normal">745</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">state</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ProcessingState</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Get current processing state.</span>
 
@@ -940,15 +1162,15 @@
 
       <details class="quote">
         <summary>Source code in <code>camilladsp/camilladsp.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">792</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">790</span>
+<span class="normal">791</span>
+<span class="normal">792</span>
 <span class="normal">793</span>
 <span class="normal">794</span>
 <span class="normal">795</span>
 <span class="normal">796</span>
 <span class="normal">797</span>
-<span class="normal">798</span>
-<span class="normal">799</span>
-<span class="normal">800</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">state_file_path</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="normal">798</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">state_file_path</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Get path to current state file.</span>
 
@@ -997,15 +1219,15 @@
 
       <details class="quote">
         <summary>Source code in <code>camilladsp/camilladsp.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">802</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">800</span>
+<span class="normal">801</span>
+<span class="normal">802</span>
 <span class="normal">803</span>
 <span class="normal">804</span>
 <span class="normal">805</span>
 <span class="normal">806</span>
 <span class="normal">807</span>
-<span class="normal">808</span>
-<span class="normal">809</span>
-<span class="normal">810</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">state_file_updated</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="normal">808</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">state_file_updated</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Check if all changes have been saved to the state file.</span>
 
@@ -1036,11 +1258,11 @@
 
       <details class="quote">
         <summary>Source code in <code>camilladsp/camilladsp.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">761</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">759</span>
+<span class="normal">760</span>
+<span class="normal">761</span>
 <span class="normal">762</span>
-<span class="normal">763</span>
-<span class="normal">764</span>
-<span class="normal">765</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="normal">763</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Stop processing and wait for new config if wait mode is active, else exit.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -1085,15 +1307,15 @@
 
       <details class="quote">
         <summary>Source code in <code>camilladsp/camilladsp.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">749</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">747</span>
+<span class="normal">748</span>
+<span class="normal">749</span>
 <span class="normal">750</span>
 <span class="normal">751</span>
 <span class="normal">752</span>
 <span class="normal">753</span>
 <span class="normal">754</span>
-<span class="normal">755</span>
-<span class="normal">756</span>
-<span class="normal">757</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">stop_reason</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">StopReason</span><span class="p">:</span>
+<span class="normal">755</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">stop_reason</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">StopReason</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Get reason why processing stopped.</span>
 
@@ -1135,17 +1357,19 @@ the first for playback and the second for capture.</p>
     <tbody>
         <tr>
           <td>
-                <code>tuple[list[str], list[str]]</code>
+                <code><span title="typing.Tuple">Tuple</span>[<span title="typing.List">List</span>[str], <span title="typing.List">List</span>[str]]</code>
           </td>
-          <td><p>tuple[list[str], list[str]]: A tuple containing two lists,
-with the supported capture and playback device types.</p></td>
+          <td><p>Tuple[List[str], List[str]]: A tuple containing two lists,
+with the supported playback and capture device types.</p></td>
         </tr>
     </tbody>
   </table>
 
       <details class="quote">
         <summary>Source code in <code>camilladsp/camilladsp.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">779</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">777</span>
+<span class="normal">778</span>
+<span class="normal">779</span>
 <span class="normal">780</span>
 <span class="normal">781</span>
 <span class="normal">782</span>
@@ -1154,17 +1378,15 @@ with the supported capture and playback device types.</p></td>
 <span class="normal">785</span>
 <span class="normal">786</span>
 <span class="normal">787</span>
-<span class="normal">788</span>
-<span class="normal">789</span>
-<span class="normal">790</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">supported_device_types</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
+<span class="normal">788</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">supported_device_types</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Read what device types the running CamillaDSP process supports.</span>
 <span class="sd">    Returns a tuple with two lists of device types,</span>
 <span class="sd">    the first for playback and the second for capture.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        tuple[list[str], list[str]]: A tuple containing two lists,</span>
-<span class="sd">            with the supported capture and playback device types.</span>
+<span class="sd">        Tuple[List[str], List[str]]: A tuple containing two lists,</span>
+<span class="sd">            with the supported playback and capture device types.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="p">(</span><span class="n">playback</span><span class="p">,</span> <span class="n">capture</span><span class="p">)</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;GetSupportedDeviceTypes&quot;</span><span class="p">)</span>
     <span class="k">return</span> <span class="p">(</span><span class="n">playback</span><span class="p">,</span> <span class="n">capture</span><span class="p">)</span>

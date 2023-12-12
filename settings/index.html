@@ -358,15 +358,15 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#camilladsp.camilladsp.Settings.get_update_interval" class="md-nav__link">
-    get_update_interval()
+  <a href="#camilladsp.camilladsp.Settings.set_update_interval" class="md-nav__link">
+    set_update_interval()
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#camilladsp.camilladsp.Settings.set_update_interval" class="md-nav__link">
-    set_update_interval()
+  <a href="#camilladsp.camilladsp.Settings.update_interval" class="md-nav__link">
+    update_interval()
   </a>
   
 </li>
@@ -480,15 +480,15 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#camilladsp.camilladsp.Settings.get_update_interval" class="md-nav__link">
-    get_update_interval()
+  <a href="#camilladsp.camilladsp.Settings.set_update_interval" class="md-nav__link">
+    set_update_interval()
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#camilladsp.camilladsp.Settings.set_update_interval" class="md-nav__link">
-    set_update_interval()
+  <a href="#camilladsp.camilladsp.Settings.update_interval" class="md-nav__link">
+    update_interval()
   </a>
   
 </li>
@@ -531,7 +531,9 @@
 
         <details class="quote">
           <summary>Source code in <code>camilladsp/camilladsp.py</code></summary>
-          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">707</span>
+          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">705</span>
+<span class="normal">706</span>
+<span class="normal">707</span>
 <span class="normal">708</span>
 <span class="normal">709</span>
 <span class="normal">710</span>
@@ -551,14 +553,12 @@
 <span class="normal">724</span>
 <span class="normal">725</span>
 <span class="normal">726</span>
-<span class="normal">727</span>
-<span class="normal">728</span>
-<span class="normal">729</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">Settings</span><span class="p">(</span><span class="n">_CommandGroup</span><span class="p">):</span>
+<span class="normal">727</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">Settings</span><span class="p">(</span><span class="n">_CommandGroup</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Methods for various settings</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">get_update_interval</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">update_interval</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get current update interval in ms.</span>
 
@@ -590,63 +590,6 @@
 
 
 
-
-<div class="doc doc-object doc-function">
-
-
-
-<h2 id="camilladsp.camilladsp.Settings.get_update_interval" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">get_update_interval</span><span class="p">()</span></code>
-
-</h2>
-
-
-  <div class="doc doc-contents ">
-  
-      <p>Get current update interval in ms.</p>
-
-  <p><strong>Returns:</strong></p>
-  <table>
-    <thead>
-      <tr>
-<th>Name</th>        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-        <tr>
-<td><code>int</code></td>          <td>
-                <code>int</code>
-          </td>
-          <td><p>Current update interval.</p></td>
-        </tr>
-    </tbody>
-  </table>
-
-      <details class="quote">
-        <summary>Source code in <code>camilladsp/camilladsp.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">712</span>
-<span class="normal">713</span>
-<span class="normal">714</span>
-<span class="normal">715</span>
-<span class="normal">716</span>
-<span class="normal">717</span>
-<span class="normal">718</span>
-<span class="normal">719</span>
-<span class="normal">720</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_update_interval</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Get current update interval in ms.</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        int: Current update interval.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">interval</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;GetUpdateInterval&quot;</span><span class="p">)</span>
-    <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">interval</span><span class="p">)</span>
-</code></pre></div></td></tr></table></div>
-      </details>
-  </div>
-
-</div>
 
 <div class="doc doc-object doc-function">
 
@@ -688,14 +631,14 @@
 
       <details class="quote">
         <summary>Source code in <code>camilladsp/camilladsp.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">722</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">720</span>
+<span class="normal">721</span>
+<span class="normal">722</span>
 <span class="normal">723</span>
 <span class="normal">724</span>
 <span class="normal">725</span>
 <span class="normal">726</span>
-<span class="normal">727</span>
-<span class="normal">728</span>
-<span class="normal">729</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">set_update_interval</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+<span class="normal">727</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">set_update_interval</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Set current update interval in ms.</span>
 
@@ -703,6 +646,63 @@
 <span class="sd">        value (int): New update interval.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;SetUpdateInterval&quot;</span><span class="p">,</span> <span class="n">arg</span><span class="o">=</span><span class="n">value</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="camilladsp.camilladsp.Settings.update_interval" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">update_interval</span><span class="p">()</span></code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Get current update interval in ms.</p>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+<th>Name</th>        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+<td><code>int</code></td>          <td>
+                <code>int</code>
+          </td>
+          <td><p>Current update interval.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+      <details class="quote">
+        <summary>Source code in <code>camilladsp/camilladsp.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">710</span>
+<span class="normal">711</span>
+<span class="normal">712</span>
+<span class="normal">713</span>
+<span class="normal">714</span>
+<span class="normal">715</span>
+<span class="normal">716</span>
+<span class="normal">717</span>
+<span class="normal">718</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">update_interval</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get current update interval in ms.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        int: Current update interval.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">interval</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;GetUpdateInterval&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">interval</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
       </details>
   </div>

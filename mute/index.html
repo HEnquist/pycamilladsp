@@ -573,7 +573,9 @@
 
         <details class="quote">
           <summary>Source code in <code>camilladsp/camilladsp.py</code></summary>
-          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">610</span>
+          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">608</span>
+<span class="normal">609</span>
+<span class="normal">610</span>
 <span class="normal">611</span>
 <span class="normal">612</span>
 <span class="normal">613</span>
@@ -634,9 +636,7 @@
 <span class="normal">668</span>
 <span class="normal">669</span>
 <span class="normal">670</span>
-<span class="normal">671</span>
-<span class="normal">672</span>
-<span class="normal">673</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">Mute</span><span class="p">(</span><span class="n">_CommandGroup</span><span class="p">):</span>
+<span class="normal">671</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">Mute</span><span class="p">(</span><span class="n">_CommandGroup</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Collection of methods for mute control</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -685,7 +685,7 @@
 <span class="sd">                Selected using an integer, 0 for `Main` and 1 to 4 for `Aux1` to `Aux4`.</span>
 <span class="sd">            value (bool): New mute setting.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">_fader</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;SetFaderMute&quot;</span><span class="p">,</span> <span class="n">arg</span><span class="o">=</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">fader</span><span class="p">),</span> <span class="nb">bool</span><span class="p">(</span><span class="n">value</span><span class="p">)))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;SetFaderMute&quot;</span><span class="p">,</span> <span class="n">arg</span><span class="o">=</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">fader</span><span class="p">),</span> <span class="nb">bool</span><span class="p">(</span><span class="n">value</span><span class="p">)))</span>
 
     <span class="k">def</span> <span class="nf">toggle_fader</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fader</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -774,7 +774,9 @@ Selected using an integer, 0 for <code>Main</code> and 1 to 4 for <code>Aux1</co
 
       <details class="quote">
         <summary>Source code in <code>camilladsp/camilladsp.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">636</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">634</span>
+<span class="normal">635</span>
+<span class="normal">636</span>
 <span class="normal">637</span>
 <span class="normal">638</span>
 <span class="normal">639</span>
@@ -784,9 +786,7 @@ Selected using an integer, 0 for <code>Main</code> and 1 to 4 for <code>Aux1</co
 <span class="normal">643</span>
 <span class="normal">644</span>
 <span class="normal">645</span>
-<span class="normal">646</span>
-<span class="normal">647</span>
-<span class="normal">648</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">fader</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fader</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="normal">646</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">fader</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fader</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Get current mute setting for a fader.</span>
 
@@ -840,16 +840,16 @@ Equivalent to calling <code>get_fader()</code> with <code>fader=0</code>.</p>
 
       <details class="quote">
         <summary>Source code in <code>camilladsp/camilladsp.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">615</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">613</span>
+<span class="normal">614</span>
+<span class="normal">615</span>
 <span class="normal">616</span>
 <span class="normal">617</span>
 <span class="normal">618</span>
 <span class="normal">619</span>
 <span class="normal">620</span>
 <span class="normal">621</span>
-<span class="normal">622</span>
-<span class="normal">623</span>
-<span class="normal">624</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="normal">622</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Get current main mute setting.</span>
 <span class="sd">    Equivalent to calling `get_fader()` with `fader=0`.</span>
@@ -916,16 +916,16 @@ Selected using an integer, 0 for <code>Main</code> and 1 to 4 for <code>Aux1</co
 
       <details class="quote">
         <summary>Source code in <code>camilladsp/camilladsp.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">650</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">648</span>
+<span class="normal">649</span>
+<span class="normal">650</span>
 <span class="normal">651</span>
 <span class="normal">652</span>
 <span class="normal">653</span>
 <span class="normal">654</span>
 <span class="normal">655</span>
 <span class="normal">656</span>
-<span class="normal">657</span>
-<span class="normal">658</span>
-<span class="normal">659</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">set_fader</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fader</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">bool</span><span class="p">):</span>
+<span class="normal">657</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">set_fader</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fader</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">bool</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Set mute status for a fader, true or false.</span>
 
@@ -934,7 +934,7 @@ Selected using an integer, 0 for <code>Main</code> and 1 to 4 for <code>Aux1</co
 <span class="sd">            Selected using an integer, 0 for `Main` and 1 to 4 for `Aux1` to `Aux4`.</span>
 <span class="sd">        value (bool): New mute setting.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">_fader</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;SetFaderMute&quot;</span><span class="p">,</span> <span class="n">arg</span><span class="o">=</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">fader</span><span class="p">),</span> <span class="nb">bool</span><span class="p">(</span><span class="n">value</span><span class="p">)))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;SetFaderMute&quot;</span><span class="p">,</span> <span class="n">arg</span><span class="o">=</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">fader</span><span class="p">),</span> <span class="nb">bool</span><span class="p">(</span><span class="n">value</span><span class="p">)))</span>
 </code></pre></div></td></tr></table></div>
       </details>
   </div>
@@ -982,15 +982,15 @@ Equivalent to calling <code>set_fader()</code> with <code>fader=0</code>.</p>
 
       <details class="quote">
         <summary>Source code in <code>camilladsp/camilladsp.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">626</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">624</span>
+<span class="normal">625</span>
+<span class="normal">626</span>
 <span class="normal">627</span>
 <span class="normal">628</span>
 <span class="normal">629</span>
 <span class="normal">630</span>
 <span class="normal">631</span>
-<span class="normal">632</span>
-<span class="normal">633</span>
-<span class="normal">634</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">set_main</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">bool</span><span class="p">):</span>
+<span class="normal">632</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">set_main</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">bool</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Set main mute, true or false.</span>
 <span class="sd">    Equivalent to calling `set_fader()` with `fader=0`.</span>
@@ -1064,7 +1064,9 @@ Selected using an integer, 0 for <code>Main</code> and 1 to 4 for <code>Aux1</co
 
       <details class="quote">
         <summary>Source code in <code>camilladsp/camilladsp.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">661</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">659</span>
+<span class="normal">660</span>
+<span class="normal">661</span>
 <span class="normal">662</span>
 <span class="normal">663</span>
 <span class="normal">664</span>
@@ -1074,9 +1076,7 @@ Selected using an integer, 0 for <code>Main</code> and 1 to 4 for <code>Aux1</co
 <span class="normal">668</span>
 <span class="normal">669</span>
 <span class="normal">670</span>
-<span class="normal">671</span>
-<span class="normal">672</span>
-<span class="normal">673</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">toggle_fader</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fader</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="normal">671</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">toggle_fader</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fader</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Toggle mute status for a fader.</span>
 

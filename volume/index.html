@@ -667,9 +667,7 @@
 <span class="normal">602</span>
 <span class="normal">603</span>
 <span class="normal">604</span>
-<span class="normal">605</span>
-<span class="normal">606</span>
-<span class="normal">607</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">Volume</span><span class="p">(</span><span class="n">_CommandGroup</span><span class="p">):</span>
+<span class="normal">605</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">Volume</span><span class="p">(</span><span class="n">_CommandGroup</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Collection of methods for volume and mute control</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -718,7 +716,7 @@
 <span class="sd">                Selected using an integer, 0 for `Main` and 1 to 4 for `Aux1` to `Aux4`.</span>
 <span class="sd">            vol (float): New volume setting.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">_fader</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;SetFaderVolume&quot;</span><span class="p">,</span> <span class="n">arg</span><span class="o">=</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">fader</span><span class="p">),</span> <span class="nb">float</span><span class="p">(</span><span class="n">vol</span><span class="p">)))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;SetFaderVolume&quot;</span><span class="p">,</span> <span class="n">arg</span><span class="o">=</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">fader</span><span class="p">),</span> <span class="nb">float</span><span class="p">(</span><span class="n">vol</span><span class="p">)))</span>
 
     <span class="k">def</span> <span class="nf">set_fader_external</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fader</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">vol</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -731,9 +729,7 @@
 <span class="sd">                Selected using an integer, 0 for `Main` and 1 to 4 for `Aux1` to `Aux4`.</span>
 <span class="sd">            vol (float): New volume setting.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">_fader</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">query</span><span class="p">(</span>
-            <span class="s2">&quot;SetFaderExternalVolume&quot;</span><span class="p">,</span> <span class="n">arg</span><span class="o">=</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">fader</span><span class="p">),</span> <span class="nb">float</span><span class="p">(</span><span class="n">vol</span><span class="p">))</span>
-        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;SetFaderExternalVolume&quot;</span><span class="p">,</span> <span class="n">arg</span><span class="o">=</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">fader</span><span class="p">),</span> <span class="nb">float</span><span class="p">(</span><span class="n">vol</span><span class="p">)))</span>
 
     <span class="k">def</span> <span class="nf">adjust_fader</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fader</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -837,7 +833,9 @@ Selected using an integer, 0 for <code>Main</code> and 1 to 4 for <code>Aux1</co
 
       <details class="quote">
         <summary>Source code in <code>camilladsp/camilladsp.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">591</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">589</span>
+<span class="normal">590</span>
+<span class="normal">591</span>
 <span class="normal">592</span>
 <span class="normal">593</span>
 <span class="normal">594</span>
@@ -851,9 +849,7 @@ Selected using an integer, 0 for <code>Main</code> and 1 to 4 for <code>Aux1</co
 <span class="normal">602</span>
 <span class="normal">603</span>
 <span class="normal">604</span>
-<span class="normal">605</span>
-<span class="normal">606</span>
-<span class="normal">607</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">adjust_fader</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fader</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="normal">605</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">adjust_fader</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fader</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Adjust volume for the given fader in dB.</span>
 <span class="sd">    Positive values increase the volume, negative decrease.</span>
@@ -1095,7 +1091,7 @@ Selected using an integer, 0 for <code>Main</code> and 1 to 4 for <code>Aux1</co
 <span class="sd">            Selected using an integer, 0 for `Main` and 1 to 4 for `Aux1` to `Aux4`.</span>
 <span class="sd">        vol (float): New volume setting.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">_fader</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;SetFaderVolume&quot;</span><span class="p">,</span> <span class="n">arg</span><span class="o">=</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">fader</span><span class="p">),</span> <span class="nb">float</span><span class="p">(</span><span class="n">vol</span><span class="p">)))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;SetFaderVolume&quot;</span><span class="p">,</span> <span class="n">arg</span><span class="o">=</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">fader</span><span class="p">),</span> <span class="nb">float</span><span class="p">(</span><span class="n">vol</span><span class="p">)))</span>
 </code></pre></div></td></tr></table></div>
       </details>
   </div>
@@ -1166,9 +1162,7 @@ Selected using an integer, 0 for <code>Main</code> and 1 to 4 for <code>Aux1</co
 <span class="normal">584</span>
 <span class="normal">585</span>
 <span class="normal">586</span>
-<span class="normal">587</span>
-<span class="normal">588</span>
-<span class="normal">589</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">set_fader_external</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fader</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">vol</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
+<span class="normal">587</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">set_fader_external</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fader</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">vol</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Special command for setting the volume when a &quot;Loudness&quot; filter</span>
 <span class="sd">    is being combined with an external volume control (without a &quot;Volume&quot; filter).</span>
@@ -1179,9 +1173,7 @@ Selected using an integer, 0 for <code>Main</code> and 1 to 4 for <code>Aux1</co
 <span class="sd">            Selected using an integer, 0 for `Main` and 1 to 4 for `Aux1` to `Aux4`.</span>
 <span class="sd">        vol (float): New volume setting.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">_fader</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">query</span><span class="p">(</span>
-        <span class="s2">&quot;SetFaderExternalVolume&quot;</span><span class="p">,</span> <span class="n">arg</span><span class="o">=</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">fader</span><span class="p">),</span> <span class="nb">float</span><span class="p">(</span><span class="n">vol</span><span class="p">))</span>
-    <span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;SetFaderExternalVolume&quot;</span><span class="p">,</span> <span class="n">arg</span><span class="o">=</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">fader</span><span class="p">),</span> <span class="nb">float</span><span class="p">(</span><span class="n">vol</span><span class="p">)))</span>
 </code></pre></div></td></tr></table></div>
       </details>
   </div>

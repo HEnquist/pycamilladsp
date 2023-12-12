@@ -920,7 +920,7 @@ The StopReason enums carry additional data:
   Carries the estimated new sample rate as an integer.
   A value of 0 means the new rate is unknown.</p>
 <p>The additional data can be accessed by reading the <code>data</code> property.</p>
-<pre><code class="language-python">reason = cdsp.get_stop_reason()
+<pre><code class="language-python">reason = cdsp.general.stop_reason()
 if reason == StopReason.CAPTUREERROR:
     error_msg = reason.data
     print(f&quot;Capture failed, error: {error_msg}&quot;)
@@ -988,7 +988,7 @@ if reason == StopReason.CAPTUREERROR:
 
 <span class="sd">    The additional data can be accessed by reading the `data` property.</span>
 <span class="sd">    ```python</span>
-<span class="sd">    reason = cdsp.get_stop_reason()</span>
+<span class="sd">    reason = cdsp.general.stop_reason()</span>
 <span class="sd">    if reason == StopReason.CAPTUREERROR:</span>
 <span class="sd">        error_msg = reason.data</span>
 <span class="sd">        print(f&quot;Capture failed, error: {error_msg}&quot;)</span>
