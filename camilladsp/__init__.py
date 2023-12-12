@@ -1,1 +1,9 @@
-from camilladsp.camilladsp import CamillaConnection, CamillaError, ProcessingState, StopReason
+"""
+Python library for communicating with CamillaDSP.
+"""
+
+from camilladsp.camilladsp import CamillaClient, CamillaError
+from camilladsp.datastructures import (
+    ProcessingState,
+    StopReason,
+)

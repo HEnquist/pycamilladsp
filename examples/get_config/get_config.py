@@ -1,5 +1,5 @@
 # get config
-from camilladsp import CamillaConnection
+from camilladsp import CamillaClient
 import sys
 import time
 
@@ -12,10 +12,10 @@ except:
     print("> python get_config.py 4321")
     sys.exit()
 
-cdsp = CamillaConnection("127.0.0.1", port)
+cdsp = CamillaClient("127.0.0.1", port)
 cdsp.connect()
 
-conf = cdsp.get_config()
+conf = cdsp.config.active()
 
 # Get some single parameters
 print(f'Capture device type: {conf["devices"]["capture"]["type"]}')

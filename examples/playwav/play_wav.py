@@ -1,5 +1,5 @@
 # play wav
-from camilladsp import CamillaConnection
+from camilladsp import CamillaClient
 import sys
 import os
 import yaml
@@ -37,13 +37,12 @@ capt_device = {
 cfg["devices"]["capture_samplerate"] = wav_info["SampleRate"]
 cfg["devices"]["enable_rate_adjust"] = False
 if cfg["devices"]["samplerate"] != cfg["devices"]["capture_samplerate"]:
-    cfg["devices"]["enable_resampling"] = True
-    cfg["devices"]["resampler_type"] = "Synchronous"
+    cfg["devices"]["resampler"] = {"type": "Synchronous"}
 else:
-    cfg["devices"]["enable_resampling"] = False
+    cfg["devices"]["resampler"] = None
 cfg["devices"]["capture"] = capt_device
 
 # Send the modded config
-cdsp = CamillaConnection("127.0.0.1", port)
+cdsp = CamillaClient("127.0.0.1", port)
 cdsp.connect()
-cdsp.set_config(cfg)
+cdsp.config.set_active(cfg)
