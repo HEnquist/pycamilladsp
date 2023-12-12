@@ -77,7 +77,7 @@ class _CamillaWS:
             raise IOError("Lost connection to CamillaDSP") from err
         return self._handle_reply(command, rawrepl)
 
-    def _handle_reply(self, command: str, rawreply: str):
+    def _handle_reply(self, command: str, rawreply: str|bytes):
         try:
             reply = json.loads(rawreply)
             value = None
@@ -92,9 +92,9 @@ class _CamillaWS:
                 if state == "Ok" and value is not None:
                     return value
                 return None
-            raise IOError(f"Invalid response received: {rawreply}")
+            raise IOError(f"Invalid response received: {rawreply!r}")
         except json.JSONDecodeError as err:
-            raise IOError(f"Invalid response received: {rawreply}") from err
+            raise IOError(f"Invalid response received: {rawreply!r}") from err
 
     def _update_version(self, resp: str):
         version = resp.split(".", 3)
