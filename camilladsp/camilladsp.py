@@ -878,6 +878,10 @@ class CamillaClient(_CamillaWS):
         """
         Create a new CamillaClient.
 
+        The newly created CamillaClient does not
+        automatically connect to the CamillaDSP process.
+        Call `connect()` to initiate the connection.
+
         Args:
             host (str): Hostname where CamillaDSP runs.
             port (int): Port number of the CamillaDSP websocket server.

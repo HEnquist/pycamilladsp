@@ -5,8 +5,8 @@ The custom exception [CamillaError][camilladsp.camilladsp.CamillaError] is raise
 
 Different exceptions are raised in different situations. Consider the following example:
 ```python
-from camilladsp import CamillaConnection, CamillaError
-cdsp = CamillaConnection("127.0.0.1", 1234)
+from camilladsp import CamillaClient, CamillaError
+cdsp = CamillaClient("127.0.0.1", 1234)
 
 myconfig = # get a config from somewhere
 try:
@@ -19,9 +19,10 @@ except CamillaError as e:
 except IOError as e:
     print("Websocket is not connected:", e)
 ```
-- `ConnectionRefusedError` means that CamillaDSP isn't responding on the given host and port. 
+- `ConnectionRefusedError` means that CamillaDSP isn't responding on the given host and port.
 - `CamillaError` means that the command was sent and CamillaDSP replied with an error.
-- `IOError` can mean a few things, but the most likely is that the websocket connection was lost. This happens if the CamillaDSP process exits or is restarted. 
+- `IOError` can mean a few things, but the most likely is that the websocket connection was lost.
+  This happens if the CamillaDSP process exits or is restarted.
 
 ## CamillaError
 ::: camilladsp.camilladsp.CamillaError
