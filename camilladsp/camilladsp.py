@@ -27,7 +27,7 @@ from .datastructures import (
     _reason_from_reply,
 )
 
-VERSION = "2.0.0"
+VERSION = "2.0.1"
 
 
 class CamillaError(ValueError):
@@ -877,6 +877,10 @@ class CamillaClient(_CamillaWS):
     def __init__(self, host: str, port: int):
         """
         Create a new CamillaClient.
+
+        The newly created CamillaClient does not
+        automatically connect to the CamillaDSP process.
+        Call `connect()` to initiate the connection.
 
         Args:
             host (str): Hostname where CamillaDSP runs.
