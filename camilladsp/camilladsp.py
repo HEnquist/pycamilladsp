@@ -667,7 +667,7 @@ class Mute(_CommandGroup):
         Returns:
             bool: True if the new status is muted, False otherwise.
         """
-        _fader, new_mute = self.client.query("SetFaderMute", arg=int(fader))
+        _fader, new_mute = self.client.query("ToggleFaderMute", arg=int(fader))
         return new_mute
 
 
