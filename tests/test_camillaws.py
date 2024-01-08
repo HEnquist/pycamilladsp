@@ -34,6 +34,15 @@ class DummyWS:
         '{"GetFaderVolume": 1}': json.dumps(
             {"GetFaderVolume": {"result": "Ok", "value": [1, -1.23]}}
         ),
+        '{"AdjustFaderVolume": [1, -2.5]}': json.dumps(
+            {"AdjustFaderVolume": {"result": "Ok", "value": [1, -3.73]}}
+        ),
+        '{"GetFaderMute": 1}': json.dumps(
+            {"GetFaderMute": {"result": "Ok", "value": [1, False]}}
+        ),
+        '{"ToggleFaderMute": 1}': json.dumps(
+            {"ToggleFaderMute": {"result": "Ok", "value": [1, True]}}
+        ),
         '"GetErrorValue"': json.dumps(
             {"GetErrorValue": {"result": "Error", "value": "badstuff"}}
         ),
@@ -215,6 +224,9 @@ def test_query_mockedws(camilla_mockws):
     assert camilla_mockws.dummyws.query == json.dumps({"SetSomeValue": 123})
     assert camilla_mockws.general.supported_device_types() == (["a", "b"], ["c", "d"])
     assert camilla_mockws.volume.fader(1) == -1.23
+    assert camilla_mockws.volume.adjust_fader(1, -2.5) == -3.73
+    assert camilla_mockws.mute.fader(1) == False
+    assert camilla_mockws.mute.toggle_fader(1) == True
 
 
 def test_queries(camilla_mockquery):
@@ -256,10 +268,14 @@ def test_queries(camilla_mockquery):
     camilla_mockquery.query.assert_called_with("GetVolume")
     camilla_mockquery.volume.set_main(-25.0)
     camilla_mockquery.query.assert_called_with("SetVolume", arg=-25.0)
+    camilla_mockquery.volume.set_fader(1, -1.23)
+    camilla_mockquery.query.assert_called_with("SetFaderVolume", arg=(1, -1.23))
     camilla_mockquery.mute.main()
     camilla_mockquery.query.assert_called_with("GetMute")
     camilla_mockquery.mute.set_main(False)
     camilla_mockquery.query.assert_called_with("SetMute", arg=False)
+    camilla_mockquery.mute.set_fader(1, False)
+    camilla_mockquery.query.assert_called_with("SetFaderMute", arg=(1, False))
     camilla_mockquery.levels.capture_rms()
     camilla_mockquery.query.assert_called_with("GetCaptureSignalRms")
     camilla_mockquery.levels.capture_peak()
@@ -268,8 +284,6 @@ def test_queries(camilla_mockquery):
     camilla_mockquery.query.assert_called_with("GetPlaybackSignalRms")
     camilla_mockquery.levels.playback_peak()
     camilla_mockquery.query.assert_called_with("GetPlaybackSignalPeak")
-    camilla_mockquery.volume.set_fader(1, -1.23)
-    camilla_mockquery.query.assert_called_with("SetFaderVolume", arg=(1, -1.23))
 
 
 def test_queries_adv(camilla_mockquery_yaml):

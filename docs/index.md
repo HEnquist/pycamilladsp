@@ -19,6 +19,7 @@ and the method for changing the main volume is called `set_main`.
 Example:
 ```py
 client = CamillaClient("localhost", 1234)
+client.connect()
 
 volume = client.volume.main()
 mute = client.mute.main()
