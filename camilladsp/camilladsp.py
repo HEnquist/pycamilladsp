@@ -27,7 +27,7 @@ from .datastructures import (
     _reason_from_reply,
 )
 
-VERSION = "2.0.1"
+VERSION = "2.0.2"
 
 
 class CamillaError(ValueError):
