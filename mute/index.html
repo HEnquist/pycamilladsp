@@ -698,7 +698,7 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            bool: True if the new status is muted, False otherwise.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">_fader</span><span class="p">,</span> <span class="n">new_mute</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;SetFaderMute&quot;</span><span class="p">,</span> <span class="n">arg</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">fader</span><span class="p">))</span>
+        <span class="n">_fader</span><span class="p">,</span> <span class="n">new_mute</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;ToggleFaderMute&quot;</span><span class="p">,</span> <span class="n">arg</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">fader</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">new_mute</span>
 </code></pre></div></td></tr></table></div>
         </details>
@@ -1087,7 +1087,7 @@ Selected using an integer, 0 for <code>Main</code> and 1 to 4 for <code>Aux1</co
 <span class="sd">    Returns:</span>
 <span class="sd">        bool: True if the new status is muted, False otherwise.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">_fader</span><span class="p">,</span> <span class="n">new_mute</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;SetFaderMute&quot;</span><span class="p">,</span> <span class="n">arg</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">fader</span><span class="p">))</span>
+    <span class="n">_fader</span><span class="p">,</span> <span class="n">new_mute</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;ToggleFaderMute&quot;</span><span class="p">,</span> <span class="n">arg</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">fader</span><span class="p">))</span>
     <span class="k">return</span> <span class="n">new_mute</span>
 </code></pre></div></td></tr></table></div>
       </details>

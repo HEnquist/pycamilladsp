@@ -767,7 +767,11 @@
 <span class="normal">955</span>
 <span class="normal">956</span>
 <span class="normal">957</span>
-<span class="normal">958</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">CamillaClient</span><span class="p">(</span><span class="n">_CamillaWS</span><span class="p">):</span>
+<span class="normal">958</span>
+<span class="normal">959</span>
+<span class="normal">960</span>
+<span class="normal">961</span>
+<span class="normal">962</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">CamillaClient</span><span class="p">(</span><span class="n">_CamillaWS</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Class for communicating with CamillaDSP.</span>
 
@@ -781,6 +785,10 @@
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">host</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">port</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create a new CamillaClient.</span>
+
+<span class="sd">        The newly created CamillaClient does not</span>
+<span class="sd">        automatically connect to the CamillaDSP process.</span>
+<span class="sd">        Call `connect()` to initiate the connection.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            host (str): Hostname where CamillaDSP runs.</span>
@@ -1077,6 +1085,9 @@
   <div class="doc doc-contents ">
   
       <p>Create a new CamillaClient.</p>
+<p>The newly created CamillaClient does not
+automatically connect to the CamillaDSP process.
+Call <code>connect()</code> to initiate the connection.</p>
 
   <p><strong>Parameters:</strong></p>
   <table>
@@ -1132,9 +1143,17 @@
 <span class="normal">892</span>
 <span class="normal">893</span>
 <span class="normal">894</span>
-<span class="normal">895</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">host</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">port</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+<span class="normal">895</span>
+<span class="normal">896</span>
+<span class="normal">897</span>
+<span class="normal">898</span>
+<span class="normal">899</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">host</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">port</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Create a new CamillaClient.</span>
+
+<span class="sd">    The newly created CamillaClient does not</span>
+<span class="sd">    automatically connect to the CamillaDSP process.</span>
+<span class="sd">    Call `connect()` to initiate the connection.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        host (str): Hostname where CamillaDSP runs.</span>

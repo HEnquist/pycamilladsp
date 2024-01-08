@@ -1724,6 +1724,7 @@ For example the method for reading the main volume is called <code>main</code>,
 and the method for changing the main volume is called <code>set_main</code>.</p>
 <p>Example:</p>
 <pre><code class="language-py">client = CamillaClient(&quot;localhost&quot;, 1234)
+client.connect()
 
 volume = client.volume.main()
 mute = client.mute.main()

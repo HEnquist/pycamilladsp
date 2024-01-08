@@ -486,8 +486,8 @@
 <h1 id="errors">Errors</h1>
 <p>The custom exception <a class="autorefs autorefs-internal" href="#camilladsp.camilladsp.CamillaError">CamillaError</a> is raised when CamillaDSP replies to a command with an error message. The error message is given as the message of the exception.</p>
 <p>Different exceptions are raised in different situations. Consider the following example:</p>
-<pre><code class="language-python">from camilladsp import CamillaConnection, CamillaError
-cdsp = CamillaConnection(&quot;127.0.0.1&quot;, 1234)
+<pre><code class="language-python">from camilladsp import CamillaClient, CamillaError
+cdsp = CamillaClient(&quot;127.0.0.1&quot;, 1234)
 
 myconfig = # get a config from somewhere
 try:
@@ -501,9 +501,10 @@ except IOError as e:
     print(&quot;Websocket is not connected:&quot;, e)
 </code></pre>
 <ul>
-<li><code>ConnectionRefusedError</code> means that CamillaDSP isn't responding on the given host and port. </li>
+<li><code>ConnectionRefusedError</code> means that CamillaDSP isn't responding on the given host and port.</li>
 <li><code>CamillaError</code> means that the command was sent and CamillaDSP replied with an error.</li>
-<li><code>IOError</code> can mean a few things, but the most likely is that the websocket connection was lost. This happens if the CamillaDSP process exits or is restarted. </li>
+<li><code>IOError</code> can mean a few things, but the most likely is that the websocket connection was lost.
+  This happens if the CamillaDSP process exits or is restarted.</li>
 </ul>
 <h2 id="camillaerror">CamillaError</h2>
 
