@@ -33,8 +33,7 @@ capture_levels = client.levels.capture_rms()
 | [General][camilladsp.camilladsp.General] | `general` | Basics, for example starting and stopping processing |
 | [Status][camilladsp.camilladsp.Status] | `status` | Reading status parameters such as buffer levels |
 | [Config][camilladsp.camilladsp.Config] | `config` | Managing the configuration |
-| [Volume][camilladsp.camilladsp.Volume] | `volume` | Volume controls |
-| [Mute][camilladsp.camilladsp.Mute] | `mute` | Mute controls |
+| [Volume][camilladsp.camilladsp.Volume] | `volume` | Volume and mute controls |
 | [Levels][camilladsp.camilladsp.Levels] | `levels` | Reading signal levels |
 | [RateMonitor][camilladsp.camilladsp.RateMonitor] | `rate` | Reading the sample rate montitor |
 | [Settings][camilladsp.camilladsp.Settings] | `settings` | Websocket server settings |

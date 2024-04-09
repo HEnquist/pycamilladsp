@@ -14,7 +14,7 @@ Reading the main volume is then done by calling `my_client.volume.main()`.
 
 import json
 import math
-from typing import Dict, Tuple, List, Optional, Union
+from typing import Dict, Tuple, List, Optional, Union, TypedDict
 from threading import Lock
 import yaml
 from websocket import create_connection, WebSocket  # type: ignore
@@ -522,15 +522,34 @@ class Config(_CommandGroup):
         return desc
 
 
+class Fader(TypedDict):
+    """
+    Class for type annotation of fader volume and mute settings.
+    """
+
+    volume: float
+    mute: bool
+
+
 class Volume(_CommandGroup):
     """
     Collection of methods for volume and mute control
     """
 
-    def main(self) -> float:
+    def all(self) -> List[Fader]:
+        """
+        Get volume and mute for all faders with a single call.
+
+        Returns:
+            List[Fader]: A list of one object per fader, each with `volume` and `mute` properties.
+        """
+        faders = self.client.query("GetFaders")
+        return faders
+
+    def main_volume(self) -> float:
         """
         Get current main volume setting in dB.
-        Equivalent to calling `get_fader_volume()` with `fader=0`.
+        Equivalent to calling `volume(0)`.
 
         Returns:
             float: Current volume setting.
@@ -538,17 +557,17 @@ class Volume(_CommandGroup):
         vol = self.client.query("GetVolume")
         return float(vol)
 
-    def set_main(self, value: float):
+    def set_main_volume(self, value: float):
         """
         Set main volume in dB.
-        Equivalent to calling `set_fader()` with `fader=0`.
+        Equivalent to calling `set_volume(0)`.
 
         Args:
             value (float): New volume in dB.
         """
         self.client.query("SetVolume", arg=float(value))
 
-    def fader(self, fader: int) -> float:
+    def volume(self, fader: int) -> float:
         """
         Get current volume setting for the given fader in dB.
 
@@ -562,7 +581,7 @@ class Volume(_CommandGroup):
         _fader, vol = self.client.query("GetFaderVolume", arg=int(fader))
         return float(vol)
 
-    def set_fader(self, fader: int, vol: float):
+    def set_volume(self, fader: int, vol: float):
         """
         Set volume for the given fader in dB.
 
@@ -573,7 +592,7 @@ class Volume(_CommandGroup):
         """
         self.client.query("SetFaderVolume", arg=(int(fader), float(vol)))
 
-    def set_fader_external(self, fader: int, vol: float):
+    def set_volume_external(self, fader: int, vol: float):
         """
         Special command for setting the volume when a "Loudness" filter
         is being combined with an external volume control (without a "Volume" filter).
@@ -586,7 +605,7 @@ class Volume(_CommandGroup):
         """
         self.client.query("SetFaderExternalVolume", arg=(int(fader), float(vol)))
 
-    def adjust_fader(self, fader: int, value: float) -> float:
+    def adjust_volume(self, fader: int, value: float) -> float:
         """
         Adjust volume for the given fader in dB.
         Positive values increase the volume, negative decrease.
@@ -604,16 +623,10 @@ class Volume(_CommandGroup):
         )
         return float(new_vol)
 
-
-class Mute(_CommandGroup):
-    """
-    Collection of methods for mute control
-    """
-
-    def main(self) -> bool:
+    def main_mute(self) -> bool:
         """
         Get current main mute setting.
-        Equivalent to calling `get_fader()` with `fader=0`.
+        Equivalent to calling `mute(0)`.
 
         Returns:
             bool: True if muted, False otherwise.
@@ -621,17 +634,17 @@ class Mute(_CommandGroup):
         mute = self.client.query("GetMute")
         return bool(mute)
 
-    def set_main(self, value: bool):
+    def set_main_mute(self, value: bool):
         """
         Set main mute, true or false.
-        Equivalent to calling `set_fader()` with `fader=0`.
+        Equivalent to calling `set_mute(0)`.
 
         Args:
             value (bool): New mute setting.
         """
         self.client.query("SetMute", arg=bool(value))
 
-    def fader(self, fader: int) -> bool:
+    def mute(self, fader: int) -> bool:
         """
         Get current mute setting for a fader.
 
@@ -645,7 +658,7 @@ class Mute(_CommandGroup):
         _fader, mute = self.client.query("GetFaderMute", arg=int(fader))
         return bool(mute)
 
-    def set_fader(self, fader: int, value: bool):
+    def set_mute(self, fader: int, value: bool):
         """
         Set mute status for a fader, true or false.
 
@@ -656,7 +669,7 @@ class Mute(_CommandGroup):
         """
         self.client.query("SetFaderMute", arg=(int(fader), bool(value)))
 
-    def toggle_fader(self, fader: int) -> bool:
+    def toggle_mute(self, fader: int) -> bool:
         """
         Toggle mute status for a fader.
 
@@ -889,7 +902,6 @@ class CamillaClient(_CamillaWS):
         super().__init__(host, port)
 
         self._volume = Volume(self)
-        self._mute = Mute(self)
         self._rate = RateMonitor(self)
         self._levels = Levels(self)
         self._config = Config(self)
@@ -901,16 +913,9 @@ class CamillaClient(_CamillaWS):
     @property
     def volume(self) -> Volume:
         """
-        A `Volume` instance for volume controls.
+        A `Volume` instance for volume and mute controls.
         """
         return self._volume
-
-    @property
-    def mute(self) -> Mute:
-        """
-        A `Mute` instance for mute controls.
-        """
-        return self._mute
 
     @property
     def rate(self) -> RateMonitor:
