@@ -41,7 +41,7 @@ class DummyWS:
                         {"volume": -3, "mute": False},
                         {"volume": -4, "mute": True},
                         {"volume": -5, "mute": False},
-                    ]
+                    ],
                 }
             }
         ),
