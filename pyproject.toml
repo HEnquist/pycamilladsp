@@ -24,6 +24,6 @@ license = {file = "LICENSE.txt"}
 version = {attr = "camilladsp.camilladsp.VERSION"}
 
 [project.optional-dependencies]
-dev = ["black >= 23.0.0", "pylint >= 2.17", "mypy >= 1.0", "pytest >= 7.0"]
+dev = ["black >= 24.0.0", "pylint >= 2.17", "mypy >= 1.0", "pytest >= 7.0"]
 docs = ["mkdocs", "mkdocs-material", "mkdocstrings"]
 
