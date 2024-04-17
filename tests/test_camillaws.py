@@ -204,14 +204,14 @@ def test_stop_reason(camilla_mockws):
     assert camilla_mockws.general.stop_reason() == StopReason.DONE
     assert camilla_mockws.general.stop_reason().data == None
     print(camilla_mockws.dummyws.responses)
-    camilla_mockws.dummyws.responses[
-        '"GetStopReason"'
-    ] = camilla_mockws.dummyws.responses['"GetStopReason2"']
+    camilla_mockws.dummyws.responses['"GetStopReason"'] = (
+        camilla_mockws.dummyws.responses['"GetStopReason2"']
+    )
     assert camilla_mockws.general.stop_reason() == StopReason.CAPTUREFORMATCHANGE
     assert camilla_mockws.general.stop_reason().data == 44098
-    camilla_mockws.dummyws.responses[
-        '"GetStopReason"'
-    ] = camilla_mockws.dummyws.responses['"GetStopReason3"']
+    camilla_mockws.dummyws.responses['"GetStopReason"'] = (
+        camilla_mockws.dummyws.responses['"GetStopReason3"']
+    )
     assert camilla_mockws.general.stop_reason() == StopReason.CAPTUREERROR
     assert camilla_mockws.general.stop_reason().data == "error error"
 

@@ -11,7 +11,6 @@ These methods are accessible via the `volume` property of the CamillaClient.
 Reading the main volume is then done by calling `my_client.volume.main()`.
 """
 
-
 import json
 import math
 from typing import Dict, Tuple, List, Optional, Union, TypedDict
