@@ -535,6 +535,9 @@ class Volume(_CommandGroup):
     Collection of methods for volume and mute control
     """
 
+    default_min_vol = -150.0
+    default_max_vol = 50.0
+
     def all(self) -> List[Fader]:
         """
         Get volume and mute for all faders with a single call.
@@ -604,22 +607,39 @@ class Volume(_CommandGroup):
         """
         self.client.query("SetFaderExternalVolume", arg=(int(fader), float(vol)))
 
-    def adjust_volume(self, fader: int, value: float) -> float:
+    def adjust_volume(
+        self,
+        fader: int,
+        value: float,
+        min_limit: Optional[float] = None,
+        max_limit: Optional[float] = None,
+    ) -> float:
         """
         Adjust volume for the given fader in dB.
         Positive values increase the volume, negative decrease.
+        The resulting volume is limited to the range -150 to +50 dB.
+        This default range can be reduced via the optional
+        `min_limit` and/or `max_limit` arguments.
 
         Args:
             fader (int): Fader to control.
                 Selected using an integer, 0 for `Main` and 1 to 4 for `Aux1` to `Aux4`.
             value (float): Volume adjustment in dB.
+            min_limit (float): Lower volume limit to clamp volume at.
+            max_limit (float): Upper volume limit to clamp volume at.
+
 
         Returns:
             float: New volume setting.
         """
-        _fader, new_vol = self.client.query(
-            "AdjustFaderVolume", arg=(int(fader), float(value))
-        )
+        arg: Tuple[int, Union[float, Tuple[float, float, float]]]
+        if max_limit is not None or min_limit is not None:
+            maxlim = max_limit if max_limit is not None else self.default_max_vol
+            minlim = min_limit if min_limit is not None else self.default_min_vol
+            arg = (int(fader), (float(value), float(minlim), float(maxlim)))
+        else:
+            arg = (int(fader), float(value))
+        _fader, new_vol = self.client.query("AdjustFaderVolume", arg=arg)
         return float(new_vol)
 
     def main_mute(self) -> bool:
