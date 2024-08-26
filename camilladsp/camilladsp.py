@@ -420,6 +420,25 @@ class Config(_CommandGroup):
         """
         self.client.query("SetConfig", arg=config_string)
 
+    def active_json(self) -> Optional[str]:
+        """
+        Get the active configuration in raw json format (as a string).
+
+        Returns:
+            str | None: Current config as a raw json string, or None.
+        """
+        config_string = self.client.query("GetConfigJson")
+        return config_string
+
+    def set_active_json(self, config_string: str):
+        """
+        Upload and apply a new configuration in raw json format (as a string).
+
+        Args:
+            config_string (str): Config as json string.
+        """
+        self.client.query("SetConfigJson", arg=config_string)
+
     def active(self) -> Optional[Dict]:
         """
         Get the active configuration as a Python object.
