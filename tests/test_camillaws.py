@@ -1,4 +1,4 @@
-from camilladsp.camilladsp import StopReason
+from camilladsp import StopReason
 import pytest
 from unittest.mock import MagicMock, patch
 import camilladsp
@@ -110,7 +110,7 @@ def camilla_mockws():
     ws_dummy = DummyWS()
     connection.send = MagicMock(side_effect=ws_dummy.send)
     connection.recv = MagicMock(side_effect=ws_dummy.recv)
-    with patch("camilladsp.camilladsp.create_connection", create_connection):
+    with patch("camilladsp.camillaws.create_connection", create_connection):
         cdsp = camilladsp.camilladsp.CamillaClient("localhost", 1234)
         cdsp.dummyws = ws_dummy
         cdsp.mockconnection = connection
@@ -147,7 +147,7 @@ def test_connect(camilla_mockws):
     assert camilla_mockws.general.state() == camilladsp.ProcessingState.INACTIVE
     assert camilla_mockws.versions.camilladsp() == ("0", "3", "2")
     assert camilla_mockws.versions.library() == tuple(
-        camilladsp.camilladsp.VERSION.split(".")
+        camilladsp.VERSION.split(".")
     )
     camilla_mockws.disconnect()
     assert not camilla_mockws.is_connected()
