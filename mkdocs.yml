@@ -6,6 +6,8 @@ theme:
 
 plugins:
   - mkdocstrings
+  - autorefs:
+      resolve_closest: true
 
 nav:
   - index.md

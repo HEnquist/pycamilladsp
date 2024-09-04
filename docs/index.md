@@ -7,22 +7,22 @@ This class handles the communication over websocket with the CamillaDSP process.
 
 The various commands are grouped on helper classes that are instantiated
 by the CamillaClient class.
-For example volume controls are handled by the `Volume` class.
+For example volume and mute controls are handled by the `Volume` class.
 These methods are accessible via the `volume` property of the CamillaClient.
-Reading the main volume is then done by calling `my_client.volume.main()`.
+Reading the main volume is then done by calling `my_client.volume.main_volume()`.
 
 Methods for reading a value are named the same as the name of the value,
 while methods for writing have a `set_` prefix.
-For example the method for reading the main volume is called `main`,
-and the method for changing the main volume is called `set_main`.
+For example the method for reading the main volume is called `main_volume`,
+and the method for changing the main volume is called `set_main_volume`.
 
 Example:
 ```py
 client = CamillaClient("localhost", 1234)
 client.connect()
 
-volume = client.volume.main()
-mute = client.mute.main()
+volume = client.volume.main_volume()
+mute = client.volume.main_mute()
 state = client.general.state()
 capture_levels = client.levels.capture_rms()
 ```
