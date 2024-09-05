@@ -1,7 +1,7 @@
 
 # Errors
 
-The custom exception [CamillaError][camilladsp.camilladsp.CamillaError] is raised when CamillaDSP replies to a command with an error message. The error message is given as the message of the exception.
+The custom exception [CamillaError][camilladsp.datastructures.CamillaError] is raised when CamillaDSP replies to a command with an error message. The error message is given as the message of the exception.
 
 Different exceptions are raised in different situations. Consider the following example:
 ```python
@@ -25,4 +25,4 @@ except IOError as e:
   This happens if the CamillaDSP process exits or is restarted.
 
 ## CamillaError
-::: camilladsp.camilladsp.CamillaError
+::: camilladsp.datastructures.CamillaError
