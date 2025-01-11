@@ -7,22 +7,22 @@ This class handles the communication over websocket with the CamillaDSP process.
 
 The various commands are grouped on helper classes that are instantiated
 by the CamillaClient class.
-For example volume controls are handled by the `Volume` class.
+For example volume and mute controls are handled by the `Volume` class.
 These methods are accessible via the `volume` property of the CamillaClient.
-Reading the main volume is then done by calling `my_client.volume.main()`.
+Reading the main volume is then done by calling `my_client.volume.main_volume()`.
 
 Methods for reading a value are named the same as the name of the value,
 while methods for writing have a `set_` prefix.
-For example the method for reading the main volume is called `main`,
-and the method for changing the main volume is called `set_main`.
+For example the method for reading the main volume is called `main_volume`,
+and the method for changing the main volume is called `set_main_volume`.
 
 Example:
 ```py
 client = CamillaClient("localhost", 1234)
 client.connect()
 
-volume = client.volume.main()
-mute = client.mute.main()
+volume = client.volume.main_volume()
+mute = client.volume.main_mute()
 state = client.general.state()
 capture_levels = client.levels.capture_rms()
 ```
@@ -30,102 +30,91 @@ capture_levels = client.levels.capture_rms()
 ## Command group classes
 |      Class   | Via property | Description |
 |--------------|----------|-------------|
-| [General][camilladsp.camilladsp.General] | `general` | Basics, for example starting and stopping processing |
-| [Status][camilladsp.camilladsp.Status] | `status` | Reading status parameters such as buffer levels |
-| [Config][camilladsp.camilladsp.Config] | `config` | Managing the configuration |
-| [Volume][camilladsp.camilladsp.Volume] | `volume` | Volume controls |
-| [Mute][camilladsp.camilladsp.Mute] | `mute` | Mute controls |
-| [Levels][camilladsp.camilladsp.Levels] | `levels` | Reading signal levels |
-| [RateMonitor][camilladsp.camilladsp.RateMonitor] | `rate` | Reading the sample rate montitor |
-| [Settings][camilladsp.camilladsp.Settings] | `settings` | Websocket server settings |
-| [Versions][camilladsp.camilladsp.Versions] | `versions` | Read software versions |
+| [General][camilladsp.general.General] | `general` | Basics, for example starting and stopping processing |
+| [Status][camilladsp.status.Status] | `status` | Reading status parameters such as buffer levels |
+| [Config][camilladsp.config.Config] | `config` | Managing the configuration |
+| [Volume][camilladsp.volume.Volume] | `volume` | Volume and mute controls |
+| [Levels][camilladsp.levels.Levels] | `levels` | Reading signal levels |
+| [RateMonitor][camilladsp.ratemonitor.RateMonitor] | `rate` | Reading the sample rate montitor |
+| [Settings][camilladsp.settings.Settings] | `settings` | Websocket server settings |
+| [Versions][camilladsp.versions.Versions] | `versions` | Read software versions |
 
 ## All commands
 
-### [General][camilladsp.camilladsp.General]
+### [General][camilladsp.general.General]
 These commands are accessed via the [general][camilladsp.CamillaClient.general]
 property of a [CamillaClient][camilladsp.CamillaClient] instance.
-::: camilladsp.camilladsp.General
+::: camilladsp.general.General
     options:
       show_bases: false
       show_source: false
       show_docstring_parameters: false
       show_docstring_returns: false
 
-### [Status][camilladsp.camilladsp.Status]
+### [Status][camilladsp.status.Status]
 These commands are accessed via the [status][camilladsp.CamillaClient.status]
 property of a [CamillaClient][camilladsp.CamillaClient] instance.
-::: camilladsp.camilladsp.Status
+::: camilladsp.status.Status
     options:
       show_bases: false
       show_source: false
       show_docstring_parameters: false
       show_docstring_returns: false
 
-### [Config][camilladsp.camilladsp.Config]
+### [Config][camilladsp.config.Config]
 These commands are accessed via the [config][camilladsp.CamillaClient.config]
 property of a [CamillaClient][camilladsp.CamillaClient] instance.
-::: camilladsp.camilladsp.Config
+::: camilladsp.config.Config
     options:
       show_bases: false
       show_source: false
       show_docstring_parameters: false
       show_docstring_returns: false
 
-### [Volume][camilladsp.camilladsp.Volume]
+### [Volume][camilladsp.volume.Volume]
 These commands are accessed via the [volume][camilladsp.CamillaClient.volume]
 property of a [CamillaClient][camilladsp.CamillaClient] instance.
-::: camilladsp.camilladsp.Volume
+::: camilladsp.volume.Volume
     options:
       show_bases: false
       show_source: false
       show_docstring_parameters: false
       show_docstring_returns: false
 
-### [Mute][camilladsp.camilladsp.Mute]
-These commands are accessed via the [mute][camilladsp.CamillaClient.mute]
-property of a [CamillaClient][camilladsp.CamillaClient] instance.
-::: camilladsp.camilladsp.Mute
-    options:
-      show_bases: false
-      show_source: false
-      show_docstring_parameters: false
-      show_docstring_returns: false
-
-### [Levels][camilladsp.camilladsp.Levels]
+### [Levels][camilladsp.levels.Levels]
 These commands are accessed via the [levels][camilladsp.CamillaClient.levels]
 property of a [CamillaClient][camilladsp.CamillaClient] instance.
-::: camilladsp.camilladsp.Levels
+::: camilladsp.levels.Levels
     options:
       show_bases: false
       show_source: false
       show_docstring_parameters: false
       show_docstring_returns: false
 
-### [RateMonitor][camilladsp.camilladsp.RateMonitor]
+### [RateMonitor][camilladsp.ratemonitor.RateMonitor]
 These commands are accessed via the [rate][camilladsp.CamillaClient.rate]
 property of a [CamillaClient][camilladsp.CamillaClient] instance.
-::: camilladsp.camilladsp.RateMonitor
+::: camilladsp.ratemonitor.RateMonitor
     options:
       show_bases: false
       show_source: false
       show_docstring_parameters: false
       show_docstring_returns: false
 
-### [Settings][camilladsp.camilladsp.Settings]
+### [Settings][camilladsp.settings.Settings]
 These commands are accessed via the [settings][camilladsp.CamillaClient.settings]
 property of a [CamillaClient][camilladsp.CamillaClient] instance.
-::: camilladsp.camilladsp.Settings
+::: camilladsp.settings.Settings
     options:
       show_bases: false
       show_source: false
       show_docstring_parameters: false
       show_docstring_returns: false
 
-### [Versions][camilladsp.camilladsp.Versions]
+### [Versions][camilladsp.versions.Versions]
 These commands are accessed via the [versions][camilladsp.CamillaClient.versions]
 property of a [CamillaClient][camilladsp.CamillaClient] instance.
-::: camilladsp.camilladsp.Versions
+::: camilladsp.versions.Versions
     options:
       show_bases: false
       show_source: falses

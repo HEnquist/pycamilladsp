@@ -1,4 +1,4 @@
-from camilladsp.camilladsp import StopReason
+from camilladsp import StopReason
 import pytest
 from unittest.mock import MagicMock, patch
 import camilladsp
@@ -30,6 +30,20 @@ class DummyWS:
         ),
         '"GetCaptureRate"': json.dumps(
             {"GetCaptureRate": {"result": "Ok", "value": "88250"}}
+        ),
+        '"GetFaders"': json.dumps(
+            {
+                "GetFaders": {
+                    "result": "Ok",
+                    "value": [
+                        {"volume": -1, "mute": False},
+                        {"volume": -2, "mute": True},
+                        {"volume": -3, "mute": False},
+                        {"volume": -4, "mute": True},
+                        {"volume": -5, "mute": False},
+                    ],
+                }
+            }
         ),
         '{"GetFaderVolume": 1}': json.dumps(
             {"GetFaderVolume": {"result": "Ok", "value": [1, -1.23]}}
@@ -96,7 +110,7 @@ def camilla_mockws():
     ws_dummy = DummyWS()
     connection.send = MagicMock(side_effect=ws_dummy.send)
     connection.recv = MagicMock(side_effect=ws_dummy.recv)
-    with patch("camilladsp.camilladsp.create_connection", create_connection):
+    with patch("camilladsp.camillaws.create_connection", create_connection):
         cdsp = camilladsp.camilladsp.CamillaClient("localhost", 1234)
         cdsp.dummyws = ws_dummy
         cdsp.mockconnection = connection
@@ -132,9 +146,7 @@ def test_connect(camilla_mockws):
     assert camilla_mockws.is_connected()
     assert camilla_mockws.general.state() == camilladsp.ProcessingState.INACTIVE
     assert camilla_mockws.versions.camilladsp() == ("0", "3", "2")
-    assert camilla_mockws.versions.library() == tuple(
-        camilladsp.camilladsp.VERSION.split(".")
-    )
+    assert camilla_mockws.versions.library() == tuple(camilladsp.VERSION.split("."))
     camilla_mockws.disconnect()
     assert not camilla_mockws.is_connected()
 
@@ -190,14 +202,14 @@ def test_stop_reason(camilla_mockws):
     assert camilla_mockws.general.stop_reason() == StopReason.DONE
     assert camilla_mockws.general.stop_reason().data == None
     print(camilla_mockws.dummyws.responses)
-    camilla_mockws.dummyws.responses[
-        '"GetStopReason"'
-    ] = camilla_mockws.dummyws.responses['"GetStopReason2"']
+    camilla_mockws.dummyws.responses['"GetStopReason"'] = (
+        camilla_mockws.dummyws.responses['"GetStopReason2"']
+    )
     assert camilla_mockws.general.stop_reason() == StopReason.CAPTUREFORMATCHANGE
     assert camilla_mockws.general.stop_reason().data == 44098
-    camilla_mockws.dummyws.responses[
-        '"GetStopReason"'
-    ] = camilla_mockws.dummyws.responses['"GetStopReason3"']
+    camilla_mockws.dummyws.responses['"GetStopReason"'] = (
+        camilla_mockws.dummyws.responses['"GetStopReason3"']
+    )
     assert camilla_mockws.general.stop_reason() == StopReason.CAPTUREERROR
     assert camilla_mockws.general.stop_reason().data == "error error"
 
@@ -223,10 +235,15 @@ def test_query_mockedws(camilla_mockws):
     assert camilla_mockws.query("SetSomeValue", arg=123) is None
     assert camilla_mockws.dummyws.query == json.dumps({"SetSomeValue": 123})
     assert camilla_mockws.general.supported_device_types() == (["a", "b"], ["c", "d"])
-    assert camilla_mockws.volume.fader(1) == -1.23
-    assert camilla_mockws.volume.adjust_fader(1, -2.5) == -3.73
-    assert camilla_mockws.mute.fader(1) == False
-    assert camilla_mockws.mute.toggle_fader(1) == True
+    assert camilla_mockws.volume.volume(1) == -1.23
+    assert camilla_mockws.volume.adjust_volume(1, -2.5) == -3.73
+    assert camilla_mockws.volume.mute(1) == False
+    assert camilla_mockws.volume.toggle_mute(1) == True
+    faders = camilla_mockws.volume.all()
+    assert faders[0]["volume"] == -1.0
+    assert faders[2]["volume"] == -3.0
+    assert faders[0]["mute"] == False
+    assert faders[1]["mute"] == True
 
 
 def test_queries(camilla_mockquery):
@@ -254,8 +271,12 @@ def test_queries(camilla_mockquery):
     camilla_mockquery.query.assert_called_with("SetConfigFilePath", arg="some/path")
     camilla_mockquery.config.active_raw()
     camilla_mockquery.query.assert_called_with("GetConfig")
+    camilla_mockquery.config.active_json()
+    camilla_mockquery.query.assert_called_with("GetConfigJson")
     camilla_mockquery.config.set_active_raw("some:yaml")
     camilla_mockquery.query.assert_called_with("SetConfig", arg="some:yaml")
+    camilla_mockquery.config.set_active_json("{'some': 'json'}")
+    camilla_mockquery.query.assert_called_with("SetConfigJson", arg="{'some': 'json'}")
     camilla_mockquery.config.set_active({"some": "yaml"})
     camilla_mockquery.query.assert_called_with("SetConfig", arg="some: yaml\n")
     camilla_mockquery.status.rate_adjust()
@@ -264,17 +285,17 @@ def test_queries(camilla_mockquery):
     camilla_mockquery.query.assert_called_with("GetBufferLevel")
     camilla_mockquery.status.clipped_samples()
     camilla_mockquery.query.assert_called_with("GetClippedSamples")
-    camilla_mockquery.volume.main()
+    camilla_mockquery.volume.main_volume()
     camilla_mockquery.query.assert_called_with("GetVolume")
-    camilla_mockquery.volume.set_main(-25.0)
+    camilla_mockquery.volume.set_main_volume(-25.0)
     camilla_mockquery.query.assert_called_with("SetVolume", arg=-25.0)
-    camilla_mockquery.volume.set_fader(1, -1.23)
+    camilla_mockquery.volume.set_volume(1, -1.23)
     camilla_mockquery.query.assert_called_with("SetFaderVolume", arg=(1, -1.23))
-    camilla_mockquery.mute.main()
+    camilla_mockquery.volume.main_mute()
     camilla_mockquery.query.assert_called_with("GetMute")
-    camilla_mockquery.mute.set_main(False)
+    camilla_mockquery.volume.set_main_mute(False)
     camilla_mockquery.query.assert_called_with("SetMute", arg=False)
-    camilla_mockquery.mute.set_fader(1, False)
+    camilla_mockquery.volume.set_mute(1, False)
     camilla_mockquery.query.assert_called_with("SetFaderMute", arg=(1, False))
     camilla_mockquery.levels.capture_rms()
     camilla_mockquery.query.assert_called_with("GetCaptureSignalRms")
@@ -299,3 +320,21 @@ def test_queries_adv(camilla_mockquery_yaml):
     camilla_mockquery_yaml.query.assert_called_with("GetConfig")
     camilla_mockquery_yaml.config.previous()
     camilla_mockquery_yaml.query.assert_called_with("GetPreviousConfig")
+
+
+def test_queries_customreplies(camilla_mockquery):
+    camilla_mockquery.query.return_value = [0, -12.0]
+    camilla_mockquery.volume.adjust_volume(0, -5.0)
+    camilla_mockquery.query.assert_called_with("AdjustFaderVolume", arg=(0, -5.0))
+    camilla_mockquery.volume.adjust_volume(0, -5.0, min_limit=-20, max_limit=3.0)
+    camilla_mockquery.query.assert_called_with(
+        "AdjustFaderVolume", arg=(0, (-5.0, -20.0, 3.0))
+    )
+    camilla_mockquery.volume.adjust_volume(0, -5.0, min_limit=-20)
+    camilla_mockquery.query.assert_called_with(
+        "AdjustFaderVolume", arg=(0, (-5.0, -20.0, 50.0))
+    )
+    camilla_mockquery.volume.adjust_volume(0, -5.0, max_limit=3.0)
+    camilla_mockquery.query.assert_called_with(
+        "AdjustFaderVolume", arg=(0, (-5.0, -150.0, 3.0))
+    )

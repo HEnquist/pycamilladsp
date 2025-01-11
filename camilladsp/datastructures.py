@@ -3,7 +3,7 @@ Various data structures used for communicating with CamillaDSP.
 """
 
 from enum import Enum, auto
-from typing import Optional
+from typing import Optional, TypedDict
 
 _STANDARD_RATES = (
     8000,
@@ -128,3 +128,18 @@ def _reason_from_reply(value):
         raise ValueError(f"Invalid value for StopReason: {value}")
     reasonenum.set_data(data)
     return reasonenum
+
+
+class CamillaError(ValueError):
+    """
+    A class representing errors returned by CamillaDSP.
+    """
+
+
+class Fader(TypedDict):
+    """
+    Class for type annotation of fader volume and mute settings.
+    """
+
+    volume: float
+    mute: bool
