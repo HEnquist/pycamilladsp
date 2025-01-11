@@ -35,5 +35,5 @@ class Versions(_CommandGroup):
             Tuple[List[str], List[str]] | None: A tuple containing the pyCamillaDSP version,
                 as (major, minor, patch).
         """
-        ver = VERSION.split(".")
+        ver = VERSION.split(".", 2)
         return (ver[0], ver[1], ver[2])
