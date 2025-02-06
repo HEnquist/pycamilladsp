@@ -12,10 +12,11 @@
         <link rel="prev" href="../config/">
       
       
-        <link rel="next" href="../mute/">
+        <link rel="next" href="../levels/">
+      
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.1.9">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.34">
     
     
       
@@ -23,11 +24,14 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.85bb2934.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.35f28582.min.css">
       
       
 
+
     
+    
+      
     
     
       
@@ -41,7 +45,7 @@
     
       <link rel="stylesheet" href="../assets/_mkdocstrings.css">
     
-    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -53,9 +57,6 @@
   
     <body dir="ltr">
   
-    
-    
-      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
@@ -82,11 +83,12 @@
     <a href=".." title="pyCamillaDSP" class="md-header__button md-logo" aria-label="pyCamillaDSP" data-md-component="logo">
       
   
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
     </label>
     <div class="md-header__title" data-md-component="header-title">
       <div class="md-header__ellipsis">
@@ -106,13 +108,16 @@
     </div>
     
     
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
     
     
       <div class="md-header__source">
         <a href="https://github.com/HEnquist/pycamilladsp" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
   </div>
   <div class="md-source__repository">
     GitHub
@@ -142,12 +147,13 @@
                     
 
 
+
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
     <a href=".." title="pyCamillaDSP" class="md-nav__button md-logo" aria-label="pyCamillaDSP" data-md-component="logo">
       
   
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
 
     </a>
     pyCamillaDSP
@@ -157,7 +163,7 @@
       <a href="https://github.com/HEnquist/pycamilladsp" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
   </div>
   <div class="md-source__repository">
     GitHub
@@ -169,14 +175,19 @@
     
       
       
-      
-
+  
   
   
   
     <li class="md-nav__item">
       <a href=".." class="md-nav__link">
-        Overview
+        
+  
+  <span class="md-ellipsis">
+    Overview
+  </span>
+  
+
       </a>
     </li>
   
@@ -184,14 +195,19 @@
     
       
       
-      
-
+  
   
   
   
     <li class="md-nav__item">
       <a href="../client/" class="md-nav__link">
-        CamillaDSP websocket client
+        
+  
+  <span class="md-ellipsis">
+    CamillaDSP websocket client
+  </span>
+  
+
       </a>
     </li>
   
@@ -199,14 +215,19 @@
     
       
       
-      
-
+  
   
   
   
     <li class="md-nav__item">
       <a href="../general/" class="md-nav__link">
-        General commands
+        
+  
+  <span class="md-ellipsis">
+    General commands
+  </span>
+  
+
       </a>
     </li>
   
@@ -214,14 +235,19 @@
     
       
       
-      
-
+  
   
   
   
     <li class="md-nav__item">
       <a href="../status/" class="md-nav__link">
-        Status commands
+        
+  
+  <span class="md-ellipsis">
+    Status commands
+  </span>
+  
+
       </a>
     </li>
   
@@ -229,14 +255,19 @@
     
       
       
-      
-
+  
   
   
   
     <li class="md-nav__item">
       <a href="../config/" class="md-nav__link">
-        Config management
+        
+  
+  <span class="md-ellipsis">
+    Config management
+  </span>
+  
+
       </a>
     </li>
   
@@ -244,11 +275,10 @@
     
       
       
-      
-
   
   
     
+  
   
   
     <li class="md-nav__item md-nav__item--active">
@@ -260,12 +290,24 @@
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          Volume control
+          
+  
+  <span class="md-ellipsis">
+    Volume control
+  </span>
+  
+
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        Volume control
+        
+  
+  <span class="md-ellipsis">
+    Volume control
+  </span>
+  
+
       </a>
       
         
@@ -285,56 +327,126 @@
       
         <li class="md-nav__item">
   <a href="#class-volume" class="md-nav__link">
-    class: Volume
+    <span class="md-ellipsis">
+      class: Volume
+    </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#camilladsp.camilladsp.Volume" class="md-nav__link">
-    camilladsp.camilladsp.Volume
+  <a href="#camilladsp.volume.Volume" class="md-nav__link">
+    <span class="md-ellipsis">
+      Volume
+    </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#camilladsp.camilladsp.Volume.adjust_fader" class="md-nav__link">
-    adjust_fader()
+  <a href="#camilladsp.volume.Volume.adjust_volume" class="md-nav__link">
+    <span class="md-ellipsis">
+      adjust_volume
+    </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#camilladsp.camilladsp.Volume.fader" class="md-nav__link">
-    fader()
+  <a href="#camilladsp.volume.Volume.all" class="md-nav__link">
+    <span class="md-ellipsis">
+      all
+    </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#camilladsp.camilladsp.Volume.main" class="md-nav__link">
-    main()
+  <a href="#camilladsp.volume.Volume.main_mute" class="md-nav__link">
+    <span class="md-ellipsis">
+      main_mute
+    </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#camilladsp.camilladsp.Volume.set_fader" class="md-nav__link">
-    set_fader()
+  <a href="#camilladsp.volume.Volume.main_volume" class="md-nav__link">
+    <span class="md-ellipsis">
+      main_volume
+    </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#camilladsp.camilladsp.Volume.set_fader_external" class="md-nav__link">
-    set_fader_external()
+  <a href="#camilladsp.volume.Volume.mute" class="md-nav__link">
+    <span class="md-ellipsis">
+      mute
+    </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#camilladsp.camilladsp.Volume.set_main" class="md-nav__link">
-    set_main()
+  <a href="#camilladsp.volume.Volume.set_main_mute" class="md-nav__link">
+    <span class="md-ellipsis">
+      set_main_mute
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#camilladsp.volume.Volume.set_main_volume" class="md-nav__link">
+    <span class="md-ellipsis">
+      set_main_volume
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#camilladsp.volume.Volume.set_mute" class="md-nav__link">
+    <span class="md-ellipsis">
+      set_mute
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#camilladsp.volume.Volume.set_volume" class="md-nav__link">
+    <span class="md-ellipsis">
+      set_volume
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#camilladsp.volume.Volume.set_volume_external" class="md-nav__link">
+    <span class="md-ellipsis">
+      set_volume_external
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#camilladsp.volume.Volume.toggle_mute" class="md-nav__link">
+    <span class="md-ellipsis">
+      toggle_mute
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#camilladsp.volume.Volume.volume" class="md-nav__link">
+    <span class="md-ellipsis">
+      volume
+    </span>
   </a>
   
 </li>
@@ -349,29 +461,19 @@
     
       
       
-      
-
   
-  
-  
-    <li class="md-nav__item">
-      <a href="../mute/" class="md-nav__link">
-        Mute control
-      </a>
-    </li>
-  
-
-    
-      
-      
-      
-
   
   
   
     <li class="md-nav__item">
       <a href="../levels/" class="md-nav__link">
-        Level monitoring
+        
+  
+  <span class="md-ellipsis">
+    Level monitoring
+  </span>
+  
+
       </a>
     </li>
   
@@ -379,14 +481,19 @@
     
       
       
-      
-
+  
   
   
   
     <li class="md-nav__item">
       <a href="../rate/" class="md-nav__link">
-        Sample rate monitoring
+        
+  
+  <span class="md-ellipsis">
+    Sample rate monitoring
+  </span>
+  
+
       </a>
     </li>
   
@@ -394,14 +501,19 @@
     
       
       
-      
-
+  
   
   
   
     <li class="md-nav__item">
       <a href="../settings/" class="md-nav__link">
-        Server settings
+        
+  
+  <span class="md-ellipsis">
+    Server settings
+  </span>
+  
+
       </a>
     </li>
   
@@ -409,14 +521,19 @@
     
       
       
-      
-
+  
   
   
   
     <li class="md-nav__item">
       <a href="../versions/" class="md-nav__link">
-        Software versions
+        
+  
+  <span class="md-ellipsis">
+    Software versions
+  </span>
+  
+
       </a>
     </li>
   
@@ -424,14 +541,19 @@
     
       
       
-      
-
+  
   
   
   
     <li class="md-nav__item">
       <a href="../enums/" class="md-nav__link">
-        Enums
+        
+  
+  <span class="md-ellipsis">
+    Enums
+  </span>
+  
+
       </a>
     </li>
   
@@ -439,14 +561,19 @@
     
       
       
-      
-
+  
   
   
   
     <li class="md-nav__item">
       <a href="../errors/" class="md-nav__link">
-        Errors
+        
+  
+  <span class="md-ellipsis">
+    Errors
+  </span>
+  
+
       </a>
     </li>
   
@@ -454,14 +581,19 @@
     
       
       
-      
-
+  
   
   
   
     <li class="md-nav__item">
       <a href="../install/" class="md-nav__link">
-        Installation instructions
+        
+  
+  <span class="md-ellipsis">
+    Installation instructions
+  </span>
+  
+
       </a>
     </li>
   
@@ -495,56 +627,126 @@
       
         <li class="md-nav__item">
   <a href="#class-volume" class="md-nav__link">
-    class: Volume
+    <span class="md-ellipsis">
+      class: Volume
+    </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#camilladsp.camilladsp.Volume" class="md-nav__link">
-    camilladsp.camilladsp.Volume
+  <a href="#camilladsp.volume.Volume" class="md-nav__link">
+    <span class="md-ellipsis">
+      Volume
+    </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#camilladsp.camilladsp.Volume.adjust_fader" class="md-nav__link">
-    adjust_fader()
+  <a href="#camilladsp.volume.Volume.adjust_volume" class="md-nav__link">
+    <span class="md-ellipsis">
+      adjust_volume
+    </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#camilladsp.camilladsp.Volume.fader" class="md-nav__link">
-    fader()
+  <a href="#camilladsp.volume.Volume.all" class="md-nav__link">
+    <span class="md-ellipsis">
+      all
+    </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#camilladsp.camilladsp.Volume.main" class="md-nav__link">
-    main()
+  <a href="#camilladsp.volume.Volume.main_mute" class="md-nav__link">
+    <span class="md-ellipsis">
+      main_mute
+    </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#camilladsp.camilladsp.Volume.set_fader" class="md-nav__link">
-    set_fader()
+  <a href="#camilladsp.volume.Volume.main_volume" class="md-nav__link">
+    <span class="md-ellipsis">
+      main_volume
+    </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#camilladsp.camilladsp.Volume.set_fader_external" class="md-nav__link">
-    set_fader_external()
+  <a href="#camilladsp.volume.Volume.mute" class="md-nav__link">
+    <span class="md-ellipsis">
+      mute
+    </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#camilladsp.camilladsp.Volume.set_main" class="md-nav__link">
-    set_main()
+  <a href="#camilladsp.volume.Volume.set_main_mute" class="md-nav__link">
+    <span class="md-ellipsis">
+      set_main_mute
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#camilladsp.volume.Volume.set_main_volume" class="md-nav__link">
+    <span class="md-ellipsis">
+      set_main_volume
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#camilladsp.volume.Volume.set_mute" class="md-nav__link">
+    <span class="md-ellipsis">
+      set_mute
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#camilladsp.volume.Volume.set_volume" class="md-nav__link">
+    <span class="md-ellipsis">
+      set_volume
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#camilladsp.volume.Volume.set_volume_external" class="md-nav__link">
+    <span class="md-ellipsis">
+      set_volume_external
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#camilladsp.volume.Volume.toggle_mute" class="md-nav__link">
+    <span class="md-ellipsis">
+      toggle_mute
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#camilladsp.volume.Volume.volume" class="md-nav__link">
+    <span class="md-ellipsis">
+      volume
+    </span>
   </a>
   
 </li>
@@ -569,113 +771,216 @@
 
 <h1 id="volume-control">Volume control</h1>
 <p>This class is accessed via the <code>volume</code> property on a <code>CamillaClient</code> instance.</p>
-<p>It provides methods for reading and setting the volume control.</p>
+<p>It provides methods for reading and setting the volume and mute controls.</p>
 <h2 id="class-volume">class: <code>Volume</code></h2>
 
 
 <div class="doc doc-object doc-class">
 
 
-<a id="camilladsp.camilladsp.Volume"></a>
-  <div class="doc doc-contents first">
-      <p class="doc doc-class-bases">
-        Bases: <code><span title="camilladsp.camilladsp._CommandGroup">_CommandGroup</span></code></p>
 
-  
-      <p>Collection of methods for volume and mute control</p>
+<a id="camilladsp.volume.Volume"></a>
+    <div class="doc doc-contents first">
+            <p class="doc doc-class-bases">
+              Bases: <code><span title="camilladsp.commandgroup._CommandGroup">_CommandGroup</span></code></p>
 
 
-        <details class="quote">
-          <summary>Source code in <code>camilladsp/camilladsp.py</code></summary>
-          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">525</span>
-<span class="normal">526</span>
-<span class="normal">527</span>
-<span class="normal">528</span>
-<span class="normal">529</span>
-<span class="normal">530</span>
-<span class="normal">531</span>
-<span class="normal">532</span>
-<span class="normal">533</span>
-<span class="normal">534</span>
-<span class="normal">535</span>
-<span class="normal">536</span>
-<span class="normal">537</span>
-<span class="normal">538</span>
-<span class="normal">539</span>
-<span class="normal">540</span>
-<span class="normal">541</span>
-<span class="normal">542</span>
-<span class="normal">543</span>
-<span class="normal">544</span>
-<span class="normal">545</span>
-<span class="normal">546</span>
-<span class="normal">547</span>
-<span class="normal">548</span>
-<span class="normal">549</span>
-<span class="normal">550</span>
-<span class="normal">551</span>
-<span class="normal">552</span>
-<span class="normal">553</span>
-<span class="normal">554</span>
-<span class="normal">555</span>
-<span class="normal">556</span>
-<span class="normal">557</span>
-<span class="normal">558</span>
-<span class="normal">559</span>
-<span class="normal">560</span>
-<span class="normal">561</span>
-<span class="normal">562</span>
-<span class="normal">563</span>
-<span class="normal">564</span>
-<span class="normal">565</span>
-<span class="normal">566</span>
-<span class="normal">567</span>
-<span class="normal">568</span>
-<span class="normal">569</span>
-<span class="normal">570</span>
-<span class="normal">571</span>
-<span class="normal">572</span>
-<span class="normal">573</span>
-<span class="normal">574</span>
-<span class="normal">575</span>
-<span class="normal">576</span>
-<span class="normal">577</span>
-<span class="normal">578</span>
-<span class="normal">579</span>
-<span class="normal">580</span>
-<span class="normal">581</span>
-<span class="normal">582</span>
-<span class="normal">583</span>
-<span class="normal">584</span>
-<span class="normal">585</span>
-<span class="normal">586</span>
-<span class="normal">587</span>
-<span class="normal">588</span>
-<span class="normal">589</span>
-<span class="normal">590</span>
-<span class="normal">591</span>
-<span class="normal">592</span>
-<span class="normal">593</span>
-<span class="normal">594</span>
-<span class="normal">595</span>
-<span class="normal">596</span>
-<span class="normal">597</span>
-<span class="normal">598</span>
-<span class="normal">599</span>
-<span class="normal">600</span>
-<span class="normal">601</span>
-<span class="normal">602</span>
-<span class="normal">603</span>
-<span class="normal">604</span>
-<span class="normal">605</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">Volume</span><span class="p">(</span><span class="n">_CommandGroup</span><span class="p">):</span>
+        <p>Collection of methods for volume and mute control</p>
+
+              <details class="quote">
+                <summary>Source code in <code>camilladsp\volume.py</code></summary>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 13</span>
+<span class="normal"> 14</span>
+<span class="normal"> 15</span>
+<span class="normal"> 16</span>
+<span class="normal"> 17</span>
+<span class="normal"> 18</span>
+<span class="normal"> 19</span>
+<span class="normal"> 20</span>
+<span class="normal"> 21</span>
+<span class="normal"> 22</span>
+<span class="normal"> 23</span>
+<span class="normal"> 24</span>
+<span class="normal"> 25</span>
+<span class="normal"> 26</span>
+<span class="normal"> 27</span>
+<span class="normal"> 28</span>
+<span class="normal"> 29</span>
+<span class="normal"> 30</span>
+<span class="normal"> 31</span>
+<span class="normal"> 32</span>
+<span class="normal"> 33</span>
+<span class="normal"> 34</span>
+<span class="normal"> 35</span>
+<span class="normal"> 36</span>
+<span class="normal"> 37</span>
+<span class="normal"> 38</span>
+<span class="normal"> 39</span>
+<span class="normal"> 40</span>
+<span class="normal"> 41</span>
+<span class="normal"> 42</span>
+<span class="normal"> 43</span>
+<span class="normal"> 44</span>
+<span class="normal"> 45</span>
+<span class="normal"> 46</span>
+<span class="normal"> 47</span>
+<span class="normal"> 48</span>
+<span class="normal"> 49</span>
+<span class="normal"> 50</span>
+<span class="normal"> 51</span>
+<span class="normal"> 52</span>
+<span class="normal"> 53</span>
+<span class="normal"> 54</span>
+<span class="normal"> 55</span>
+<span class="normal"> 56</span>
+<span class="normal"> 57</span>
+<span class="normal"> 58</span>
+<span class="normal"> 59</span>
+<span class="normal"> 60</span>
+<span class="normal"> 61</span>
+<span class="normal"> 62</span>
+<span class="normal"> 63</span>
+<span class="normal"> 64</span>
+<span class="normal"> 65</span>
+<span class="normal"> 66</span>
+<span class="normal"> 67</span>
+<span class="normal"> 68</span>
+<span class="normal"> 69</span>
+<span class="normal"> 70</span>
+<span class="normal"> 71</span>
+<span class="normal"> 72</span>
+<span class="normal"> 73</span>
+<span class="normal"> 74</span>
+<span class="normal"> 75</span>
+<span class="normal"> 76</span>
+<span class="normal"> 77</span>
+<span class="normal"> 78</span>
+<span class="normal"> 79</span>
+<span class="normal"> 80</span>
+<span class="normal"> 81</span>
+<span class="normal"> 82</span>
+<span class="normal"> 83</span>
+<span class="normal"> 84</span>
+<span class="normal"> 85</span>
+<span class="normal"> 86</span>
+<span class="normal"> 87</span>
+<span class="normal"> 88</span>
+<span class="normal"> 89</span>
+<span class="normal"> 90</span>
+<span class="normal"> 91</span>
+<span class="normal"> 92</span>
+<span class="normal"> 93</span>
+<span class="normal"> 94</span>
+<span class="normal"> 95</span>
+<span class="normal"> 96</span>
+<span class="normal"> 97</span>
+<span class="normal"> 98</span>
+<span class="normal"> 99</span>
+<span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span>
+<span class="normal">108</span>
+<span class="normal">109</span>
+<span class="normal">110</span>
+<span class="normal">111</span>
+<span class="normal">112</span>
+<span class="normal">113</span>
+<span class="normal">114</span>
+<span class="normal">115</span>
+<span class="normal">116</span>
+<span class="normal">117</span>
+<span class="normal">118</span>
+<span class="normal">119</span>
+<span class="normal">120</span>
+<span class="normal">121</span>
+<span class="normal">122</span>
+<span class="normal">123</span>
+<span class="normal">124</span>
+<span class="normal">125</span>
+<span class="normal">126</span>
+<span class="normal">127</span>
+<span class="normal">128</span>
+<span class="normal">129</span>
+<span class="normal">130</span>
+<span class="normal">131</span>
+<span class="normal">132</span>
+<span class="normal">133</span>
+<span class="normal">134</span>
+<span class="normal">135</span>
+<span class="normal">136</span>
+<span class="normal">137</span>
+<span class="normal">138</span>
+<span class="normal">139</span>
+<span class="normal">140</span>
+<span class="normal">141</span>
+<span class="normal">142</span>
+<span class="normal">143</span>
+<span class="normal">144</span>
+<span class="normal">145</span>
+<span class="normal">146</span>
+<span class="normal">147</span>
+<span class="normal">148</span>
+<span class="normal">149</span>
+<span class="normal">150</span>
+<span class="normal">151</span>
+<span class="normal">152</span>
+<span class="normal">153</span>
+<span class="normal">154</span>
+<span class="normal">155</span>
+<span class="normal">156</span>
+<span class="normal">157</span>
+<span class="normal">158</span>
+<span class="normal">159</span>
+<span class="normal">160</span>
+<span class="normal">161</span>
+<span class="normal">162</span>
+<span class="normal">163</span>
+<span class="normal">164</span>
+<span class="normal">165</span>
+<span class="normal">166</span>
+<span class="normal">167</span>
+<span class="normal">168</span>
+<span class="normal">169</span>
+<span class="normal">170</span>
+<span class="normal">171</span>
+<span class="normal">172</span>
+<span class="normal">173</span>
+<span class="normal">174</span>
+<span class="normal">175</span>
+<span class="normal">176</span>
+<span class="normal">177</span>
+<span class="normal">178</span>
+<span class="normal">179</span>
+<span class="normal">180</span>
+<span class="normal">181</span>
+<span class="normal">182</span>
+<span class="normal">183</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">Volume</span><span class="p">(</span><span class="n">_CommandGroup</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Collection of methods for volume and mute control</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+    <span class="n">default_min_vol</span> <span class="o">=</span> <span class="o">-</span><span class="mf">150.0</span>
+    <span class="n">default_max_vol</span> <span class="o">=</span> <span class="mf">50.0</span>
+
+    <span class="k">def</span> <span class="nf">all</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Fader</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get volume and mute for all faders with a single call.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            List[Fader]: A list of one object per fader, each with `volume` and `mute` properties.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">faders</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;GetFaders&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">faders</span>
+
+    <span class="k">def</span> <span class="nf">main_volume</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get current main volume setting in dB.</span>
-<span class="sd">        Equivalent to calling `get_fader_volume()` with `fader=0`.</span>
+<span class="sd">        Equivalent to calling `volume(0)`.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            float: Current volume setting.</span>
@@ -683,17 +988,17 @@
         <span class="n">vol</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;GetVolume&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">vol</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">set_main</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">set_main_volume</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set main volume in dB.</span>
-<span class="sd">        Equivalent to calling `set_fader()` with `fader=0`.</span>
+<span class="sd">        Equivalent to calling `set_volume(0)`.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            value (float): New volume in dB.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;SetVolume&quot;</span><span class="p">,</span> <span class="n">arg</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
 
-    <span class="k">def</span> <span class="nf">fader</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fader</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">volume</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fader</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get current volume setting for the given fader in dB.</span>
 
@@ -707,7 +1012,7 @@
         <span class="n">_fader</span><span class="p">,</span> <span class="n">vol</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;GetFaderVolume&quot;</span><span class="p">,</span> <span class="n">arg</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">fader</span><span class="p">))</span>
         <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">vol</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">set_fader</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fader</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">vol</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">set_volume</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fader</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">vol</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set volume for the given fader in dB.</span>
 
@@ -718,7 +1023,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;SetFaderVolume&quot;</span><span class="p">,</span> <span class="n">arg</span><span class="o">=</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">fader</span><span class="p">),</span> <span class="nb">float</span><span class="p">(</span><span class="n">vol</span><span class="p">)))</span>
 
-    <span class="k">def</span> <span class="nf">set_fader_external</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fader</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">vol</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">set_volume_external</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fader</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">vol</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Special command for setting the volume when a &quot;Loudness&quot; filter</span>
 <span class="sd">        is being combined with an external volume control (without a &quot;Volume&quot; filter).</span>
@@ -731,27 +1036,104 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;SetFaderExternalVolume&quot;</span><span class="p">,</span> <span class="n">arg</span><span class="o">=</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">fader</span><span class="p">),</span> <span class="nb">float</span><span class="p">(</span><span class="n">vol</span><span class="p">)))</span>
 
-    <span class="k">def</span> <span class="nf">adjust_fader</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fader</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">adjust_volume</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">fader</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">value</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">min_limit</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">max_limit</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Adjust volume for the given fader in dB.</span>
 <span class="sd">        Positive values increase the volume, negative decrease.</span>
+<span class="sd">        The resulting volume is limited to the range -150 to +50 dB.</span>
+<span class="sd">        This default range can be reduced via the optional</span>
+<span class="sd">        `min_limit` and/or `max_limit` arguments.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            fader (int): Fader to control.</span>
 <span class="sd">                Selected using an integer, 0 for `Main` and 1 to 4 for `Aux1` to `Aux4`.</span>
 <span class="sd">            value (float): Volume adjustment in dB.</span>
+<span class="sd">            min_limit (float): Lower volume limit to clamp volume at.</span>
+<span class="sd">            max_limit (float): Upper volume limit to clamp volume at.</span>
+
 
 <span class="sd">        Returns:</span>
 <span class="sd">            float: New volume setting.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">_fader</span><span class="p">,</span> <span class="n">new_vol</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">query</span><span class="p">(</span>
-            <span class="s2">&quot;AdjustFaderVolume&quot;</span><span class="p">,</span> <span class="n">arg</span><span class="o">=</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">fader</span><span class="p">),</span> <span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
-        <span class="p">)</span>
+        <span class="n">arg</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]]</span>
+        <span class="k">if</span> <span class="n">max_limit</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">min_limit</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">maxlim</span> <span class="o">=</span> <span class="n">max_limit</span> <span class="k">if</span> <span class="n">max_limit</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">default_max_vol</span>
+            <span class="n">minlim</span> <span class="o">=</span> <span class="n">min_limit</span> <span class="k">if</span> <span class="n">min_limit</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">default_min_vol</span>
+            <span class="n">arg</span> <span class="o">=</span> <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">fader</span><span class="p">),</span> <span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">),</span> <span class="nb">float</span><span class="p">(</span><span class="n">minlim</span><span class="p">),</span> <span class="nb">float</span><span class="p">(</span><span class="n">maxlim</span><span class="p">)))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">arg</span> <span class="o">=</span> <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">fader</span><span class="p">),</span> <span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+        <span class="n">_fader</span><span class="p">,</span> <span class="n">new_vol</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;AdjustFaderVolume&quot;</span><span class="p">,</span> <span class="n">arg</span><span class="o">=</span><span class="n">arg</span><span class="p">)</span>
         <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">new_vol</span><span class="p">)</span>
-</code></pre></div></td></tr></table></div>
-        </details>
 
-  
+    <span class="k">def</span> <span class="nf">main_mute</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get current main mute setting.</span>
+<span class="sd">        Equivalent to calling `mute(0)`.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True if muted, False otherwise.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">mute</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;GetMute&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="n">mute</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">set_main_mute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">bool</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set main mute, true or false.</span>
+<span class="sd">        Equivalent to calling `set_mute(0)`.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            value (bool): New mute setting.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;SetMute&quot;</span><span class="p">,</span> <span class="n">arg</span><span class="o">=</span><span class="nb">bool</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">mute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fader</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get current mute setting for a fader.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            fader (int): Fader to read.</span>
+<span class="sd">                Selected using an integer, 0 for `Main` and 1 to 4 for `Aux1` to `Aux4`.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True if muted, False otherwise.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">_fader</span><span class="p">,</span> <span class="n">mute</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;GetFaderMute&quot;</span><span class="p">,</span> <span class="n">arg</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">fader</span><span class="p">))</span>
+        <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="n">mute</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">set_mute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fader</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">bool</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set mute status for a fader, true or false.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            fader (int): Fader to control.</span>
+<span class="sd">                Selected using an integer, 0 for `Main` and 1 to 4 for `Aux1` to `Aux4`.</span>
+<span class="sd">            value (bool): New mute setting.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;SetFaderMute&quot;</span><span class="p">,</span> <span class="n">arg</span><span class="o">=</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">fader</span><span class="p">),</span> <span class="nb">bool</span><span class="p">(</span><span class="n">value</span><span class="p">)))</span>
+
+    <span class="k">def</span> <span class="nf">toggle_mute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fader</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Toggle mute status for a fader.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            fader (int): Fader to control.</span>
+<span class="sd">                Selected using an integer, 0 for `Main` and 1 to 4 for `Aux1` to `Aux4`.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True if the new status is muted, False otherwise.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">_fader</span><span class="p">,</span> <span class="n">new_mute</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;ToggleFaderMute&quot;</span><span class="p">,</span> <span class="n">arg</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">fader</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">new_mute</span>
+</code></pre></div></td></tr></table></div>
+              </details>
+
+
 
   <div class="doc doc-children">
 
@@ -766,184 +1148,1052 @@
 <div class="doc doc-object doc-function">
 
 
-
-<h2 id="camilladsp.camilladsp.Volume.adjust_fader" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">adjust_fader</span><span class="p">(</span><span class="n">fader</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span></code>
+<h2 id="camilladsp.volume.Volume.adjust_volume" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">adjust_volume</span><span class="p">(</span><span class="n">fader</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">min_limit</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">max_limit</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
 
 </h2>
 
 
-  <div class="doc doc-contents ">
-  
-      <p>Adjust volume for the given fader in dB.
-Positive values increase the volume, negative decrease.</p>
+    <div class="doc doc-contents ">
 
-  <p><strong>Parameters:</strong></p>
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Type</th>
-        <th>Description</th>
-        <th>Default</th>
-      </tr>
-    </thead>
-    <tbody>
-        <tr>
-          <td><code>fader</code></td>
-          <td>
-                <code>int</code>
-          </td>
-          <td><p>Fader to control.
-Selected using an integer, 0 for <code>Main</code> and 1 to 4 for <code>Aux1</code> to <code>Aux4</code>.</p></td>
-          <td>
-              <em>required</em>
-          </td>
-        </tr>
-        <tr>
-          <td><code>value</code></td>
-          <td>
-                <code>float</code>
-          </td>
-          <td><p>Volume adjustment in dB.</p></td>
-          <td>
-              <em>required</em>
-          </td>
-        </tr>
-    </tbody>
-  </table>
+        <p>Adjust volume for the given fader in dB.
+Positive values increase the volume, negative decrease.
+The resulting volume is limited to the range -150 to +50 dB.
+This default range can be reduced via the optional
+<code>min_limit</code> and/or <code>max_limit</code> arguments.</p>
 
-  <p><strong>Returns:</strong></p>
-  <table>
-    <thead>
-      <tr>
-<th>Name</th>        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-        <tr>
-<td><code>float</code></td>          <td>
-                <code>float</code>
-          </td>
-          <td><p>New volume setting.</p></td>
-        </tr>
-    </tbody>
-  </table>
 
-      <details class="quote">
-        <summary>Source code in <code>camilladsp/camilladsp.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">589</span>
-<span class="normal">590</span>
-<span class="normal">591</span>
-<span class="normal">592</span>
-<span class="normal">593</span>
-<span class="normal">594</span>
-<span class="normal">595</span>
-<span class="normal">596</span>
-<span class="normal">597</span>
-<span class="normal">598</span>
-<span class="normal">599</span>
-<span class="normal">600</span>
-<span class="normal">601</span>
-<span class="normal">602</span>
-<span class="normal">603</span>
-<span class="normal">604</span>
-<span class="normal">605</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">adjust_fader</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fader</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td><code>fader</code></td>
+            <td>
+                  <code>int</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Fader to control.
+Selected using an integer, 0 for <code>Main</code> and 1 to 4 for <code>Aux1</code> to <code>Aux4</code>.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code>value</code></td>
+            <td>
+                  <code>float</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Volume adjustment in dB.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code>min_limit</code></td>
+            <td>
+                  <code>float</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Lower volume limit to clamp volume at.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code>max_limit</code></td>
+            <td>
+                  <code>float</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Upper volume limit to clamp volume at.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+<th>Name</th>          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+<td><code>float</code></td>            <td>
+                  <code>float</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>New volume setting.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+            <details class="quote">
+              <summary>Source code in <code>camilladsp\volume.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 90</span>
+<span class="normal"> 91</span>
+<span class="normal"> 92</span>
+<span class="normal"> 93</span>
+<span class="normal"> 94</span>
+<span class="normal"> 95</span>
+<span class="normal"> 96</span>
+<span class="normal"> 97</span>
+<span class="normal"> 98</span>
+<span class="normal"> 99</span>
+<span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span>
+<span class="normal">108</span>
+<span class="normal">109</span>
+<span class="normal">110</span>
+<span class="normal">111</span>
+<span class="normal">112</span>
+<span class="normal">113</span>
+<span class="normal">114</span>
+<span class="normal">115</span>
+<span class="normal">116</span>
+<span class="normal">117</span>
+<span class="normal">118</span>
+<span class="normal">119</span>
+<span class="normal">120</span>
+<span class="normal">121</span>
+<span class="normal">122</span>
+<span class="normal">123</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">adjust_volume</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">fader</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">value</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">min_limit</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">max_limit</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Adjust volume for the given fader in dB.</span>
 <span class="sd">    Positive values increase the volume, negative decrease.</span>
+<span class="sd">    The resulting volume is limited to the range -150 to +50 dB.</span>
+<span class="sd">    This default range can be reduced via the optional</span>
+<span class="sd">    `min_limit` and/or `max_limit` arguments.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        fader (int): Fader to control.</span>
 <span class="sd">            Selected using an integer, 0 for `Main` and 1 to 4 for `Aux1` to `Aux4`.</span>
 <span class="sd">        value (float): Volume adjustment in dB.</span>
+<span class="sd">        min_limit (float): Lower volume limit to clamp volume at.</span>
+<span class="sd">        max_limit (float): Upper volume limit to clamp volume at.</span>
+
 
 <span class="sd">    Returns:</span>
 <span class="sd">        float: New volume setting.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">_fader</span><span class="p">,</span> <span class="n">new_vol</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">query</span><span class="p">(</span>
-        <span class="s2">&quot;AdjustFaderVolume&quot;</span><span class="p">,</span> <span class="n">arg</span><span class="o">=</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">fader</span><span class="p">),</span> <span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
-    <span class="p">)</span>
+    <span class="n">arg</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]]</span>
+    <span class="k">if</span> <span class="n">max_limit</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">min_limit</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">maxlim</span> <span class="o">=</span> <span class="n">max_limit</span> <span class="k">if</span> <span class="n">max_limit</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">default_max_vol</span>
+        <span class="n">minlim</span> <span class="o">=</span> <span class="n">min_limit</span> <span class="k">if</span> <span class="n">min_limit</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">default_min_vol</span>
+        <span class="n">arg</span> <span class="o">=</span> <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">fader</span><span class="p">),</span> <span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">),</span> <span class="nb">float</span><span class="p">(</span><span class="n">minlim</span><span class="p">),</span> <span class="nb">float</span><span class="p">(</span><span class="n">maxlim</span><span class="p">)))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">arg</span> <span class="o">=</span> <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">fader</span><span class="p">),</span> <span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+    <span class="n">_fader</span><span class="p">,</span> <span class="n">new_vol</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;AdjustFaderVolume&quot;</span><span class="p">,</span> <span class="n">arg</span><span class="o">=</span><span class="n">arg</span><span class="p">)</span>
     <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">new_vol</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
-      </details>
-  </div>
+            </details>
+    </div>
 
 </div>
 
 <div class="doc doc-object doc-function">
 
 
-
-<h2 id="camilladsp.camilladsp.Volume.fader" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">fader</span><span class="p">(</span><span class="n">fader</span><span class="p">)</span></code>
+<h2 id="camilladsp.volume.Volume.all" class="doc doc-heading">
+            <code class="highlight language-python"><span class="nb">all</span><span class="p">()</span></code>
 
 </h2>
 
 
-  <div class="doc doc-contents ">
-  
-      <p>Get current volume setting for the given fader in dB.</p>
+    <div class="doc doc-contents ">
 
-  <p><strong>Parameters:</strong></p>
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Type</th>
-        <th>Description</th>
-        <th>Default</th>
-      </tr>
-    </thead>
-    <tbody>
+        <p>Get volume and mute for all faders with a single call.</p>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
         <tr>
-          <td><code>fader</code></td>
-          <td>
-                <code>int</code>
-          </td>
-          <td><p>Fader to read.
-Selected using an integer, 0 for <code>Main</code> and 1 to 4 for <code>Aux1</code> to <code>Aux4</code>.</p></td>
-          <td>
-              <em>required</em>
-          </td>
+          <th>Type</th>
+          <th>Description</th>
         </tr>
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="typing.List">List</span>[<span title="camilladsp.datastructures.Fader">Fader</span>]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>List[Fader]: A list of one object per fader, each with <code>volume</code> and <code>mute</code> properties.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
 
-  <p><strong>Returns:</strong></p>
-  <table>
-    <thead>
-      <tr>
-<th>Name</th>        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
+            <details class="quote">
+              <summary>Source code in <code>camilladsp\volume.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">all</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Fader</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get volume and mute for all faders with a single call.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        List[Fader]: A list of one object per fader, each with `volume` and `mute` properties.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">faders</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;GetFaders&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">faders</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="camilladsp.volume.Volume.main_mute" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">main_mute</span><span class="p">()</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Get current main mute setting.
+Equivalent to calling <code>mute(0)</code>.</p>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
         <tr>
-<td><code>float</code></td>          <td>
-                <code>float</code>
-          </td>
-          <td><p>Current volume setting.</p></td>
+<th>Name</th>          <th>Type</th>
+          <th>Description</th>
         </tr>
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+<td><code>bool</code></td>            <td>
+                  <code>bool</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>True if muted, False otherwise.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
 
-      <details class="quote">
-        <summary>Source code in <code>camilladsp/camilladsp.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">551</span>
-<span class="normal">552</span>
-<span class="normal">553</span>
-<span class="normal">554</span>
-<span class="normal">555</span>
-<span class="normal">556</span>
-<span class="normal">557</span>
-<span class="normal">558</span>
-<span class="normal">559</span>
-<span class="normal">560</span>
-<span class="normal">561</span>
-<span class="normal">562</span>
-<span class="normal">563</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">fader</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fader</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+            <details class="quote">
+              <summary>Source code in <code>camilladsp\volume.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">125</span>
+<span class="normal">126</span>
+<span class="normal">127</span>
+<span class="normal">128</span>
+<span class="normal">129</span>
+<span class="normal">130</span>
+<span class="normal">131</span>
+<span class="normal">132</span>
+<span class="normal">133</span>
+<span class="normal">134</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">main_mute</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get current main mute setting.</span>
+<span class="sd">    Equivalent to calling `mute(0)`.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        bool: True if muted, False otherwise.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">mute</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;GetMute&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="n">mute</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="camilladsp.volume.Volume.main_volume" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">main_volume</span><span class="p">()</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Get current main volume setting in dB.
+Equivalent to calling <code>volume(0)</code>.</p>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+<th>Name</th>          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+<td><code>float</code></td>            <td>
+                  <code>float</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Current volume setting.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+            <details class="quote">
+              <summary>Source code in <code>camilladsp\volume.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">main_volume</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get current main volume setting in dB.</span>
+<span class="sd">    Equivalent to calling `volume(0)`.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        float: Current volume setting.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">vol</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;GetVolume&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">vol</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="camilladsp.volume.Volume.mute" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">mute</span><span class="p">(</span><span class="n">fader</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Get current mute setting for a fader.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td><code>fader</code></td>
+            <td>
+                  <code>int</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Fader to read.
+Selected using an integer, 0 for <code>Main</code> and 1 to 4 for <code>Aux1</code> to <code>Aux4</code>.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+<th>Name</th>          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+<td><code>bool</code></td>            <td>
+                  <code>bool</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>True if muted, False otherwise.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+            <details class="quote">
+              <summary>Source code in <code>camilladsp\volume.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">146</span>
+<span class="normal">147</span>
+<span class="normal">148</span>
+<span class="normal">149</span>
+<span class="normal">150</span>
+<span class="normal">151</span>
+<span class="normal">152</span>
+<span class="normal">153</span>
+<span class="normal">154</span>
+<span class="normal">155</span>
+<span class="normal">156</span>
+<span class="normal">157</span>
+<span class="normal">158</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">mute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fader</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get current mute setting for a fader.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        fader (int): Fader to read.</span>
+<span class="sd">            Selected using an integer, 0 for `Main` and 1 to 4 for `Aux1` to `Aux4`.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        bool: True if muted, False otherwise.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_fader</span><span class="p">,</span> <span class="n">mute</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;GetFaderMute&quot;</span><span class="p">,</span> <span class="n">arg</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">fader</span><span class="p">))</span>
+    <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="n">mute</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="camilladsp.volume.Volume.set_main_mute" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">set_main_mute</span><span class="p">(</span><span class="n">value</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Set main mute, true or false.
+Equivalent to calling <code>set_mute(0)</code>.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td><code>value</code></td>
+            <td>
+                  <code>bool</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>New mute setting.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+            <details class="quote">
+              <summary>Source code in <code>camilladsp\volume.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">136</span>
+<span class="normal">137</span>
+<span class="normal">138</span>
+<span class="normal">139</span>
+<span class="normal">140</span>
+<span class="normal">141</span>
+<span class="normal">142</span>
+<span class="normal">143</span>
+<span class="normal">144</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">set_main_mute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">bool</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Set main mute, true or false.</span>
+<span class="sd">    Equivalent to calling `set_mute(0)`.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        value (bool): New mute setting.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;SetMute&quot;</span><span class="p">,</span> <span class="n">arg</span><span class="o">=</span><span class="nb">bool</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="camilladsp.volume.Volume.set_main_volume" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">set_main_volume</span><span class="p">(</span><span class="n">value</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Set main volume in dB.
+Equivalent to calling <code>set_volume(0)</code>.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td><code>value</code></td>
+            <td>
+                  <code>float</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>New volume in dB.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+            <details class="quote">
+              <summary>Source code in <code>camilladsp\volume.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span>
+<span class="normal">50</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">set_main_volume</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Set main volume in dB.</span>
+<span class="sd">    Equivalent to calling `set_volume(0)`.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        value (float): New volume in dB.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;SetVolume&quot;</span><span class="p">,</span> <span class="n">arg</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="camilladsp.volume.Volume.set_mute" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">set_mute</span><span class="p">(</span><span class="n">fader</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Set mute status for a fader, true or false.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td><code>fader</code></td>
+            <td>
+                  <code>int</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Fader to control.
+Selected using an integer, 0 for <code>Main</code> and 1 to 4 for <code>Aux1</code> to <code>Aux4</code>.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code>value</code></td>
+            <td>
+                  <code>bool</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>New mute setting.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+            <details class="quote">
+              <summary>Source code in <code>camilladsp\volume.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">160</span>
+<span class="normal">161</span>
+<span class="normal">162</span>
+<span class="normal">163</span>
+<span class="normal">164</span>
+<span class="normal">165</span>
+<span class="normal">166</span>
+<span class="normal">167</span>
+<span class="normal">168</span>
+<span class="normal">169</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">set_mute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fader</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">bool</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Set mute status for a fader, true or false.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        fader (int): Fader to control.</span>
+<span class="sd">            Selected using an integer, 0 for `Main` and 1 to 4 for `Aux1` to `Aux4`.</span>
+<span class="sd">        value (bool): New mute setting.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;SetFaderMute&quot;</span><span class="p">,</span> <span class="n">arg</span><span class="o">=</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">fader</span><span class="p">),</span> <span class="nb">bool</span><span class="p">(</span><span class="n">value</span><span class="p">)))</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="camilladsp.volume.Volume.set_volume" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">set_volume</span><span class="p">(</span><span class="n">fader</span><span class="p">,</span> <span class="n">vol</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Set volume for the given fader in dB.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td><code>fader</code></td>
+            <td>
+                  <code>int</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Fader to control.
+Selected using an integer, 0 for <code>Main</code> and 1 to 4 for <code>Aux1</code> to <code>Aux4</code>.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code>vol</code></td>
+            <td>
+                  <code>float</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>New volume setting.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+            <details class="quote">
+              <summary>Source code in <code>camilladsp\volume.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">66</span>
+<span class="normal">67</span>
+<span class="normal">68</span>
+<span class="normal">69</span>
+<span class="normal">70</span>
+<span class="normal">71</span>
+<span class="normal">72</span>
+<span class="normal">73</span>
+<span class="normal">74</span>
+<span class="normal">75</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">set_volume</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fader</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">vol</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Set volume for the given fader in dB.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        fader (int): Fader to control.</span>
+<span class="sd">            Selected using an integer, 0 for `Main` and 1 to 4 for `Aux1` to `Aux4`.</span>
+<span class="sd">        vol (float): New volume setting.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;SetFaderVolume&quot;</span><span class="p">,</span> <span class="n">arg</span><span class="o">=</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">fader</span><span class="p">),</span> <span class="nb">float</span><span class="p">(</span><span class="n">vol</span><span class="p">)))</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="camilladsp.volume.Volume.set_volume_external" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">set_volume_external</span><span class="p">(</span><span class="n">fader</span><span class="p">,</span> <span class="n">vol</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Special command for setting the volume when a "Loudness" filter
+is being combined with an external volume control (without a "Volume" filter).
+Set volume for the given fader in dB.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td><code>fader</code></td>
+            <td>
+                  <code>int</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Fader to control.
+Selected using an integer, 0 for <code>Main</code> and 1 to 4 for <code>Aux1</code> to <code>Aux4</code>.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code>vol</code></td>
+            <td>
+                  <code>float</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>New volume setting.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+            <details class="quote">
+              <summary>Source code in <code>camilladsp\volume.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">77</span>
+<span class="normal">78</span>
+<span class="normal">79</span>
+<span class="normal">80</span>
+<span class="normal">81</span>
+<span class="normal">82</span>
+<span class="normal">83</span>
+<span class="normal">84</span>
+<span class="normal">85</span>
+<span class="normal">86</span>
+<span class="normal">87</span>
+<span class="normal">88</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">set_volume_external</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fader</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">vol</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Special command for setting the volume when a &quot;Loudness&quot; filter</span>
+<span class="sd">    is being combined with an external volume control (without a &quot;Volume&quot; filter).</span>
+<span class="sd">    Set volume for the given fader in dB.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        fader (int): Fader to control.</span>
+<span class="sd">            Selected using an integer, 0 for `Main` and 1 to 4 for `Aux1` to `Aux4`.</span>
+<span class="sd">        vol (float): New volume setting.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;SetFaderExternalVolume&quot;</span><span class="p">,</span> <span class="n">arg</span><span class="o">=</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">fader</span><span class="p">),</span> <span class="nb">float</span><span class="p">(</span><span class="n">vol</span><span class="p">)))</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="camilladsp.volume.Volume.toggle_mute" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">toggle_mute</span><span class="p">(</span><span class="n">fader</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Toggle mute status for a fader.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td><code>fader</code></td>
+            <td>
+                  <code>int</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Fader to control.
+Selected using an integer, 0 for <code>Main</code> and 1 to 4 for <code>Aux1</code> to <code>Aux4</code>.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+<th>Name</th>          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+<td><code>bool</code></td>            <td>
+                  <code>bool</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>True if the new status is muted, False otherwise.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+            <details class="quote">
+              <summary>Source code in <code>camilladsp\volume.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">171</span>
+<span class="normal">172</span>
+<span class="normal">173</span>
+<span class="normal">174</span>
+<span class="normal">175</span>
+<span class="normal">176</span>
+<span class="normal">177</span>
+<span class="normal">178</span>
+<span class="normal">179</span>
+<span class="normal">180</span>
+<span class="normal">181</span>
+<span class="normal">182</span>
+<span class="normal">183</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">toggle_mute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fader</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Toggle mute status for a fader.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        fader (int): Fader to control.</span>
+<span class="sd">            Selected using an integer, 0 for `Main` and 1 to 4 for `Aux1` to `Aux4`.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        bool: True if the new status is muted, False otherwise.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_fader</span><span class="p">,</span> <span class="n">new_mute</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;ToggleFaderMute&quot;</span><span class="p">,</span> <span class="n">arg</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">fader</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">new_mute</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="camilladsp.volume.Volume.volume" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">volume</span><span class="p">(</span><span class="n">fader</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Get current volume setting for the given fader in dB.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td><code>fader</code></td>
+            <td>
+                  <code>int</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Fader to read.
+Selected using an integer, 0 for <code>Main</code> and 1 to 4 for <code>Aux1</code> to <code>Aux4</code>.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+<th>Name</th>          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+<td><code>float</code></td>            <td>
+                  <code>float</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Current volume setting.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+            <details class="quote">
+              <summary>Source code in <code>camilladsp\volume.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span>
+<span class="normal">55</span>
+<span class="normal">56</span>
+<span class="normal">57</span>
+<span class="normal">58</span>
+<span class="normal">59</span>
+<span class="normal">60</span>
+<span class="normal">61</span>
+<span class="normal">62</span>
+<span class="normal">63</span>
+<span class="normal">64</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">volume</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fader</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Get current volume setting for the given fader in dB.</span>
 
@@ -957,290 +2207,8 @@ Selected using an integer, 0 for <code>Main</code> and 1 to 4 for <code>Aux1</co
     <span class="n">_fader</span><span class="p">,</span> <span class="n">vol</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;GetFaderVolume&quot;</span><span class="p">,</span> <span class="n">arg</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">fader</span><span class="p">))</span>
     <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">vol</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
-      </details>
-  </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-
-<h2 id="camilladsp.camilladsp.Volume.main" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">main</span><span class="p">()</span></code>
-
-</h2>
-
-
-  <div class="doc doc-contents ">
-  
-      <p>Get current main volume setting in dB.
-Equivalent to calling <code>get_fader_volume()</code> with <code>fader=0</code>.</p>
-
-  <p><strong>Returns:</strong></p>
-  <table>
-    <thead>
-      <tr>
-<th>Name</th>        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-        <tr>
-<td><code>float</code></td>          <td>
-                <code>float</code>
-          </td>
-          <td><p>Current volume setting.</p></td>
-        </tr>
-    </tbody>
-  </table>
-
-      <details class="quote">
-        <summary>Source code in <code>camilladsp/camilladsp.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">530</span>
-<span class="normal">531</span>
-<span class="normal">532</span>
-<span class="normal">533</span>
-<span class="normal">534</span>
-<span class="normal">535</span>
-<span class="normal">536</span>
-<span class="normal">537</span>
-<span class="normal">538</span>
-<span class="normal">539</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Get current main volume setting in dB.</span>
-<span class="sd">    Equivalent to calling `get_fader_volume()` with `fader=0`.</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        float: Current volume setting.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">vol</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;GetVolume&quot;</span><span class="p">)</span>
-    <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">vol</span><span class="p">)</span>
-</code></pre></div></td></tr></table></div>
-      </details>
-  </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-
-<h2 id="camilladsp.camilladsp.Volume.set_fader" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">set_fader</span><span class="p">(</span><span class="n">fader</span><span class="p">,</span> <span class="n">vol</span><span class="p">)</span></code>
-
-</h2>
-
-
-  <div class="doc doc-contents ">
-  
-      <p>Set volume for the given fader in dB.</p>
-
-  <p><strong>Parameters:</strong></p>
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Type</th>
-        <th>Description</th>
-        <th>Default</th>
-      </tr>
-    </thead>
-    <tbody>
-        <tr>
-          <td><code>fader</code></td>
-          <td>
-                <code>int</code>
-          </td>
-          <td><p>Fader to control.
-Selected using an integer, 0 for <code>Main</code> and 1 to 4 for <code>Aux1</code> to <code>Aux4</code>.</p></td>
-          <td>
-              <em>required</em>
-          </td>
-        </tr>
-        <tr>
-          <td><code>vol</code></td>
-          <td>
-                <code>float</code>
-          </td>
-          <td><p>New volume setting.</p></td>
-          <td>
-              <em>required</em>
-          </td>
-        </tr>
-    </tbody>
-  </table>
-
-      <details class="quote">
-        <summary>Source code in <code>camilladsp/camilladsp.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">565</span>
-<span class="normal">566</span>
-<span class="normal">567</span>
-<span class="normal">568</span>
-<span class="normal">569</span>
-<span class="normal">570</span>
-<span class="normal">571</span>
-<span class="normal">572</span>
-<span class="normal">573</span>
-<span class="normal">574</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">set_fader</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fader</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">vol</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Set volume for the given fader in dB.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        fader (int): Fader to control.</span>
-<span class="sd">            Selected using an integer, 0 for `Main` and 1 to 4 for `Aux1` to `Aux4`.</span>
-<span class="sd">        vol (float): New volume setting.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;SetFaderVolume&quot;</span><span class="p">,</span> <span class="n">arg</span><span class="o">=</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">fader</span><span class="p">),</span> <span class="nb">float</span><span class="p">(</span><span class="n">vol</span><span class="p">)))</span>
-</code></pre></div></td></tr></table></div>
-      </details>
-  </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-
-<h2 id="camilladsp.camilladsp.Volume.set_fader_external" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">set_fader_external</span><span class="p">(</span><span class="n">fader</span><span class="p">,</span> <span class="n">vol</span><span class="p">)</span></code>
-
-</h2>
-
-
-  <div class="doc doc-contents ">
-  
-      <p>Special command for setting the volume when a "Loudness" filter
-is being combined with an external volume control (without a "Volume" filter).
-Set volume for the given fader in dB.</p>
-
-  <p><strong>Parameters:</strong></p>
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Type</th>
-        <th>Description</th>
-        <th>Default</th>
-      </tr>
-    </thead>
-    <tbody>
-        <tr>
-          <td><code>fader</code></td>
-          <td>
-                <code>int</code>
-          </td>
-          <td><p>Fader to control.
-Selected using an integer, 0 for <code>Main</code> and 1 to 4 for <code>Aux1</code> to <code>Aux4</code>.</p></td>
-          <td>
-              <em>required</em>
-          </td>
-        </tr>
-        <tr>
-          <td><code>vol</code></td>
-          <td>
-                <code>float</code>
-          </td>
-          <td><p>New volume setting.</p></td>
-          <td>
-              <em>required</em>
-          </td>
-        </tr>
-    </tbody>
-  </table>
-
-      <details class="quote">
-        <summary>Source code in <code>camilladsp/camilladsp.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">576</span>
-<span class="normal">577</span>
-<span class="normal">578</span>
-<span class="normal">579</span>
-<span class="normal">580</span>
-<span class="normal">581</span>
-<span class="normal">582</span>
-<span class="normal">583</span>
-<span class="normal">584</span>
-<span class="normal">585</span>
-<span class="normal">586</span>
-<span class="normal">587</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">set_fader_external</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fader</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">vol</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Special command for setting the volume when a &quot;Loudness&quot; filter</span>
-<span class="sd">    is being combined with an external volume control (without a &quot;Volume&quot; filter).</span>
-<span class="sd">    Set volume for the given fader in dB.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        fader (int): Fader to control.</span>
-<span class="sd">            Selected using an integer, 0 for `Main` and 1 to 4 for `Aux1` to `Aux4`.</span>
-<span class="sd">        vol (float): New volume setting.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;SetFaderExternalVolume&quot;</span><span class="p">,</span> <span class="n">arg</span><span class="o">=</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">fader</span><span class="p">),</span> <span class="nb">float</span><span class="p">(</span><span class="n">vol</span><span class="p">)))</span>
-</code></pre></div></td></tr></table></div>
-      </details>
-  </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-
-<h2 id="camilladsp.camilladsp.Volume.set_main" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">set_main</span><span class="p">(</span><span class="n">value</span><span class="p">)</span></code>
-
-</h2>
-
-
-  <div class="doc doc-contents ">
-  
-      <p>Set main volume in dB.
-Equivalent to calling <code>set_fader()</code> with <code>fader=0</code>.</p>
-
-  <p><strong>Parameters:</strong></p>
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Type</th>
-        <th>Description</th>
-        <th>Default</th>
-      </tr>
-    </thead>
-    <tbody>
-        <tr>
-          <td><code>value</code></td>
-          <td>
-                <code>float</code>
-          </td>
-          <td><p>New volume in dB.</p></td>
-          <td>
-              <em>required</em>
-          </td>
-        </tr>
-    </tbody>
-  </table>
-
-      <details class="quote">
-        <summary>Source code in <code>camilladsp/camilladsp.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">541</span>
-<span class="normal">542</span>
-<span class="normal">543</span>
-<span class="normal">544</span>
-<span class="normal">545</span>
-<span class="normal">546</span>
-<span class="normal">547</span>
-<span class="normal">548</span>
-<span class="normal">549</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">set_main</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Set main volume in dB.</span>
-<span class="sd">    Equivalent to calling `set_fader()` with `fader=0`.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        value (float): New volume in dB.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;SetVolume&quot;</span><span class="p">,</span> <span class="n">arg</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
-</code></pre></div></td></tr></table></div>
-      </details>
-  </div>
+            </details>
+    </div>
 
 </div>
 
@@ -1248,9 +2216,16 @@ Equivalent to calling <code>set_fader()</code> with <code>fader=0</code>.</p>
 
   </div>
 
-  </div>
+    </div>
 
 </div>
+
+
+
+
+
+
+
 
 
 
@@ -1261,6 +2236,7 @@ Equivalent to calling <code>set_fader()</code> with <code>fader=0</code>.</p>
             </div>
           
           
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
         </div>
         
       </main>
@@ -1288,10 +2264,11 @@ Equivalent to calling <code>set_fader()</code> with <code>fader=0</code>.</p>
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.07f07601.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../assets/javascripts/bundle.fac441b0.min.js"></script>
+      <script src="../assets/javascripts/bundle.56dfad97.min.js"></script>
       
     
   </body>
