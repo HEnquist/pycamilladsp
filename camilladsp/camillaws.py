@@ -9,9 +9,9 @@ from threading import Lock
 import json
 from websocket import create_connection, WebSocket  # type: ignore
 
-from .datastructures import (
+from .exceptions import (
     CamillaError,
-    raise_error,
+    _raise_error,
 )
 
 
@@ -69,7 +69,7 @@ class _CamillaWS:
                 value = response_data.get("value")
                 if state == "Ok":
                     return value
-                raise_error(state, message, value)
+                _raise_error(state, message, value)
             raise IOError(f"Invalid response received: {rawreply!r}")
         except json.JSONDecodeError as err:
             raise IOError(f"Invalid response received: {rawreply!r}") from err
