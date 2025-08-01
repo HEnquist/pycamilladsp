@@ -61,9 +61,29 @@ class DummyWS:
             {"GetErrorValue": {"result": "Error", "value": "badstuff"}}
         ),
         '"GetError"': json.dumps({"GetError": {"result": "Error"}}),
-        '"InvalidValue"': json.dumps({"InvalidValue": {"result": {"InvalidValueError": "invalid value"}, "value": "badstuff"}}),
-        '"InvalidRequest"': json.dumps({"InvalidRequest": {"result": {"InvalidRequestError": "invalid request"}, "value": "badstuff"}}),
-        '"TooManyRequests"': json.dumps({"TooManyRequests": {"result": {"RateLimitExceededError": "too many requests"}}}),
+        '"InvalidValue"': json.dumps(
+            {
+                "InvalidValue": {
+                    "result": {"InvalidValueError": "invalid value"},
+                    "value": "badstuff",
+                }
+            }
+        ),
+        '"InvalidRequest"': json.dumps(
+            {
+                "InvalidRequest": {
+                    "result": {"InvalidRequestError": "invalid request"},
+                    "value": "badstuff",
+                }
+            }
+        ),
+        '"TooManyRequests"': json.dumps(
+            {
+                "TooManyRequests": {
+                    "result": {"RateLimitExceededError": "too many requests"}
+                }
+            }
+        ),
         '"GetStopReason"': json.dumps(
             {"GetStopReason": {"result": "Ok", "value": "Done"}}
         ),
@@ -96,9 +116,7 @@ class DummyWS:
         if query in self.responses:
             self.response = self.responses[query]
         else:
-            self.response = json.dumps(
-                {"Invalid": {"error": "Error"}}
-            )
+            self.response = json.dumps({"Invalid": {"error": "Error"}})
 
     def recv(self):
         print(self.response)
