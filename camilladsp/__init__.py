@@ -7,6 +7,14 @@ from camilladsp.datastructures import (
     ProcessingState,
     StopReason,
     CamillaError,
+    InvalidRequestError,
+    InvalidValueError,
+    RateLimitExceededError,
+    ShutdownInProgressError,
+    ConfigReadError,
+    ConfigValidationError,
+    InvalidFaderError,
+    UnknownError,
 )
 
 from camilladsp.versions import VERSION

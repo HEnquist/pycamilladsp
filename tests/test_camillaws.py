@@ -61,7 +61,9 @@ class DummyWS:
             {"GetErrorValue": {"result": "Error", "value": "badstuff"}}
         ),
         '"GetError"': json.dumps({"GetError": {"result": "Error"}}),
-        '"Invalid"': json.dumps({"Invalid": {"result": "Error", "value": "badstuff"}}),
+        '"InvalidValue"': json.dumps({"InvalidValue": {"result": {"InvalidValueError": "invalid value"}, "value": "badstuff"}}),
+        '"InvalidRequest"': json.dumps({"InvalidRequest": {"result": {"InvalidRequestError": "invalid request"}, "value": "badstuff"}}),
+        '"TooManyRequests"': json.dumps({"TooManyRequests": {"result": {"RateLimitExceededError": "too many requests"}}}),
         '"GetStopReason"': json.dumps(
             {"GetStopReason": {"result": "Ok", "value": "Done"}}
         ),
@@ -76,7 +78,7 @@ class DummyWS:
                 }
             }
         ),
-        '"NotACommand"': json.dumps({"Invalid": {"result": "Error"}}),
+        '"NotACommand"': json.dumps({"Invalid": {"error": "Some error"}}),
         '{"SetSomeValue": 123}': json.dumps({"SetSomeValue": {"result": "Ok"}}),
         '"nonsense"': "abcdefgh",
         '"bug_in_ws"': "OK:OTHER",
@@ -95,7 +97,7 @@ class DummyWS:
             self.response = self.responses[query]
         else:
             self.response = json.dumps(
-                {"Invalid": {"result": "Error", "value": "badstuff"}}
+                {"Invalid": {"error": "Error"}}
             )
 
     def recv(self):
@@ -230,6 +232,33 @@ def test_query(camilla_mockws):
         camilla_mockws.query("fail")
 
 
+def test_query_invalid_value(camilla_mockws):
+    camilla_mockws.connect()
+    with pytest.raises(camilladsp.InvalidValueError) as exc:
+        camilla_mockws.query("InvalidValue")
+    exc_val = exc.value
+    assert exc_val.message == "invalid value"
+    assert exc_val.value == "badstuff"
+    assert str(exc_val) == "invalid value"
+    assert repr(exc_val) == "InvalidValueError('invalid value')"
+
+
+def test_query_invalid_request(camilla_mockws):
+    camilla_mockws.connect()
+    with pytest.raises(camilladsp.InvalidRequestError) as exc:
+        camilla_mockws.query("InvalidRequest")
+    assert exc.value.message == "invalid request"
+    assert exc.value.value == "badstuff"
+
+
+def test_query_too_many_requests(camilla_mockws):
+    camilla_mockws.connect()
+    with pytest.raises(camilladsp.RateLimitExceededError) as exc:
+        camilla_mockws.query("TooManyRequests")
+    assert exc.value.message is None
+    assert exc.value.value is None
+
+
 def test_query_mockedws(camilla_mockws):
     camilla_mockws.connect()
     assert camilla_mockws.query("SetSomeValue", arg=123) is None
@@ -247,24 +276,41 @@ def test_query_mockedws(camilla_mockws):
 
 
 def test_queries(camilla_mockquery):
+    # rate
     camilla_mockquery.rate.capture()
     camilla_mockquery.query.assert_called_with("GetCaptureRate")
     camilla_mockquery.rate.capture_raw()
     camilla_mockquery.query.assert_called_with("GetCaptureRate")
+
+    # levels
     camilla_mockquery.levels.range()
     camilla_mockquery.query.assert_called_with("GetSignalRange")
     camilla_mockquery.levels.range_decibel()
     camilla_mockquery.query.assert_called_with("GetSignalRange")
+    camilla_mockquery.levels.capture_rms()
+    camilla_mockquery.query.assert_called_with("GetCaptureSignalRms")
+    camilla_mockquery.levels.capture_peak()
+    camilla_mockquery.query.assert_called_with("GetCaptureSignalPeak")
+    camilla_mockquery.levels.playback_rms()
+    camilla_mockquery.query.assert_called_with("GetPlaybackSignalRms")
+    camilla_mockquery.levels.playback_peak()
+    camilla_mockquery.query.assert_called_with("GetPlaybackSignalPeak")
+
+    # settings
     camilla_mockquery.settings.set_update_interval(1234)
     camilla_mockquery.query.assert_called_with("SetUpdateInterval", arg=1234)
     camilla_mockquery.settings.update_interval()
     camilla_mockquery.query.assert_called_with("GetUpdateInterval")
+
+    # general
     camilla_mockquery.general.stop()
     camilla_mockquery.query.assert_called_with("Stop")
     camilla_mockquery.general.exit()
     camilla_mockquery.query.assert_called_with("Exit")
     camilla_mockquery.general.reload()
     camilla_mockquery.query.assert_called_with("Reload")
+
+    # config
     camilla_mockquery.config.file_path()
     camilla_mockquery.query.assert_called_with("GetConfigFilePath")
     camilla_mockquery.config.set_file_path("some/path")
@@ -279,12 +325,22 @@ def test_queries(camilla_mockquery):
     camilla_mockquery.query.assert_called_with("SetConfigJson", arg="{'some': 'json'}")
     camilla_mockquery.config.set_active({"some": "yaml"})
     camilla_mockquery.query.assert_called_with("SetConfig", arg="some: yaml\n")
+    camilla_mockquery.config.get_value("some")
+    camilla_mockquery.query.assert_called_with("GetConfigValue", arg="some")
+    camilla_mockquery.config.set_value("some", "value")
+    camilla_mockquery.query.assert_called_with("SetConfigValue", arg=("some", "value"))
+    camilla_mockquery.config.patch({"some": "value"})
+    camilla_mockquery.query.assert_called_with("PatchConfig", arg={"some": "value"})
+
+    # status
     camilla_mockquery.status.rate_adjust()
     camilla_mockquery.query.assert_called_with("GetRateAdjust")
     camilla_mockquery.status.buffer_level()
     camilla_mockquery.query.assert_called_with("GetBufferLevel")
     camilla_mockquery.status.clipped_samples()
     camilla_mockquery.query.assert_called_with("GetClippedSamples")
+
+    # volume & mute
     camilla_mockquery.volume.main_volume()
     camilla_mockquery.query.assert_called_with("GetVolume")
     camilla_mockquery.volume.set_main_volume(-25.0)
@@ -297,14 +353,6 @@ def test_queries(camilla_mockquery):
     camilla_mockquery.query.assert_called_with("SetMute", arg=False)
     camilla_mockquery.volume.set_mute(1, False)
     camilla_mockquery.query.assert_called_with("SetFaderMute", arg=(1, False))
-    camilla_mockquery.levels.capture_rms()
-    camilla_mockquery.query.assert_called_with("GetCaptureSignalRms")
-    camilla_mockquery.levels.capture_peak()
-    camilla_mockquery.query.assert_called_with("GetCaptureSignalPeak")
-    camilla_mockquery.levels.playback_rms()
-    camilla_mockquery.query.assert_called_with("GetPlaybackSignalRms")
-    camilla_mockquery.levels.playback_peak()
-    camilla_mockquery.query.assert_called_with("GetPlaybackSignalPeak")
 
 
 def test_queries_adv(camilla_mockquery_yaml):

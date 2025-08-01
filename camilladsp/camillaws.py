@@ -4,12 +4,15 @@ Python library for communicating with CamillaDSP.
 This module contains the websocket connection class.
 """
 
-from typing import Tuple, Optional, Union
+from typing import Dict, Tuple, Optional, Union
 from threading import Lock
 import json
 from websocket import create_connection, WebSocket  # type: ignore
 
-from .datastructures import CamillaError
+from .datastructures import (
+    CamillaError,
+    raise_error,
+)
 
 
 class _CamillaWS:
@@ -56,21 +59,27 @@ class _CamillaWS:
     def _handle_reply(self, command: str, rawreply: Union[str, bytes]):
         try:
             reply = json.loads(rawreply)
-            value = None
             if command in reply:
-                state = reply[command]["result"]
-                if "value" in reply[command]:
-                    value = reply[command]["value"]
-                if state == "Error" and value is not None:
-                    raise CamillaError(value)
-                if state == "Error" and value is None:
-                    raise CamillaError("Command returned an error")
-                if state == "Ok" and value is not None:
+                response_data = reply[command]
+                if "error" in response_data:
+                    # generic error, the command was not recognized
+                    raise CamillaError(message=response_data["error"])
+                result = response_data["result"]
+                state, message = self._handle_result(result)
+                value = response_data.get("value")
+                if state == "Ok":
                     return value
-                return None
+                raise_error(state, message, value)
             raise IOError(f"Invalid response received: {rawreply!r}")
         except json.JSONDecodeError as err:
             raise IOError(f"Invalid response received: {rawreply!r}") from err
+
+    def _handle_result(
+        self, result: Union[str, Dict[str, str]]
+    ) -> Tuple[str, Optional[str]]:
+        if isinstance(result, str):
+            return result, None
+        return next(iter(result.items()))
 
     def _update_version(self, resp: str):
         version = resp.split(".", 3)
