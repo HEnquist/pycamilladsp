@@ -30,10 +30,15 @@ class _CamillaWS:
         self.cdsp_version: Optional[Tuple[str, str, str]] = None
         self._lock = Lock()
 
+    def __del__(self):
+        # Close the connection nicely instead of just dropping it,
+        # which causes CamillaDSP to warn about a missing closing handshake.
+        self.disconnect()
+
     def query(self, command: str, arg=None):
         """
         Send a command and return the response.
-
+  
         Args:
             command (str): The command to send.
             arg: Parameter to send with the command.
