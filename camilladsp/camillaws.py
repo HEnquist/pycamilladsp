@@ -38,7 +38,7 @@ class _CamillaWS:
     def query(self, command: str, arg=None):
         """
         Send a command and return the response.
-  
+
         Args:
             command (str): The command to send.
             arg: Parameter to send with the command.
