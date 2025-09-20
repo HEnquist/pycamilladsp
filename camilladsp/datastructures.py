@@ -130,12 +130,6 @@ def _reason_from_reply(value):
     return reasonenum
 
 
-class CamillaError(ValueError):
-    """
-    A class representing errors returned by CamillaDSP.
-    """
-
-
 class Fader(TypedDict):
     """
     Class for type annotation of fader volume and mute settings.

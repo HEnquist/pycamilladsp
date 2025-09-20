@@ -1,7 +1,9 @@
 
 # Errors
 
-The custom exception [CamillaError][camilladsp.datastructures.CamillaError] is raised when CamillaDSP replies to a command with an error message. The error message is given as the message of the exception.
+The exception [CamillaError][camilladsp.exceptions.CamillaError]
+or one of its subclasses is raised when CamillaDSP replies to a command with an error message.
+The error message is given as the message of the exception.
 
 Different exceptions are raised in different situations. Consider the following example:
 ```python
@@ -24,5 +26,6 @@ except IOError as e:
 - `IOError` can mean a few things, but the most likely is that the websocket connection was lost.
   This happens if the CamillaDSP process exits or is restarted.
 
-## CamillaError
-::: camilladsp.datastructures.CamillaError
+## Exceptions
+::: camilladsp.exceptions
+

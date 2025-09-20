@@ -4,7 +4,7 @@ Python library for communicating with CamillaDSP.
 This module contains commands for managind configs.
 """
 
-from typing import Dict, Optional
+from typing import Any, Dict, Optional
 
 import yaml
 
@@ -173,3 +173,31 @@ class Config(_CommandGroup):
         """
         desc = self.client.query("GetConfigDescription")
         return desc
+
+    def get_value(self, pointer: str) -> Any:
+        """
+        Get a value from the active configuration.
+        Args:
+            pointer (str): Location of the value to get, given as a json pointer.
+        Returns:
+            Any: Value at the given location.
+        """
+        value = self.client.query("GetConfigValue", arg=pointer)
+        return value
+
+    def set_value(self, pointer: str, value: Any):
+        """
+        Set a value in the active configuration.
+        Args:
+            pointer (str): Location of the value to set, given as a json pointer.
+            value (Any): Value to set.
+        """
+        self.client.query("SetConfigValue", arg=(pointer, value))
+
+    def patch(self, patch: Dict):
+        """
+        Patch the active config by merging it with the provided patch dict.
+        Args:
+            patch (Dict): Patch to apply.
+        """
+        self.client.query("PatchConfig", arg=patch)
