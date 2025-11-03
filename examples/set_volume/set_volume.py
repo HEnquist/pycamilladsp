@@ -13,7 +13,7 @@ except:
     print("Then start CamillaDSP with the websocket server enabled:")
     print("> camilladsp -p4321 yourconfig.yml")
     print("Then set the volume")
-    print("> python read_rms.py 4321 -12.3")
+    print("> python set_volume.py 4321 -12.3")
     sys.exit()
 
 cdsp = CamillaClient("127.0.0.1", port)
