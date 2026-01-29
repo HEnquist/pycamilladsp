@@ -4,6 +4,7 @@ Python library for communicating with CamillaDSP.
 This module contains commands for managind configs.
 """
 
+import json
 from typing import Any, Dict, Optional
 
 import yaml
@@ -113,6 +114,21 @@ class Config(_CommandGroup):
         config_object = yaml.safe_load(config_raw)
         return config_object
 
+    def parse_json(self, config_string: str) -> Dict:
+        """
+        Parse a config from json string and return the contents
+        as a Python object, with defaults filled out with their default values.
+
+        Args:
+            config_string (str): A config as raw json string.
+
+        Returns:
+            Dict | None: Parsed config as a Python dict.
+        """
+        config_raw = self.client.query("ReadConfigJson", arg=config_string)
+        config_object = json.loads(config_raw)
+        return config_object
+
     def read_and_parse_file(self, filename: str) -> Dict:
         """
         Read and parse a config file from disk and return the contents as a Python object.
@@ -137,6 +153,36 @@ class Config(_CommandGroup):
         config_raw = yaml.dump(config_object)
         self.set_active_raw(config_raw)
 
+    def validate_json(self, config_string: str) -> str:
+        """
+        Validate a configuration provided as a json string.
+        Returns the validated config with all optional fields filled with defaults,
+        also as a json string.
+        Raises a CamillaError on errors.
+
+        Args:
+            config_string (str): A config as a json string.
+        Returns:
+            str: Validated config as a json string.
+        """
+        validated_string = self.client.query("ValidateConfigJson", arg=config_string)
+        return validated_string
+
+    def validate_yaml(self, config_string: str) -> str:
+        """
+        Validate a configuration provided as a yaml string.
+        Returns the validated config with all optional fields filled with defaults,
+        also as a yaml string.
+        Raises a CamillaError on errors.
+
+        Args:
+            config_string (str): A config as a yaml string.
+        Returns:
+            str: Validated config as a yaml string.
+        """
+        validated_string = self.client.query("ValidateConfig", arg=config_string)
+        return validated_string
+
     def validate(self, config_object: Dict) -> Dict:
         """
         Validate a configuration object.
@@ -150,7 +196,7 @@ class Config(_CommandGroup):
             Dict | None: Validated config as a Python dict.
         """
         config_string = yaml.dump(config_object)
-        validated_string = self.client.query("ValidateConfig", arg=config_string)
+        validated_string = self.validate_yaml(config_string)
         validated_object = yaml.safe_load(validated_string)
         return validated_object
 
