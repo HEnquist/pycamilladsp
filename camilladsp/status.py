@@ -51,3 +51,13 @@ class Status(_CommandGroup):
         """
         load = self.client.query("GetProcessingLoad")
         return float(load)
+
+    def resampler_load(self) -> float:
+        """
+        Get resampler load in percent.
+
+        Returns:
+            float: Current load.
+        """
+        load = self.client.query("GetResamplerLoad")
+        return float(load)

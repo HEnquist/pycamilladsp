@@ -357,6 +357,10 @@ def test_queries(camilla_mockquery):
     camilla_mockquery.query.assert_called_with("GetBufferLevel")
     camilla_mockquery.status.clipped_samples()
     camilla_mockquery.query.assert_called_with("GetClippedSamples")
+    camilla_mockquery.status.processing_load()
+    camilla_mockquery.query.assert_called_with("GetProcessingLoad")
+    camilla_mockquery.status.resampler_load()
+    camilla_mockquery.query.assert_called_with("GetResamplerLoad")
 
     # volume & mute
     camilla_mockquery.volume.main_volume()
