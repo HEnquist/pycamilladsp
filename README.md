@@ -2,7 +2,7 @@
 
 # pyCamillaDSP
 Companion Python library for CamillaDSP.
-Works with CamillaDSP version 2.0.0 and up.
+Works with CamillaDSP version 4.0.0 and up.
 
 See the [published documentation](https://henquist.github.io/pycamilladsp/)for descriptions of all classes and methods.
 

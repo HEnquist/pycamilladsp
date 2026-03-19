@@ -191,3 +191,13 @@ class Levels(_CommandGroup):
         Reset the peak level values.
         """
         self.client.query("ResetSignalPeaksSinceStart")
+
+    def labels(self):
+        """
+        Get the channel labels from the active config.
+        The labels are returned as a json object with keys `playback` and `capture`,
+        each an optional list of strings.
+        The labels can be used to display the signal levels in a more informative way.
+        """
+        labels = self.client.query("GetChannelLabels")
+        return labels

@@ -72,7 +72,7 @@ class General(_CommandGroup):
             Tuple[List[str], List[str]]: A tuple containing two lists,
                 with the supported playback and capture device types.
         """
-        (playback, capture) = self.client.query("GetSupportedDeviceTypes")
+        playback, capture = self.client.query("GetSupportedDeviceTypes")
         return (playback, capture)
 
     def state_file_path(self) -> Optional[str]:
