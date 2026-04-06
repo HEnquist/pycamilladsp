@@ -4,7 +4,7 @@ Python library for communicating with CamillaDSP.
 This module contains the websocket connection class.
 """
 
-from typing import Dict, Tuple, Optional, Union
+from typing import Any, Callable, Dict, Tuple, Optional, Union
 from threading import Lock
 import json
 from websocket import create_connection, WebSocket  # type: ignore
@@ -79,6 +79,21 @@ class _CamillaWS:
         except json.JSONDecodeError as err:
             raise IOError(f"Invalid response received: {rawreply!r}") from err
 
+    def _handle_event_reply(self, event_name: str, rawreply: Union[str, bytes]):
+        try:
+            reply = json.loads(rawreply)
+            if event_name not in reply:
+                return None
+            response_data = reply[event_name]
+            result = response_data["result"]
+            state, message = self._handle_result(result)
+            value = response_data.get("value")
+            if state == "Ok":
+                return value
+            _raise_error(state, message, value)
+        except json.JSONDecodeError as err:
+            raise IOError(f"Invalid response received: {rawreply!r}") from err
+
     def _handle_result(
         self, result: Union[str, Dict[str, str]]
     ) -> Tuple[str, Optional[str]]:
@@ -104,6 +119,73 @@ class _CamillaWS:
         except Exception as _e:
             self._ws = None
             raise
+
+    def subscribe_events(
+        self,
+        command: str,
+        event_name: str,
+        callback: Callable[[Any], Optional[bool]],
+        arg=None,
+    ):
+        """
+        Start a subscription and call `callback` for each incoming event value.
+
+        This method blocks until the callback returns `False`, or an exception
+        is raised. A `StopSubscription` command is sent before returning.
+
+        Args:
+            command (str): Subscription command to send.
+            event_name (str): Name of event messages to listen for.
+            callback: Function called with each event payload.
+            arg: Optional parameter to send with the subscription command.
+        """
+        if not callable(callback):
+            raise TypeError("callback must be callable")
+        if self._ws is None:
+            raise IOError("Not connected to CamillaDSP")
+
+        subscribed = False
+        try:
+            with self._lock:
+                if arg is not None:
+                    query = json.dumps({command: arg})
+                else:
+                    query = json.dumps(command)
+                self._ws.send(query)
+                rawrepl = self._ws.recv()
+        except Exception as err:
+            self._ws = None
+            raise IOError("Lost connection to CamillaDSP") from err
+
+        self._handle_reply(command, rawrepl)
+        subscribed = True
+
+        try:
+            while True:
+                if self._ws is None:
+                    raise IOError("Lost connection to CamillaDSP")
+                try:
+                    with self._lock:
+                        raw_event = self._ws.recv()
+                except Exception as err:
+                    self._ws = None
+                    raise IOError("Lost connection to CamillaDSP") from err
+
+                event_data = self._handle_event_reply(event_name, raw_event)
+                if event_data is None:
+                    continue
+                should_continue = callback(event_data)
+                if should_continue is False:
+                    break
+        finally:
+            if subscribed and self._ws is not None:
+                try:
+                    with self._lock:
+                        self._ws.send(json.dumps("StopSubscription"))
+                        rawrepl = self._ws.recv()
+                    self._handle_reply("StopSubscription", rawrepl)
+                except Exception:
+                    self._ws = None
 
     def disconnect(self):
         """

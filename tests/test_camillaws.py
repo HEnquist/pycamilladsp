@@ -408,3 +408,65 @@ def test_queries_customreplies(camilla_mockquery):
     camilla_mockquery.query.assert_called_with(
         "AdjustFaderVolume", arg=(0, (-5.0, -150.0, 3.0))
     )
+
+
+def test_subscribe_signal_levels(camilla_mockquery):
+    callback = MagicMock(return_value=False)
+    camilla_mockquery.subscribe_events = MagicMock()
+
+    camilla_mockquery.levels.subscribe_signal_levels(callback, side="playback")
+
+    camilla_mockquery.subscribe_events.assert_called_with(
+        command="SubscribeSignalLevels",
+        arg="playback",
+        event_name="SignalLevelsEvent",
+        callback=callback,
+    )
+
+
+def test_subscribe_events(camilla_mockws):
+    camilla_mockws.connect()
+    sent = []
+    replies = iter(
+        [
+            json.dumps({"SubscribeSignalLevels": {"result": "Ok"}}),
+            json.dumps(
+                {
+                    "SignalLevelsEvent": {
+                        "result": "Ok",
+                        "value": {
+                            "side": "capture",
+                            "rms": [-58.1, -57.6],
+                            "peak": [-39.4, -38.9],
+                        },
+                    }
+                }
+            ),
+            json.dumps({"StopSubscription": {"result": "Ok"}}),
+        ]
+    )
+
+    camilla_mockws.mockconnection.send = MagicMock(side_effect=lambda msg: sent.append(msg))
+    camilla_mockws.mockconnection.recv = MagicMock(side_effect=lambda: next(replies))
+
+    events = []
+
+    def on_event(event_data):
+        events.append(event_data)
+        return False
+
+    camilla_mockws.subscribe_events(
+        command="SubscribeSignalLevels",
+        arg="capture",
+        event_name="SignalLevelsEvent",
+        callback=on_event,
+    )
+
+    assert sent == [json.dumps({"SubscribeSignalLevels": "capture"}), '"StopSubscription"']
+    assert events == [
+        {
+            "side": "capture",
+            "rms": [-58.1, -57.6],
+            "peak": [-39.4, -38.9],
+        }
+    ]

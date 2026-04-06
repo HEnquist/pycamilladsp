@@ -4,7 +4,7 @@ Python library for communicating with CamillaDSP.
 This module contains commands for reading levels.
 """
 
-from typing import Dict, List
+from typing import Any, Callable, Dict, List, Optional
 import math
 
 from .commandgroup import _CommandGroup
@@ -201,3 +201,29 @@ class Levels(_CommandGroup):
         """
         labels = self.client.query("GetChannelLabels")
         return labels
+
+    def subscribe_signal_levels(
+        self,
+        callback: Callable[[Dict[str, Any]], Optional[bool]],
+        side: str = "both",
+    ):
+        """
+        Subscribe to signal level events and call `callback` for each event.
+
+        This method blocks until `callback` returns `False`.
+
+        Args:
+            callback: Function that receives event payloads.
+                Typical payload keys are `side`, `rms`, and `peak`.
+            side (str): Which side to subscribe to. One of
+                `capture`, `playback`, or `both`.
+        """
+        if side not in ("capture", "playback", "both"):
+            raise ValueError("side must be one of: capture, playback, both")
+
+        self.client.subscribe_events(
+            command="SubscribeSignalLevels",
+            arg=side,
+            event_name="SignalLevelsEvent",
+            callback=callback,
+        )
