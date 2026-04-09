@@ -164,6 +164,56 @@ def test_connect(camilla_mockws):
         camilla_mockws.general.state()
     camilla_mockws.connect()
     assert camilla_mockws.is_connected()
+    def test_subscribe_vu_events(camilla_mockws):
+        camilla_mockws.connect()
+        sent = []
+        replies = iter(
+            [
+                json.dumps({"SubscribeVuLevels": {"result": "Ok"}}),
+                json.dumps(
+                    {
+                        "VuLevelsEvent": {
+                            "result": "Ok",
+                            "value": {
+                                "playback_rms": [-20.0, -21.0],
+                                "playback_peak": [-10.0, -11.0],
+                                "capture_rms": [-30.0, -31.0],
+                                "capture_peak": [-12.0, -13.0],
+                            },
+                        }
+                    }
+                ),
+                json.dumps({"StopSubscription": {"result": "Ok"}}),
+            ]
+        )
+
+        camilla_mockws.mockconnection.send = MagicMock(side_effect=lambda msg: sent.append(msg))
+        camilla_mockws.mockconnection.recv = MagicMock(side_effect=lambda: next(replies))
+
+        events = []
+
+        def on_event(event_data):
+            events.append(event_data)
+            return False
+
+        camilla_mockws.levels.subscribe_vu_levels(
+            on_event, max_rate=30, attack=10, release=200
+        )
+
+        assert events == [
+            {
+                "playback_rms": [-20.0, -21.0],
+                "playback_peak": [-10.0, -11.0],
+                "capture_rms": [-30.0, -31.0],
+                "capture_peak": [-12.0, -13.0],
+            }
+        ]
+        assert sent == [
+            json.dumps(
+                {"SubscribeVuLevels": {"max_rate": 30.0, "attack": 10.0, "release": 200.0}}
+            ),
+            json.dumps("StopSubscription"),
+        ]
     assert camilla_mockws.general.state() == camilladsp.ProcessingState.INACTIVE
     assert camilla_mockws.versions.camilladsp() == ("0", "3", "2")
     assert camilla_mockws.versions.library() == tuple(camilladsp.VERSION.split("."))
@@ -424,6 +474,38 @@ def test_subscribe_signal_levels(camilla_mockquery):
     )
 
 
+def test_subscribe_vu_levels(camilla_mockquery):
+    callback = MagicMock(return_value=False)
+    camilla_mockquery.subscribe_events = MagicMock()
+
+    camilla_mockquery.levels.subscribe_vu_levels(
+        callback, max_rate=30, attack=10, release=200
+    )
+
+    camilla_mockquery.subscribe_events.assert_called_with(
+        command="SubscribeVuLevels",
+        arg={"max_rate": 30.0, "attack": 10.0, "release": 200.0},
+        event_name="VuLevelsEvent",
+        callback=callback,
+    )
+
+
+def test_subscribe_vu_levels(camilla_mockquery):
+    callback = MagicMock(return_value=False)
+    camilla_mockquery.subscribe_events = MagicMock()
+
+    camilla_mockquery.levels.subscribe_vu_levels(
+        callback, max_rate=30, attack=10, release=200
+    )
+
+    camilla_mockquery.subscribe_events.assert_called_with(
+        command="SubscribeVuLevels",
+        arg={"max_rate": 30.0, "attack": 10.0, "release": 200.0},
+        event_name="VuLevelsEvent",
+        callback=callback,
+    )
+
+
 def test_subscribe_events(camilla_mockws):
     camilla_mockws.connect()
     sent = []
@@ -469,4 +551,56 @@ def test_subscribe_events(camilla_mockws):
             "rms": [-58.1, -57.6],
             "peak": [-39.4, -38.9],
         }
+    ]
+
+
+def test_subscribe_vu_events(camilla_mockws):
+    camilla_mockws.connect()
+    sent = []
+    replies = iter(
+        [
+            json.dumps({"SubscribeVuLevels": {"result": "Ok"}}),
+            json.dumps(
+                {
+                    "VuLevelsEvent": {
+                        "result": "Ok",
+                        "value": {
+                            "playback_rms": [-20.0, -21.0],
+                            "playback_peak": [-10.0, -11.0],
+                            "capture_rms": [-30.0, -31.0],
+                            "capture_peak": [-12.0, -13.0],
+                        },
+                    }
+                }
+            ),
+            json.dumps({"StopSubscription": {"result": "Ok"}}),
+        ]
+    )
+
+    camilla_mockws.mockconnection.send = MagicMock(side_effect=lambda msg: sent.append(msg))
+    camilla_mockws.mockconnection.recv = MagicMock(side_effect=lambda: next(replies))
+
+    events = []
+
+    def on_event(event_data):
+        events.append(event_data)
+        return False
+
+    camilla_mockws.levels.subscribe_vu_levels(
+        on_event, max_rate=30, attack=10, release=200
+    )
+
+    assert events == [
+        {
+            "playback_rms": [-20.0, -21.0],
+            "playback_peak": [-10.0, -11.0],
+            "capture_rms": [-30.0, -31.0],
+            "capture_peak": [-12.0, -13.0],
+        }
+    ]
+    assert sent == [
+        json.dumps(
+            {"SubscribeVuLevels": {"max_rate": 30.0, "attack": 10.0, "release": 200.0}}
+        ),
+        json.dumps("StopSubscription"),
     ]

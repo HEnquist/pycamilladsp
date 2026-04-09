@@ -227,3 +227,34 @@ class Levels(_CommandGroup):
             event_name="SignalLevelsEvent",
             callback=callback,
         )
+
+    def subscribe_vu_levels(
+        self,
+        callback: Callable[[Dict[str, Any]], Optional[bool]],
+        max_rate: float,
+        attack: float,
+        release: float,
+    ):
+        """
+        Subscribe to VU meter level events and call `callback` for each event.
+
+        This method blocks until `callback` returns `False`.
+
+        Args:
+            callback: Function that receives event payloads.
+                Typical payload keys are `playback_rms`, `playback_peak`,
+                `capture_rms`, and `capture_peak`.
+            max_rate (float): Maximum event rate in Hz. Use 0 to disable capping.
+            attack (float): Attack time constant in milliseconds.
+            release (float): Release time constant in milliseconds.
+        """
+        self.client.subscribe_events(
+            command="SubscribeVuLevels",
+            arg={
+                "max_rate": float(max_rate),
+                "attack": float(attack),
+                "release": float(release),
+            },
+            event_name="VuLevelsEvent",
+            callback=callback,
+        )

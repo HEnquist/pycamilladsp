@@ -4,7 +4,7 @@ Python library for communicating with CamillaDSP.
 This module contains commands of general nature.
 """
 
-from typing import Tuple, List, Optional
+from typing import Any, Callable, List, Optional, Tuple
 
 from .commandgroup import _CommandGroup
 from .datastructures import (
@@ -31,6 +31,22 @@ class General(_CommandGroup):
         """
         state = self.client.query("GetState")
         return _state_from_string(state)
+
+    def subscribe_state(self, callback: Callable[[Any], Optional[bool]]):
+        """
+        Subscribe to state change events and call `callback` for each event.
+
+        This method blocks until `callback` returns `False`.
+
+        Args:
+            callback: Function that receives event payloads.
+                Typical payload keys are `state` and `stop_reason`.
+        """
+        self.client.subscribe_events(
+            command="SubscribeState",
+            event_name="StateEvent",
+            callback=callback,
+        )
 
     def stop_reason(self) -> StopReason:
         """
