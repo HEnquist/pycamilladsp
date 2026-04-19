@@ -164,6 +164,7 @@ def test_connect(camilla_mockws):
         camilla_mockws.general.state()
     camilla_mockws.connect()
     assert camilla_mockws.is_connected()
+
     def test_subscribe_vu_events(camilla_mockws):
         camilla_mockws.connect()
         sent = []
@@ -187,8 +188,12 @@ def test_connect(camilla_mockws):
             ]
         )
 
-        camilla_mockws.mockconnection.send = MagicMock(side_effect=lambda msg: sent.append(msg))
-        camilla_mockws.mockconnection.recv = MagicMock(side_effect=lambda: next(replies))
+        camilla_mockws.mockconnection.send = MagicMock(
+            side_effect=lambda msg: sent.append(msg)
+        )
+        camilla_mockws.mockconnection.recv = MagicMock(
+            side_effect=lambda: next(replies)
+        )
 
         events = []
 
@@ -210,10 +215,17 @@ def test_connect(camilla_mockws):
         ]
         assert sent == [
             json.dumps(
-                {"SubscribeVuLevels": {"max_rate": 30.0, "attack": 10.0, "release": 200.0}}
+                {
+                    "SubscribeVuLevels": {
+                        "max_rate": 30.0,
+                        "attack": 10.0,
+                        "release": 200.0,
+                    }
+                }
             ),
             json.dumps("StopSubscription"),
         ]
+
     assert camilla_mockws.general.state() == camilladsp.ProcessingState.INACTIVE
     assert camilla_mockws.versions.camilladsp() == ("0", "3", "2")
     assert camilla_mockws.versions.library() == tuple(camilladsp.VERSION.split("."))
@@ -528,7 +540,9 @@ def test_subscribe_events(camilla_mockws):
         ]
     )
 
-    camilla_mockws.mockconnection.send = MagicMock(side_effect=lambda msg: sent.append(msg))
+    camilla_mockws.mockconnection.send = MagicMock(
+        side_effect=lambda msg: sent.append(msg)
+    )
     camilla_mockws.mockconnection.recv = MagicMock(side_effect=lambda: next(replies))
 
     events = []
@@ -544,7 +558,10 @@ def test_subscribe_events(camilla_mockws):
         callback=on_event,
     )
 
-    assert sent == [json.dumps({"SubscribeSignalLevels": "capture"}), '"StopSubscription"']
+    assert sent == [
+        json.dumps({"SubscribeSignalLevels": "capture"}),
+        '"StopSubscription"',
+    ]
     assert events == [
         {
             "side": "capture",
@@ -577,7 +594,9 @@ def test_subscribe_vu_events(camilla_mockws):
         ]
     )
 
-    camilla_mockws.mockconnection.send = MagicMock(side_effect=lambda msg: sent.append(msg))
+    camilla_mockws.mockconnection.send = MagicMock(
+        side_effect=lambda msg: sent.append(msg)
+    )
     camilla_mockws.mockconnection.recv = MagicMock(side_effect=lambda: next(replies))
 
     events = []

@@ -173,7 +173,9 @@ class _CamillaWS:
         if self._ws is None:
             raise IOError("Not connected to CamillaDSP")
 
-        self._handle_reply(command, self._send_and_receive(self._make_query(command, arg)))
+        self._handle_reply(
+            command, self._send_and_receive(self._make_query(command, arg))
+        )
 
         subscribed = True
 

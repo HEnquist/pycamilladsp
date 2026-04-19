@@ -43,7 +43,9 @@ except:
     sys.exit()
 
 
-level_thread = threading.Thread(target=subscribe_capture_levels, args=(port,), daemon=True)
+level_thread = threading.Thread(
+    target=subscribe_capture_levels, args=(port,), daemon=True
+)
 state_thread = threading.Thread(target=subscribe_state, args=(port,), daemon=True)
 
 level_thread.start()
