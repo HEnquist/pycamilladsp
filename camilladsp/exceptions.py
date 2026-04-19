@@ -2,7 +2,7 @@
 Exceptions that may be raised by this library.
 """
 
-from typing import Any, Optional
+from typing import Any, NoReturn, Optional
 
 
 class CamillaError(Exception):
@@ -68,7 +68,7 @@ class UnknownError(CamillaError):
     """
 
 
-def _raise_error(state: str, message: Optional[str], value: Any):
+def _raise_error(state: str, message: Optional[str], value: Any) -> NoReturn:
     """
     Raise the appropriate exception for the given error state.
     """

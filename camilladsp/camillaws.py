@@ -48,18 +48,35 @@ class _CamillaWS:
         """
         if self._ws is None:
             raise IOError("Not connected to CamillaDSP")
+        rawrepl = self._send_and_receive(self._make_query(command, arg))
+        return self._handle_reply(command, rawrepl)
+
+    @staticmethod
+    def _make_query(command: str, arg=None) -> str:
         if arg is not None:
-            query = json.dumps({command: arg})
-        else:
-            query = json.dumps(command)
+            return json.dumps({command: arg})
+        return json.dumps(command)
+
+    def _send_and_receive(self, query: str) -> Union[str, bytes]:
+        if self._ws is None:
+            raise IOError("Not connected to CamillaDSP")
         try:
             with self._lock:
                 self._ws.send(query)
-                rawrepl = self._ws.recv()
+                return self._ws.recv()
         except Exception as err:
             self._ws = None
             raise IOError("Lost connection to CamillaDSP") from err
-        return self._handle_reply(command, rawrepl)
+
+    def _receive_message(self) -> Union[str, bytes]:
+        if self._ws is None:
+            raise IOError("Not connected to CamillaDSP")
+        try:
+            with self._lock:
+                return self._ws.recv()
+        except Exception as err:
+            self._ws = None
+            raise IOError("Lost connection to CamillaDSP") from err
 
     def _handle_reply(self, command: str, rawreply: Union[str, bytes]):
         try:
@@ -120,6 +137,18 @@ class _CamillaWS:
             self._ws = None
             raise
 
+    def _receive_subscription_event(self, event_name: str):
+        return self._handle_event_reply(event_name, self._receive_message())
+
+    def _stop_subscription(self):
+        if self._ws is None:
+            return
+        try:
+            rawrepl = self._send_and_receive(self._make_query("StopSubscription"))
+            self._handle_reply("StopSubscription", rawrepl)
+        except (CamillaError, IOError):
+            self._ws = None
+
     def subscribe_events(
         self,
         command: str,
@@ -144,34 +173,13 @@ class _CamillaWS:
         if self._ws is None:
             raise IOError("Not connected to CamillaDSP")
 
-        subscribed = False
-        try:
-            with self._lock:
-                if arg is not None:
-                    query = json.dumps({command: arg})
-                else:
-                    query = json.dumps(command)
-                self._ws.send(query)
-                rawrepl = self._ws.recv()
-        except Exception as err:
-            self._ws = None
-            raise IOError("Lost connection to CamillaDSP") from err
+        self._handle_reply(command, self._send_and_receive(self._make_query(command, arg)))
 
-        self._handle_reply(command, rawrepl)
         subscribed = True
 
         try:
             while True:
-                if self._ws is None:
-                    raise IOError("Lost connection to CamillaDSP")
-                try:
-                    with self._lock:
-                        raw_event = self._ws.recv()
-                except Exception as err:
-                    self._ws = None
-                    raise IOError("Lost connection to CamillaDSP") from err
-
-                event_data = self._handle_event_reply(event_name, raw_event)
+                event_data = self._receive_subscription_event(event_name)
                 if event_data is None:
                     continue
                 should_continue = callback(event_data)
@@ -179,13 +187,7 @@ class _CamillaWS:
                     break
         finally:
             if subscribed and self._ws is not None:
-                try:
-                    with self._lock:
-                        self._ws.send(json.dumps("StopSubscription"))
-                        rawrepl = self._ws.recv()
-                    self._handle_reply("StopSubscription", rawrepl)
-                except Exception:
-                    self._ws = None
+                self._stop_subscription()
 
     def disconnect(self):
         """

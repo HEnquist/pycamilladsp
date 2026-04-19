@@ -11,6 +11,7 @@ from .commandgroup import _CommandGroup
 
 
 class Levels(_CommandGroup):
+    # pylint: disable=too-many-public-methods
     """
     Collection of methods for level monitoring
     """
