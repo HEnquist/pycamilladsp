@@ -4,13 +4,14 @@ Python library for communicating with CamillaDSP.
 This module contains commands for reading levels.
 """
 
-from typing import Dict, List
+from typing import Any, Callable, Dict, List, Optional
 import math
 
 from .commandgroup import _CommandGroup
 
 
 class Levels(_CommandGroup):
+    # pylint: disable=too-many-public-methods
     """
     Collection of methods for level monitoring
     """
@@ -201,3 +202,60 @@ class Levels(_CommandGroup):
         """
         labels = self.client.query("GetChannelLabels")
         return labels
+
+    def subscribe_signal_levels(
+        self,
+        callback: Callable[[Dict[str, Any]], Optional[bool]],
+        side: str = "both",
+    ):
+        """
+        Subscribe to signal level events and call `callback` for each event.
+
+        This method blocks until `callback` returns `False`.
+
+        Args:
+            callback: Function that receives event payloads.
+                Typical payload keys are `side`, `rms`, and `peak`.
+            side (str): Which side to subscribe to. One of
+                `capture`, `playback`, or `both`.
+        """
+        if side not in ("capture", "playback", "both"):
+            raise ValueError("side must be one of: capture, playback, both")
+
+        self.client.subscribe_events(
+            command="SubscribeSignalLevels",
+            arg=side,
+            event_name="SignalLevelsEvent",
+            callback=callback,
+        )
+
+    def subscribe_vu_levels(
+        self,
+        callback: Callable[[Dict[str, Any]], Optional[bool]],
+        max_rate: float,
+        attack: float,
+        release: float,
+    ):
+        """
+        Subscribe to VU meter level events and call `callback` for each event.
+
+        This method blocks until `callback` returns `False`.
+
+        Args:
+            callback: Function that receives event payloads.
+                Typical payload keys are `playback_rms`, `playback_peak`,
+                `capture_rms`, and `capture_peak`.
+            max_rate (float): Maximum event rate in Hz. Use 0 to disable capping.
+            attack (float): Attack time constant in milliseconds.
+            release (float): Release time constant in milliseconds.
+        """
+        self.client.subscribe_events(
+            command="SubscribeVuLevels",
+            arg={
+                "max_rate": float(max_rate),
+                "attack": float(attack),
+                "release": float(release),
+            },
+            event_name="VuLevelsEvent",
+            callback=callback,
+        )

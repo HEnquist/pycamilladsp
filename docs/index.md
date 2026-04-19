@@ -27,6 +27,12 @@ state = client.general.state()
 capture_levels = client.levels.capture_rms()
 ```
 
+Subscriptions are also available for streaming updates. For example,
+`client.levels.subscribe_signal_levels(...)` can be used to receive signal
+level events, and `client.general.subscribe_state(...)` can be used to
+receive processing state changes. Subscription calls block while listening for
+events, so use a separate client connection for each concurrent subscription.
+
 ## Command group classes
 |      Class   | Via property | Description |
 |--------------|----------|-------------|
@@ -44,6 +50,8 @@ capture_levels = client.levels.capture_rms()
 ### [General][camilladsp.general.General]
 These commands are accessed via the [general][camilladsp.CamillaClient.general]
 property of a [CamillaClient][camilladsp.CamillaClient] instance.
+This group also includes `subscribe_state`, which listens for processing state
+change events.
 ::: camilladsp.general.General
     options:
       show_bases: false
@@ -84,6 +92,8 @@ property of a [CamillaClient][camilladsp.CamillaClient] instance.
 ### [Levels][camilladsp.levels.Levels]
 These commands are accessed via the [levels][camilladsp.CamillaClient.levels]
 property of a [CamillaClient][camilladsp.CamillaClient] instance.
+This group also includes `subscribe_signal_levels`, which listens for signal
+level events on the selected side.
 ::: camilladsp.levels.Levels
     options:
       show_bases: false
