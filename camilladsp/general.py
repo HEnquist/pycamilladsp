@@ -8,6 +8,7 @@ from typing import Any, Callable, List, Optional, Tuple
 
 from .commandgroup import _CommandGroup
 from .datastructures import (
+    AudioDeviceDescriptor,
     ProcessingState,
     StopReason,
     _state_from_string,
@@ -138,3 +139,39 @@ class General(_CommandGroup):
         """
         devs = self.client.query("GetAvailableCaptureDevices", arg=value)
         return devs
+
+    def playback_device_capabilities(
+        self, backend: str, device_name: str
+    ) -> AudioDeviceDescriptor:
+        """
+        Read the capabilities of a specific playback device.
+
+        Args:
+            backend (str): Backend name such as Alsa or CoreAudio.
+            device_name (str): Device identifier or name.
+
+        Returns:
+            AudioDeviceDescriptor: Device descriptor with capabilities.
+        """
+        capabilities = self.client.query(
+            "GetPlaybackDeviceCapabilities", arg=(backend, device_name)
+        )
+        return capabilities
+
+    def capture_device_capabilities(
+        self, backend: str, device_name: str
+    ) -> AudioDeviceDescriptor:
+        """
+        Read the capabilities of a specific capture device.
+
+        Args:
+            backend (str): Backend name such as Alsa or CoreAudio.
+            device_name (str): Device identifier or name.
+
+        Returns:
+            AudioDeviceDescriptor: Device descriptor with capabilities.
+        """
+        capabilities = self.client.query(
+            "GetCaptureDeviceCapabilities", arg=(backend, device_name)
+        )
+        return capabilities

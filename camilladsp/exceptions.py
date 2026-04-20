@@ -60,6 +60,24 @@ class ConfigReadError(CamillaError):
     """
 
 
+class DeviceNotFoundError(CamillaError):
+    """
+    The requested audio device was not found.
+    """
+
+
+class DeviceBusyError(CamillaError):
+    """
+    The requested audio device is busy.
+    """
+
+
+class DeviceError(CamillaError):
+    """
+    A device-specific error occurred.
+    """
+
+
 class UnknownError(CamillaError):
     """
     An unknown error occurred.
@@ -86,4 +104,10 @@ def _raise_error(state: str, message: Optional[str], value: Any) -> NoReturn:
         raise ConfigValidationError(message=message, value=value)
     if state == "ConfigReadError":
         raise ConfigReadError(message=message, value=value)
+    if state == "DeviceNotFoundError":
+        raise DeviceNotFoundError(message=message, value=value)
+    if state == "DeviceBusyError":
+        raise DeviceBusyError(message=message, value=value)
+    if state == "DeviceError":
+        raise DeviceError(message=message, value=value)
     raise UnknownError(message=message, value=value)

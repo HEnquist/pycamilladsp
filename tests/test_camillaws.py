@@ -57,6 +57,47 @@ class DummyWS:
         '{"ToggleFaderMute": 1}': json.dumps(
             {"ToggleFaderMute": {"result": "Ok", "value": [1, True]}}
         ),
+        '{"GetPlaybackDeviceCapabilities": ["Alsa", "hw:Loopback,0,0"]}': json.dumps(
+            {
+                "GetPlaybackDeviceCapabilities": {
+                    "result": "Ok",
+                    "value": {
+                        "name": "hw:Loopback,0,0",
+                        "description": "Loopback, Loopback PCM, subdevice #0",
+                        "capabilities": [
+                            {
+                                "channels": 2,
+                                "samplerates": [
+                                    {
+                                        "samplerate": 44100,
+                                        "formats": ["S16_LE", "S32_LE"],
+                                    }
+                                ],
+                            }
+                        ],
+                    },
+                }
+            }
+        ),
+        '{"GetCaptureDeviceCapabilities": ["Alsa", "hw:Loopback,1,0"]}': json.dumps(
+            {
+                "GetCaptureDeviceCapabilities": {
+                    "result": "Ok",
+                    "value": {
+                        "name": "hw:Loopback,1,0",
+                        "description": "Loopback capture",
+                        "capabilities": [
+                            {
+                                "channels": 2,
+                                "samplerates": [
+                                    {"samplerate": 48000, "formats": ["FLOAT32LE"]}
+                                ],
+                            }
+                        ],
+                    },
+                }
+            }
+        ),
         '"GetErrorValue"': json.dumps(
             {"GetErrorValue": {"result": "Error", "value": "badstuff"}}
         ),
@@ -81,6 +122,30 @@ class DummyWS:
             {
                 "TooManyRequests": {
                     "result": {"RateLimitExceededError": "too many requests"}
+                }
+            }
+        ),
+        '"DeviceBusy"': json.dumps(
+            {
+                "DeviceBusy": {
+                    "result": {"DeviceBusyError": "device is busy"},
+                    "value": {"name": "hw:Loopback,0,0"},
+                }
+            }
+        ),
+        '"DeviceNotFound"': json.dumps(
+            {
+                "DeviceNotFound": {
+                    "result": {"DeviceNotFoundError": "device not found"},
+                    "value": {"name": "missing"},
+                }
+            }
+        ),
+        '"DeviceError"': json.dumps(
+            {
+                "DeviceError": {
+                    "result": {"DeviceError": "backend failed"},
+                    "value": {"name": "hw:Broken"},
                 }
             }
         ),
@@ -243,6 +308,24 @@ def test_device_types(camilla_mockws):
     assert camilla_mockws.general.supported_device_types() == (["a", "b"], ["c", "d"])
 
 
+def test_device_capabilities(camilla_mockws):
+    camilla_mockws.connect()
+    playback = camilla_mockws.general.playback_device_capabilities(
+        "Alsa", "hw:Loopback,0,0"
+    )
+    capture = camilla_mockws.general.capture_device_capabilities(
+        "Alsa", "hw:Loopback,1,0"
+    )
+
+    assert playback["name"] == "hw:Loopback,0,0"
+    assert playback["capabilities"][0]["samplerates"][0]["formats"] == [
+        "S16_LE",
+        "S32_LE",
+    ]
+    assert capture["description"] == "Loopback capture"
+    assert capture["capabilities"][0]["samplerates"][0]["samplerate"] == 48000
+
+
 def test_signal_range(camilla_mockws):
     camilla_mockws.connect()
     assert camilla_mockws.levels.range() == 0.2
@@ -339,6 +422,25 @@ def test_query_too_many_requests(camilla_mockws):
     assert exc.value.value is None
 
 
+def test_query_device_errors(camilla_mockws):
+    camilla_mockws.connect()
+
+    with pytest.raises(camilladsp.DeviceBusyError) as busy_exc:
+        camilla_mockws.query("DeviceBusy")
+    assert busy_exc.value.message == "device is busy"
+    assert busy_exc.value.value == {"name": "hw:Loopback,0,0"}
+
+    with pytest.raises(camilladsp.DeviceNotFoundError) as missing_exc:
+        camilla_mockws.query("DeviceNotFound")
+    assert missing_exc.value.message == "device not found"
+    assert missing_exc.value.value == {"name": "missing"}
+
+    with pytest.raises(camilladsp.DeviceError) as device_exc:
+        camilla_mockws.query("DeviceError")
+    assert device_exc.value.message == "backend failed"
+    assert device_exc.value.value == {"name": "hw:Broken"}
+
+
 def test_query_mockedws(camilla_mockws):
     camilla_mockws.connect()
     assert camilla_mockws.query("SetSomeValue", arg=123) is None
@@ -389,6 +491,14 @@ def test_queries(camilla_mockquery):
     camilla_mockquery.query.assert_called_with("Exit")
     camilla_mockquery.general.reload()
     camilla_mockquery.query.assert_called_with("Reload")
+    camilla_mockquery.general.playback_device_capabilities("Alsa", "hw:Loopback,0,0")
+    camilla_mockquery.query.assert_called_with(
+        "GetPlaybackDeviceCapabilities", arg=("Alsa", "hw:Loopback,0,0")
+    )
+    camilla_mockquery.general.capture_device_capabilities("Alsa", "hw:Loopback,1,0")
+    camilla_mockquery.query.assert_called_with(
+        "GetCaptureDeviceCapabilities", arg=("Alsa", "hw:Loopback,1,0")
+    )
 
     # config
     camilla_mockquery.config.file_path()

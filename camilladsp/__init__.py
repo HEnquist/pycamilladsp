@@ -9,6 +9,9 @@ from camilladsp.datastructures import (
 )
 from camilladsp.exceptions import (
     CamillaError,
+    DeviceBusyError,
+    DeviceError,
+    DeviceNotFoundError,
     InvalidRequestError,
     InvalidValueError,
     RateLimitExceededError,
