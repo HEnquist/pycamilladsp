@@ -163,6 +163,17 @@ class DummyWS:
                 }
             }
         ),
+        '{"GetSpectrum": {"side": "capture", "channel": null, "min_freq": 20.0, "max_freq": 20000.0, "n_bins": 100}}': json.dumps(
+            {
+                "GetSpectrum": {
+                    "result": "Ok",
+                    "value": {
+                        "frequencies": [20.0, 44.7, 100.0],
+                        "magnitudes": [-42.3, -45.1, -38.7],
+                    },
+                }
+            }
+        ),
         '"NotACommand"': json.dumps({"Invalid": {"error": "Some error"}}),
         '{"SetSomeValue": 123}': json.dumps({"SetSomeValue": {"result": "Ok"}}),
         '"nonsense"': "abcdefgh",
@@ -733,3 +744,162 @@ def test_subscribe_vu_events(camilla_mockws):
         ),
         json.dumps("StopSubscription"),
     ]
+
+
+def test_get_spectrum(camilla_mockws):
+    camilla_mockws.connect()
+    result = camilla_mockws.spectrum.get_spectrum(
+        side="capture", min_freq=20.0, max_freq=20000.0, n_bins=100
+    )
+    assert result["frequencies"] == [20.0, 44.7, 100.0]
+    assert result["magnitudes"] == [-42.3, -45.1, -38.7]
+
+
+def test_spectrum_queries(camilla_mockquery):
+    camilla_mockquery.spectrum.get_spectrum(
+        side="capture", min_freq=20.0, max_freq=20000.0, n_bins=100
+    )
+    camilla_mockquery.query.assert_called_with(
+        "GetSpectrum",
+        arg={
+            "side": "capture",
+            "channel": None,
+            "min_freq": 20.0,
+            "max_freq": 20000.0,
+            "n_bins": 100,
+        },
+    )
+
+    camilla_mockquery.spectrum.get_spectrum(
+        side="playback", min_freq=100.0, max_freq=10000.0, n_bins=50, channel=1
+    )
+    camilla_mockquery.query.assert_called_with(
+        "GetSpectrum",
+        arg={
+            "side": "playback",
+            "channel": 1,
+            "min_freq": 100.0,
+            "max_freq": 10000.0,
+            "n_bins": 50,
+        },
+    )
+
+
+def test_subscribe_spectrum(camilla_mockquery):
+    callback = MagicMock(return_value=False)
+    camilla_mockquery.subscribe_events = MagicMock()
+
+    camilla_mockquery.spectrum.subscribe_spectrum(
+        callback, side="capture", min_freq=20.0, max_freq=20000.0, n_bins=100
+    )
+    camilla_mockquery.subscribe_events.assert_called_with(
+        command="SubscribeSpectrum",
+        arg={
+            "side": "capture",
+            "channel": None,
+            "min_freq": 20.0,
+            "max_freq": 20000.0,
+            "n_bins": 100,
+        },
+        event_name="SpectrumEvent",
+        callback=callback,
+    )
+
+
+def test_subscribe_spectrum_with_rate(camilla_mockquery):
+    callback = MagicMock(return_value=False)
+    camilla_mockquery.subscribe_events = MagicMock()
+
+    camilla_mockquery.spectrum.subscribe_spectrum(
+        callback,
+        side="playback",
+        min_freq=20.0,
+        max_freq=20000.0,
+        n_bins=100,
+        channel=0,
+        max_rate=30.0,
+    )
+    camilla_mockquery.subscribe_events.assert_called_with(
+        command="SubscribeSpectrum",
+        arg={
+            "side": "playback",
+            "channel": 0,
+            "min_freq": 20.0,
+            "max_freq": 20000.0,
+            "n_bins": 100,
+            "max_rate": 30.0,
+        },
+        event_name="SpectrumEvent",
+        callback=callback,
+    )
+
+
+def test_subscribe_spectrum_events(camilla_mockws):
+    camilla_mockws.connect()
+    sent = []
+    replies = iter(
+        [
+            json.dumps({"SubscribeSpectrum": {"result": "Ok"}}),
+            json.dumps(
+                {
+                    "SpectrumEvent": {
+                        "result": "Ok",
+                        "value": {
+                            "frequencies": [20.0, 44.7, 100.0],
+                            "magnitudes": [-42.3, -45.1, -38.7],
+                        },
+                    }
+                }
+            ),
+            json.dumps({"StopSubscription": {"result": "Ok"}}),
+        ]
+    )
+
+    camilla_mockws.mockconnection.send = MagicMock(
+        side_effect=lambda msg: sent.append(msg)
+    )
+    camilla_mockws.mockconnection.recv = MagicMock(side_effect=lambda: next(replies))
+
+    events = []
+
+    def on_event(event_data):
+        events.append(event_data)
+        return False
+
+    camilla_mockws.spectrum.subscribe_spectrum(
+        on_event, side="capture", min_freq=20.0, max_freq=20000.0, n_bins=100
+    )
+
+    assert events == [
+        {
+            "frequencies": [20.0, 44.7, 100.0],
+            "magnitudes": [-42.3, -45.1, -38.7],
+        }
+    ]
+    assert sent == [
+        json.dumps(
+            {
+                "SubscribeSpectrum": {
+                    "side": "capture",
+                    "channel": None,
+                    "min_freq": 20.0,
+                    "max_freq": 20000.0,
+                    "n_bins": 100,
+                }
+            }
+        ),
+        json.dumps("StopSubscription"),
+    ]
+
+
+def test_spectrum_invalid_side(camilla_mockquery):
+    with pytest.raises(ValueError):
+        camilla_mockquery.spectrum.get_spectrum(
+            side="both", min_freq=20.0, max_freq=20000.0, n_bins=100
+        )
+
+    callback = MagicMock()
+    with pytest.raises(ValueError):
+        camilla_mockquery.spectrum.subscribe_spectrum(
+            callback, side="invalid", min_freq=20.0, max_freq=20000.0, n_bins=100
+        )
