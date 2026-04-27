@@ -14,6 +14,8 @@ from camilladsp.exceptions import (
     DeviceNotFoundError,
     InvalidRequestError,
     InvalidValueError,
+    ProcessingNotRunningError,
+    ProcessingStoppedError,
     RateLimitExceededError,
     ShutdownInProgressError,
     ConfigReadError,

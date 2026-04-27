@@ -11,6 +11,7 @@ from websocket import create_connection, WebSocket  # type: ignore
 
 from .exceptions import (
     CamillaError,
+    ProcessingStoppedError,
     _raise_error,
 )
 
@@ -187,6 +188,9 @@ class _CamillaWS:
                 should_continue = callback(event_data)
                 if should_continue is False:
                     break
+        except ProcessingStoppedError:
+            subscribed = False
+            raise
         finally:
             if subscribed and self._ws is not None:
                 self._stop_subscription()

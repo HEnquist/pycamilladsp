@@ -78,6 +78,21 @@ class DeviceError(CamillaError):
     """
 
 
+class ProcessingNotRunningError(CamillaError):
+    """
+    CamillaDSP processing is not running.
+    Raised when a spectrum subscription is requested while processing is stopped.
+    """
+
+
+class ProcessingStoppedError(CamillaError):
+    """
+    CamillaDSP processing stopped while a spectrum subscription was active.
+    The subscription has been cancelled by CamillaDSP; the client must resubscribe
+    once processing has resumed.
+    """
+
+
 class UnknownError(CamillaError):
     """
     An unknown error occurred.
@@ -110,4 +125,8 @@ def _raise_error(state: str, message: Optional[str], value: Any) -> NoReturn:
         raise DeviceBusyError(message=message, value=value)
     if state == "DeviceError":
         raise DeviceError(message=message, value=value)
+    if state == "ProcessingNotRunningError":
+        raise ProcessingNotRunningError()
+    if state == "ProcessingStopped":
+        raise ProcessingStoppedError()
     raise UnknownError(message=message, value=value)
