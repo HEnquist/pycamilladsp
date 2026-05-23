@@ -127,6 +127,6 @@ property of a [CamillaClient][camilladsp.CamillaClient] instance.
 ::: camilladsp.versions.Versions
     options:
       show_bases: false
-      show_source: falses
-      how_docstring_parameters: false
+      show_source: false
+      show_docstring_parameters: false
       show_docstring_returns: false
