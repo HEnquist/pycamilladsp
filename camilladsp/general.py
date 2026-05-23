@@ -120,7 +120,7 @@ class General(_CommandGroup):
         For some backends, those two names are identical.
 
         Returns:
-            List[Tuple[str, str]: A list containing tuples of two strings,
+            List[Tuple[str, str]]: A list containing tuples of two strings,
                 with system device name and a descriptive name.
         """
         devs = self.client.query("GetAvailablePlaybackDevices", arg=value)
@@ -134,7 +134,7 @@ class General(_CommandGroup):
         For some backends, those two names are identical.
 
         Returns:
-            List[Tuple[str, str]: A list containing tuples of two strings,
+            List[Tuple[str, str]]: A list containing tuples of two strings,
                 with system device name and a descriptive name.
         """
         devs = self.client.query("GetAvailableCaptureDevices", arg=value)
