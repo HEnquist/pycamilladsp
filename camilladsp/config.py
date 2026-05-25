@@ -108,7 +108,7 @@ class Config(_CommandGroup):
             config_string (str): A config as raw yaml string.
 
         Returns:
-            Dict | None: Parsed config as a Python dict.
+            Dict: Parsed config as a Python dict.
         """
         config_raw = self.client.query("ReadConfig", arg=config_string)
         config_object = yaml.safe_load(config_raw)
@@ -123,7 +123,7 @@ class Config(_CommandGroup):
             config_string (str): A config as raw json string.
 
         Returns:
-            Dict | None: Parsed config as a Python dict.
+            Dict: Parsed config as a Python dict.
         """
         config_raw = self.client.query("ReadConfigJson", arg=config_string)
         config_object = json.loads(config_raw)
@@ -137,7 +137,7 @@ class Config(_CommandGroup):
             filename (str): Path to a config file.
 
         Returns:
-            Dict | None: Parsed config as a Python dict.
+            Dict: Parsed config as a Python dict.
         """
         config_raw = self.client.query("ReadConfigFile", arg=filename)
         config = yaml.safe_load(config_raw)
@@ -193,7 +193,7 @@ class Config(_CommandGroup):
             config_object (Dict): A configuration as a Python dict.
 
         Returns:
-            Dict | None: Validated config as a Python dict.
+            Dict: Validated config as a Python dict.
         """
         config_string = yaml.dump(config_object)
         validated_string = self.validate_yaml(config_string)

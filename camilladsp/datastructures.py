@@ -3,7 +3,7 @@ Various data structures used for communicating with CamillaDSP.
 """
 
 from enum import Enum, auto
-from typing import Optional, TypedDict
+from typing import List, Optional, TypedDict
 
 _STANDARD_RATES = (
     8000,
@@ -137,3 +137,31 @@ class Fader(TypedDict):
 
     volume: float
     mute: bool
+
+
+class AudioDeviceSampleRateCapability(TypedDict):
+    """
+    Supported formats for one sample rate.
+    """
+
+    samplerate: int
+    formats: List[str]
+
+
+class AudioDeviceChannelCapability(TypedDict):
+    """
+    Supported sample rates and formats for one channel count.
+    """
+
+    channels: int
+    samplerates: List[AudioDeviceSampleRateCapability]
+
+
+class AudioDeviceDescriptor(TypedDict):
+    """
+    Capabilities reported for an audio device.
+    """
+
+    name: str
+    description: str
+    capabilities: List[AudioDeviceChannelCapability]

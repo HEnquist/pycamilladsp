@@ -2,7 +2,7 @@
 Exceptions that may be raised by this library.
 """
 
-from typing import Any, Optional
+from typing import Any, NoReturn, Optional
 
 
 class CamillaError(Exception):
@@ -60,6 +60,39 @@ class ConfigReadError(CamillaError):
     """
 
 
+class DeviceNotFoundError(CamillaError):
+    """
+    The requested audio device was not found.
+    """
+
+
+class DeviceBusyError(CamillaError):
+    """
+    The requested audio device is busy.
+    """
+
+
+class DeviceError(CamillaError):
+    """
+    A device-specific error occurred.
+    """
+
+
+class ProcessingNotRunningError(CamillaError):
+    """
+    CamillaDSP processing is not running.
+    Raised when a spectrum subscription is requested while processing is stopped.
+    """
+
+
+class ProcessingStoppedError(CamillaError):
+    """
+    CamillaDSP processing stopped while a spectrum subscription was active.
+    The subscription has been cancelled by CamillaDSP; the client must resubscribe
+    once processing has resumed.
+    """
+
+
 class UnknownError(CamillaError):
     """
     An unknown error occurred.
@@ -68,7 +101,7 @@ class UnknownError(CamillaError):
     """
 
 
-def _raise_error(state: str, message: Optional[str], value: Any):
+def _raise_error(state: str, message: Optional[str], value: Any) -> NoReturn:
     """
     Raise the appropriate exception for the given error state.
     """
@@ -86,4 +119,14 @@ def _raise_error(state: str, message: Optional[str], value: Any):
         raise ConfigValidationError(message=message, value=value)
     if state == "ConfigReadError":
         raise ConfigReadError(message=message, value=value)
+    if state == "DeviceNotFoundError":
+        raise DeviceNotFoundError(message=message, value=value)
+    if state == "DeviceBusyError":
+        raise DeviceBusyError(message=message, value=value)
+    if state == "DeviceError":
+        raise DeviceError(message=message, value=value)
+    if state == "ProcessingNotRunningError":
+        raise ProcessingNotRunningError()
+    if state == "ProcessingStopped":
+        raise ProcessingStoppedError()
     raise UnknownError(message=message, value=value)

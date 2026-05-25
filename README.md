@@ -15,6 +15,12 @@ Read the playback signal level continuously and print in the terminal, until sto
 python read_rms.py 1234
 ```
 
+## subscribe_events
+Subscribe to capture signal level events and state change events, and print incoming events in the terminal until stopped by Ctrl+c.
+```sh
+python subscribe_events.py 1234
+```
+
 ## get_config
 Read the configuration and print some parameters. 
 ```sh
@@ -77,3 +83,7 @@ Publish to Github pages:
 ```console
 mkdocs gh-deploy
 ```
+
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) before opening a pull request.

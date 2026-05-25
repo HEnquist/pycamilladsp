@@ -4,10 +4,11 @@ Python library for communicating with CamillaDSP.
 This module contains commands of general nature.
 """
 
-from typing import Tuple, List, Optional
+from typing import Any, Callable, List, Optional, Tuple
 
 from .commandgroup import _CommandGroup
 from .datastructures import (
+    AudioDeviceDescriptor,
     ProcessingState,
     StopReason,
     _state_from_string,
@@ -31,6 +32,22 @@ class General(_CommandGroup):
         """
         state = self.client.query("GetState")
         return _state_from_string(state)
+
+    def subscribe_state(self, callback: Callable[[Any], Optional[bool]]):
+        """
+        Subscribe to state change events and call `callback` for each event.
+
+        This method blocks until `callback` returns `False`.
+
+        Args:
+            callback: Function that receives event payloads.
+                Typical payload keys are `state` and `stop_reason`.
+        """
+        self.client.subscribe_events(
+            command="SubscribeState",
+            event_name="StateEvent",
+            callback=callback,
+        )
 
     def stop_reason(self) -> StopReason:
         """
@@ -103,7 +120,7 @@ class General(_CommandGroup):
         For some backends, those two names are identical.
 
         Returns:
-            List[Tuple[str, str]: A list containing tuples of two strings,
+            List[Tuple[str, str]]: A list containing tuples of two strings,
                 with system device name and a descriptive name.
         """
         devs = self.client.query("GetAvailablePlaybackDevices", arg=value)
@@ -117,8 +134,44 @@ class General(_CommandGroup):
         For some backends, those two names are identical.
 
         Returns:
-            List[Tuple[str, str]: A list containing tuples of two strings,
+            List[Tuple[str, str]]: A list containing tuples of two strings,
                 with system device name and a descriptive name.
         """
         devs = self.client.query("GetAvailableCaptureDevices", arg=value)
         return devs
+
+    def playback_device_capabilities(
+        self, backend: str, device_name: str
+    ) -> AudioDeviceDescriptor:
+        """
+        Read the capabilities of a specific playback device.
+
+        Args:
+            backend (str): Backend name such as Alsa or CoreAudio.
+            device_name (str): Device identifier or name.
+
+        Returns:
+            AudioDeviceDescriptor: Device descriptor with capabilities.
+        """
+        capabilities = self.client.query(
+            "GetPlaybackDeviceCapabilities", arg=(backend, device_name)
+        )
+        return capabilities
+
+    def capture_device_capabilities(
+        self, backend: str, device_name: str
+    ) -> AudioDeviceDescriptor:
+        """
+        Read the capabilities of a specific capture device.
+
+        Args:
+            backend (str): Backend name such as Alsa or CoreAudio.
+            device_name (str): Device identifier or name.
+
+        Returns:
+            AudioDeviceDescriptor: Device descriptor with capabilities.
+        """
+        capabilities = self.client.query(
+            "GetCaptureDeviceCapabilities", arg=(backend, device_name)
+        )
+        return capabilities

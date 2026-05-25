@@ -9,7 +9,7 @@ from typing import Tuple, Optional
 
 from .commandgroup import _CommandGroup
 
-VERSION = "4.0.0"
+VERSION = "4.1.0"
 
 
 class Versions(_CommandGroup):
@@ -22,8 +22,8 @@ class Versions(_CommandGroup):
         Read CamillaDSP version.
 
         Returns:
-            Tuple[List[str], List[str]] | None: A tuple containing the CamillaDSP version,
-                as (major, minor, patch).
+            Tuple[str, str, str] | None: A tuple containing the CamillaDSP version,
+                as (major, minor, patch), or None if not connected.
         """
         return self.client.cdsp_version
 
@@ -32,7 +32,7 @@ class Versions(_CommandGroup):
         Read pyCamillaDSP library version.
 
         Returns:
-            Tuple[List[str], List[str]] | None: A tuple containing the pyCamillaDSP version,
+            Tuple[str, str, str]: A tuple containing the pyCamillaDSP version,
                 as (major, minor, patch).
         """
         ver = VERSION.split(".", 2)
