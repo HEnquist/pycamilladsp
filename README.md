@@ -83,3 +83,7 @@ Publish to Github pages:
 ```console
 mkdocs gh-deploy
 ```
+
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) before opening a pull request.
