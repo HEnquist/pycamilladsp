@@ -59,7 +59,7 @@ class StopReason(Enum):
     """
     An enum representing the possible reasons why CamillaDSP stopped processing.
     The StopReason enums carry additional data:
-    - CAPTUREERROR and PLAYBACKERROR:
+    - CAPTUREERROR, PLAYBACKERROR and UNKNOWNERROR:
       Carries the error message as a string.
     - CAPTUREFORMATCHANGE and PLAYBACKFORMATCHANGE:
       Carries the estimated new sample rate as an integer.
@@ -82,6 +82,8 @@ class StopReason(Enum):
     """The capture device encountered an error."""
     PLAYBACKERROR = auto()
     """The playback device encountered an error."""
+    UNKNOWNERROR = auto()
+    """An unexpected internal error occurred."""
     CAPTUREFORMATCHANGE = auto()
     """The sample format or rate of the capture device changed. """
     PLAYBACKFORMATCHANGE = auto()
@@ -120,6 +122,8 @@ def _reason_from_reply(value):
         reasonenum = StopReason.CAPTUREERROR
     elif reason == "PlaybackError":
         reasonenum = StopReason.PLAYBACKERROR
+    elif reason == "UnknownError":
+        reasonenum = StopReason.UNKNOWNERROR
     elif reason == "CaptureFormatChange":
         reasonenum = StopReason.CAPTUREFORMATCHANGE
     elif reason == "PlaybackFormatChange":

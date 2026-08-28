@@ -19,7 +19,7 @@ except:
 cdsp = CamillaClient("127.0.0.1", port)
 cdsp.connect()
 
-current_vol = cdsp.volume.main()
+current_vol = cdsp.volume.main_volume()
 print(f"Current volume: {current_vol} dB")
 print(f"Changing volume to: {new_vol} dB")
-cdsp.volume.set_main(new_vol)
+cdsp.volume.set_main_volume(new_vol)

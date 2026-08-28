@@ -39,14 +39,14 @@ class Spectrum(_CommandGroup):
         """
         if side not in ("capture", "playback"):
             raise ValueError("side must be one of: capture, playback")
-        arg = {
+        request = {
             "side": side,
             "channel": channel,
             "min_freq": float(min_freq),
             "max_freq": float(max_freq),
             "n_bins": int(n_bins),
         }
-        return self.client.query("GetSpectrum", arg=arg)
+        return self.client.query("GetSpectrum", value=request)
 
     def subscribe_spectrum(
         self,
@@ -77,7 +77,7 @@ class Spectrum(_CommandGroup):
         """
         if side not in ("capture", "playback"):
             raise ValueError("side must be one of: capture, playback")
-        arg: Dict[str, Any] = {
+        request: Dict[str, Any] = {
             "side": side,
             "channel": channel,
             "min_freq": float(min_freq),
@@ -85,10 +85,10 @@ class Spectrum(_CommandGroup):
             "n_bins": int(n_bins),
         }
         if max_rate is not None:
-            arg["max_rate"] = float(max_rate)
+            request["max_rate"] = float(max_rate)
         self.client.subscribe_events(
             command="SubscribeSpectrum",
-            arg=arg,
             event_name="SpectrumEvent",
             callback=callback,
+            value=request,
         )

@@ -35,7 +35,7 @@ class Config(_CommandGroup):
         Args:
             value (str): Path to config file.
         """
-        self.client.query("SetConfigFilePath", arg=value)
+        self.client.query("SetConfigFilePath", value=value)
 
     def active_raw(self) -> Optional[str]:
         """
@@ -54,7 +54,7 @@ class Config(_CommandGroup):
         Args:
             config_string (str): Config as yaml string.
         """
-        self.client.query("SetConfig", arg=config_string)
+        self.client.query("SetConfig", value=config_string)
 
     def active_json(self) -> Optional[str]:
         """
@@ -73,7 +73,7 @@ class Config(_CommandGroup):
         Args:
             config_string (str): Config as json string.
         """
-        self.client.query("SetConfigJson", arg=config_string)
+        self.client.query("SetConfigJson", value=config_string)
 
     def active(self) -> Optional[Dict]:
         """
@@ -110,7 +110,7 @@ class Config(_CommandGroup):
         Returns:
             Dict: Parsed config as a Python dict.
         """
-        config_raw = self.client.query("ReadConfig", arg=config_string)
+        config_raw = self.client.query("ReadConfig", value=config_string)
         config_object = yaml.safe_load(config_raw)
         return config_object
 
@@ -125,7 +125,7 @@ class Config(_CommandGroup):
         Returns:
             Dict: Parsed config as a Python dict.
         """
-        config_raw = self.client.query("ReadConfigJson", arg=config_string)
+        config_raw = self.client.query("ReadConfigJson", value=config_string)
         config_object = json.loads(config_raw)
         return config_object
 
@@ -139,7 +139,7 @@ class Config(_CommandGroup):
         Returns:
             Dict: Parsed config as a Python dict.
         """
-        config_raw = self.client.query("ReadConfigFile", arg=filename)
+        config_raw = self.client.query("ReadConfigFile", value=filename)
         config = yaml.safe_load(config_raw)
         return config
 
@@ -165,7 +165,7 @@ class Config(_CommandGroup):
         Returns:
             str: Validated config as a json string.
         """
-        validated_string = self.client.query("ValidateConfigJson", arg=config_string)
+        validated_string = self.client.query("ValidateConfigJson", value=config_string)
         return validated_string
 
     def validate_yaml(self, config_string: str) -> str:
@@ -180,7 +180,7 @@ class Config(_CommandGroup):
         Returns:
             str: Validated config as a yaml string.
         """
-        validated_string = self.client.query("ValidateConfig", arg=config_string)
+        validated_string = self.client.query("ValidateConfig", value=config_string)
         return validated_string
 
     def validate(self, config_object: Dict) -> Dict:
@@ -228,7 +228,7 @@ class Config(_CommandGroup):
         Returns:
             Any: Value at the given location.
         """
-        value = self.client.query("GetConfigValue", arg=pointer)
+        value = self.client.query("GetConfigValue", value=pointer)
         return value
 
     def set_value(self, pointer: str, value: Any):
@@ -238,7 +238,7 @@ class Config(_CommandGroup):
             pointer (str): Location of the value to set, given as a json pointer.
             value (Any): Value to set.
         """
-        self.client.query("SetConfigValue", arg=(pointer, value))
+        self.client.query("SetConfigValue", pointer=pointer, value=value)
 
     def patch(self, patch: Dict):
         """
@@ -246,4 +246,4 @@ class Config(_CommandGroup):
         Args:
             patch (Dict): Patch to apply.
         """
-        self.client.query("PatchConfig", arg=patch)
+        self.client.query("PatchConfig", value=patch)

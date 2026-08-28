@@ -42,6 +42,12 @@ class Status(_CommandGroup):
         clipped = self.client.query("GetClippedSamples")
         return int(clipped)
 
+    def reset_clipped_samples(self):
+        """
+        Reset the clipped samples counter.
+        """
+        self.client.query("ResetClippedSamples")
+
     def processing_load(self) -> float:
         """
         Get processing load in percent.

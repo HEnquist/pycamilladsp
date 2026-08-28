@@ -5,6 +5,16 @@ import camilladsp
 import json
 
 
+def cmd(name, **args):
+    """Build a command string in the same way the library does."""
+    return json.dumps({"command": name, **args})
+
+
+def reply(name, **fields):
+    """Build a reply message as sent by CamillaDSP."""
+    return json.dumps({"reply": name, **fields})
+
+
 class DummyWS:
     def __init__(self):
         self.query = None
@@ -12,187 +22,159 @@ class DummyWS:
         self.value = None
 
     responses = {
-        '"GetState"': json.dumps({"GetState": {"result": "Ok", "value": "Inactive"}}),
-        '"GetVersion"': json.dumps({"GetVersion": {"result": "Ok", "value": "0.3.2"}}),
-        '"GetSupportedDeviceTypes"': json.dumps(
-            {
-                "GetSupportedDeviceTypes": {
-                    "result": "Ok",
-                    "value": [["a", "b"], ["c", "d"]],
-                }
-            }
+        cmd("GetState"): reply("GetState", result="Ok", value="Inactive"),
+        cmd("GetVersion"): reply("GetVersion", result="Ok", value="0.3.2"),
+        cmd("GetSupportedDeviceTypes"): reply(
+            "GetSupportedDeviceTypes", result="Ok", value=[["a", "b"], ["c", "d"]]
         ),
-        '"GetSignalRange"': json.dumps(
-            {"GetSignalRange": {"result": "Ok", "value": "0.2"}}
+        cmd("GetSignalRange"): reply("GetSignalRange", result="Ok", value="0.2"),
+        cmd("GetCaptureSignalRms"): reply(
+            "GetCaptureSignalRms", result="Ok", value=[0.1, 0.2]
         ),
-        '"GetCaptureSignalRms"': json.dumps(
-            {"GetCaptureSignalRms": {"result": "Ok", "value": [0.1, 0.2]}}
+        cmd("GetCaptureRate"): reply("GetCaptureRate", result="Ok", value="88250"),
+        cmd("GetFaders"): reply(
+            "GetFaders",
+            result="Ok",
+            value=[
+                {"volume": -1, "mute": False},
+                {"volume": -2, "mute": True},
+                {"volume": -3, "mute": False},
+                {"volume": -4, "mute": True},
+                {"volume": -5, "mute": False},
+            ],
         ),
-        '"GetCaptureRate"': json.dumps(
-            {"GetCaptureRate": {"result": "Ok", "value": "88250"}}
+        cmd("GetFaderVolume", fader=1): reply(
+            "GetFaderVolume", result="Ok", value=[1, -1.23]
         ),
-        '"GetFaders"': json.dumps(
-            {
-                "GetFaders": {
-                    "result": "Ok",
-                    "value": [
-                        {"volume": -1, "mute": False},
-                        {"volume": -2, "mute": True},
-                        {"volume": -3, "mute": False},
-                        {"volume": -4, "mute": True},
-                        {"volume": -5, "mute": False},
-                    ],
-                }
-            }
+        cmd("AdjustFaderVolume", fader=1, value=-2.5): reply(
+            "AdjustFaderVolume", result="Ok", value=[1, -3.73]
         ),
-        '{"GetFaderVolume": 1}': json.dumps(
-            {"GetFaderVolume": {"result": "Ok", "value": [1, -1.23]}}
+        cmd("AdjustVolume", value=-2.5): reply(
+            "AdjustVolume", result="Ok", value=-3.73
         ),
-        '{"AdjustFaderVolume": [1, -2.5]}': json.dumps(
-            {"AdjustFaderVolume": {"result": "Ok", "value": [1, -3.73]}}
+        cmd("GetFaderMute", fader=1): reply(
+            "GetFaderMute", result="Ok", value=[1, False]
         ),
-        '{"GetFaderMute": 1}': json.dumps(
-            {"GetFaderMute": {"result": "Ok", "value": [1, False]}}
+        cmd("ToggleFaderMute", fader=1): reply(
+            "ToggleFaderMute", result="Ok", value=[1, True]
         ),
-        '{"ToggleFaderMute": 1}': json.dumps(
-            {"ToggleFaderMute": {"result": "Ok", "value": [1, True]}}
-        ),
-        '{"GetPlaybackDeviceCapabilities": ["Alsa", "hw:Loopback,0,0"]}': json.dumps(
-            {
-                "GetPlaybackDeviceCapabilities": {
-                    "result": "Ok",
-                    "value": {
-                        "name": "hw:Loopback,0,0",
-                        "description": "Loopback, Loopback PCM, subdevice #0",
-                        "capabilities": [
+        cmd("ToggleMute"): reply("ToggleMute", result="Ok", value=True),
+        cmd(
+            "GetPlaybackDeviceCapabilities",
+            backend="Alsa",
+            device="hw:Loopback,0,0",
+        ): reply(
+            "GetPlaybackDeviceCapabilities",
+            result="Ok",
+            value={
+                "name": "hw:Loopback,0,0",
+                "description": "Loopback, Loopback PCM, subdevice #0",
+                "capabilities": [
+                    {
+                        "channels": 2,
+                        "samplerates": [
                             {
-                                "channels": 2,
-                                "samplerates": [
-                                    {
-                                        "samplerate": 44100,
-                                        "formats": ["S16_LE", "S32_LE"],
-                                    }
-                                ],
+                                "samplerate": 44100,
+                                "formats": ["S16_LE", "S32_LE"],
                             }
                         ],
-                    },
-                }
-            }
+                    }
+                ],
+            },
         ),
-        '{"GetCaptureDeviceCapabilities": ["Alsa", "hw:Loopback,1,0"]}': json.dumps(
-            {
-                "GetCaptureDeviceCapabilities": {
-                    "result": "Ok",
-                    "value": {
-                        "name": "hw:Loopback,1,0",
-                        "description": "Loopback capture",
-                        "capabilities": [
-                            {
-                                "channels": 2,
-                                "samplerates": [
-                                    {"samplerate": 48000, "formats": ["FLOAT32LE"]}
-                                ],
-                            }
+        cmd(
+            "GetCaptureDeviceCapabilities",
+            backend="Alsa",
+            device="hw:Loopback,1,0",
+        ): reply(
+            "GetCaptureDeviceCapabilities",
+            result="Ok",
+            value={
+                "name": "hw:Loopback,1,0",
+                "description": "Loopback capture",
+                "capabilities": [
+                    {
+                        "channels": 2,
+                        "samplerates": [
+                            {"samplerate": 48000, "formats": ["FLOAT32LE"]}
                         ],
-                    },
-                }
-            }
+                    }
+                ],
+            },
         ),
-        '"GetErrorValue"': json.dumps(
-            {"GetErrorValue": {"result": "Error", "value": "badstuff"}}
+        cmd("GetErrorValue"): reply("GetErrorValue", result="Error", value="badstuff"),
+        cmd("GetError"): reply("GetError", result="Error"),
+        cmd("InvalidValue"): reply(
+            "InvalidValue",
+            result="InvalidValueError",
+            message="invalid value",
+            value="badstuff",
         ),
-        '"GetError"': json.dumps({"GetError": {"result": "Error"}}),
-        '"InvalidValue"': json.dumps(
-            {
-                "InvalidValue": {
-                    "result": {"InvalidValueError": "invalid value"},
-                    "value": "badstuff",
-                }
-            }
+        cmd("InvalidRequest"): reply(
+            "InvalidRequest",
+            result="InvalidRequestError",
+            message="invalid request",
+            value="badstuff",
         ),
-        '"InvalidRequest"': json.dumps(
-            {
-                "InvalidRequest": {
-                    "result": {"InvalidRequestError": "invalid request"},
-                    "value": "badstuff",
-                }
-            }
+        cmd("InvalidFader"): reply("InvalidFader", result="InvalidFaderError"),
+        cmd("TooManyRequests"): reply(
+            "TooManyRequests",
+            result="RateLimitExceededError",
+            message="too many requests",
         ),
-        '"TooManyRequests"': json.dumps(
-            {
-                "TooManyRequests": {
-                    "result": {"RateLimitExceededError": "too many requests"}
-                }
-            }
+        cmd("DeviceBusy"): reply(
+            "DeviceBusy", result="DeviceBusyError", message="device is busy"
         ),
-        '"DeviceBusy"': json.dumps(
-            {
-                "DeviceBusy": {
-                    "result": {"DeviceBusyError": "device is busy"},
-                    "value": {"name": "hw:Loopback,0,0"},
-                }
-            }
+        cmd("DeviceNotFound"): reply(
+            "DeviceNotFound", result="DeviceNotFoundError", message="device not found"
         ),
-        '"DeviceNotFound"': json.dumps(
-            {
-                "DeviceNotFound": {
-                    "result": {"DeviceNotFoundError": "device not found"},
-                    "value": {"name": "missing"},
-                }
-            }
+        cmd("DeviceError"): reply(
+            "DeviceError", result="DeviceError", message="backend failed"
         ),
-        '"DeviceError"': json.dumps(
-            {
-                "DeviceError": {
-                    "result": {"DeviceError": "backend failed"},
-                    "value": {"name": "hw:Broken"},
-                }
-            }
+        cmd("GetStopReason"): reply("GetStopReason", result="Ok", value="Done"),
+        cmd("GetStopReason2"): reply(
+            "GetStopReason", result="Ok", value={"CaptureFormatChange": 44098}
         ),
-        '"GetStopReason"': json.dumps(
-            {"GetStopReason": {"result": "Ok", "value": "Done"}}
+        cmd("GetStopReason3"): reply(
+            "GetStopReason", result="Ok", value={"CaptureError": "error error"}
         ),
-        '"GetStopReason2"': json.dumps(
-            {"GetStopReason": {"result": "Ok", "value": {"CaptureFormatChange": 44098}}}
+        cmd("GetStopReason4"): reply(
+            "GetStopReason", result="Ok", value={"UnknownError": "something broke"}
         ),
-        '"GetStopReason3"': json.dumps(
-            {
-                "GetStopReason": {
-                    "result": "Ok",
-                    "value": {"CaptureError": "error error"},
-                }
-            }
+        cmd(
+            "GetSpectrum",
+            value={
+                "side": "capture",
+                "channel": None,
+                "min_freq": 20.0,
+                "max_freq": 20000.0,
+                "n_bins": 100,
+            },
+        ): reply(
+            "GetSpectrum",
+            result="Ok",
+            value={
+                "frequencies": [20.0, 44.7, 100.0],
+                "magnitudes": [-42.3, -45.1, -38.7],
+            },
         ),
-        '{"GetSpectrum": {"side": "capture", "channel": null, "min_freq": 20.0, "max_freq": 20000.0, "n_bins": 100}}': json.dumps(
-            {
-                "GetSpectrum": {
-                    "result": "Ok",
-                    "value": {
-                        "frequencies": [20.0, 44.7, 100.0],
-                        "magnitudes": [-42.3, -45.1, -38.7],
-                    },
-                }
-            }
-        ),
-        '"NotACommand"': json.dumps({"Invalid": {"error": "Some error"}}),
-        '{"SetSomeValue": 123}': json.dumps({"SetSomeValue": {"result": "Ok"}}),
-        '"nonsense"': "abcdefgh",
-        '"bug_in_ws"': "OK:OTHER",
+        cmd("NotACommand"): reply("Invalid", error="Some error"),
+        cmd("WrongReply"): reply("SomeOtherCommand", result="Ok"),
+        cmd("NoResult"): reply("NoResult", value=123),
+        cmd("SetSomeValue", value=123): reply("SetSomeValue", result="Ok"),
+        cmd("nonsense"): "abcdefgh",
+        cmd("bug_in_ws"): "OK:OTHER",
     }
 
     def send(self, query):
-        if query == '"fail"':
+        if query == cmd("fail"):
             raise IOError("not connected")
         self.query = query
-        # if ":" in query:
-        #    query, val = query.split(":",1)
-        #    self.response = "OK:{}".format(query.upper())
-        #    self.value = val
         print(query)
         if query in self.responses:
             self.response = self.responses[query]
         else:
-            self.response = json.dumps({"Invalid": {"error": "Error"}})
+            self.response = reply("Invalid", error="Error")
 
     def recv(self):
         print(self.response)
@@ -240,68 +222,6 @@ def test_connect(camilla_mockws):
         camilla_mockws.general.state()
     camilla_mockws.connect()
     assert camilla_mockws.is_connected()
-
-    def test_subscribe_vu_events(camilla_mockws):
-        camilla_mockws.connect()
-        sent = []
-        replies = iter(
-            [
-                json.dumps({"SubscribeVuLevels": {"result": "Ok"}}),
-                json.dumps(
-                    {
-                        "VuLevelsEvent": {
-                            "result": "Ok",
-                            "value": {
-                                "playback_rms": [-20.0, -21.0],
-                                "playback_peak": [-10.0, -11.0],
-                                "capture_rms": [-30.0, -31.0],
-                                "capture_peak": [-12.0, -13.0],
-                            },
-                        }
-                    }
-                ),
-                json.dumps({"StopSubscription": {"result": "Ok"}}),
-            ]
-        )
-
-        camilla_mockws.mockconnection.send = MagicMock(
-            side_effect=lambda msg: sent.append(msg)
-        )
-        camilla_mockws.mockconnection.recv = MagicMock(
-            side_effect=lambda: next(replies)
-        )
-
-        events = []
-
-        def on_event(event_data):
-            events.append(event_data)
-            return False
-
-        camilla_mockws.levels.subscribe_vu_levels(
-            on_event, max_rate=30, attack=10, release=200
-        )
-
-        assert events == [
-            {
-                "playback_rms": [-20.0, -21.0],
-                "playback_peak": [-10.0, -11.0],
-                "capture_rms": [-30.0, -31.0],
-                "capture_peak": [-12.0, -13.0],
-            }
-        ]
-        assert sent == [
-            json.dumps(
-                {
-                    "SubscribeVuLevels": {
-                        "max_rate": 30.0,
-                        "attack": 10.0,
-                        "release": 200.0,
-                    }
-                }
-            ),
-            json.dumps("StopSubscription"),
-        ]
-
     assert camilla_mockws.general.state() == camilladsp.ProcessingState.INACTIVE
     assert camilla_mockws.versions.camilladsp() == ("0", "3", "2")
     assert camilla_mockws.versions.library() == tuple(camilladsp.VERSION.split("."))
@@ -350,8 +270,8 @@ def test_signal_rms(camilla_mockws):
 def test_signal_range_decibel(camilla_mockws):
     camilla_mockws.connect()
     assert camilla_mockws.levels.range_decibel() == -20
-    camilla_mockws.dummyws.responses['"GetSignalRange"'] = json.dumps(
-        {"GetSignalRange": {"result": "Ok", "value": "0.0"}}
+    camilla_mockws.dummyws.responses[cmd("GetSignalRange")] = reply(
+        "GetSignalRange", result="Ok", value="0.0"
     )
     assert camilla_mockws.levels.range_decibel() == -1000
 
@@ -378,16 +298,21 @@ def test_stop_reason(camilla_mockws):
     assert camilla_mockws.general.stop_reason() == StopReason.DONE
     assert camilla_mockws.general.stop_reason().data == None
     print(camilla_mockws.dummyws.responses)
-    camilla_mockws.dummyws.responses['"GetStopReason"'] = (
-        camilla_mockws.dummyws.responses['"GetStopReason2"']
+    camilla_mockws.dummyws.responses[cmd("GetStopReason")] = (
+        camilla_mockws.dummyws.responses[cmd("GetStopReason2")]
     )
     assert camilla_mockws.general.stop_reason() == StopReason.CAPTUREFORMATCHANGE
     assert camilla_mockws.general.stop_reason().data == 44098
-    camilla_mockws.dummyws.responses['"GetStopReason"'] = (
-        camilla_mockws.dummyws.responses['"GetStopReason3"']
+    camilla_mockws.dummyws.responses[cmd("GetStopReason")] = (
+        camilla_mockws.dummyws.responses[cmd("GetStopReason3")]
     )
     assert camilla_mockws.general.stop_reason() == StopReason.CAPTUREERROR
     assert camilla_mockws.general.stop_reason().data == "error error"
+    camilla_mockws.dummyws.responses[cmd("GetStopReason")] = (
+        camilla_mockws.dummyws.responses[cmd("GetStopReason4")]
+    )
+    assert camilla_mockws.general.stop_reason() == StopReason.UNKNOWNERROR
+    assert camilla_mockws.general.stop_reason().data == "something broke"
 
 
 def test_query(camilla_mockws):
@@ -401,9 +326,23 @@ def test_query(camilla_mockws):
     with pytest.raises(IOError):
         camilla_mockws.query("bug_in_ws")
     with pytest.raises(IOError):
-        camilla_mockws.query("NotACommand")
-    with pytest.raises(IOError):
         camilla_mockws.query("fail")
+
+
+def test_query_unknown_command(camilla_mockws):
+    """An `Invalid` reply means CamillaDSP did not accept the command."""
+    camilla_mockws.connect()
+    with pytest.raises(camilladsp.CamillaError) as exc:
+        camilla_mockws.query("NotACommand")
+    assert exc.value.message == "Some error"
+
+
+def test_query_mismatched_reply(camilla_mockws):
+    camilla_mockws.connect()
+    with pytest.raises(IOError):
+        camilla_mockws.query("WrongReply")
+    with pytest.raises(IOError):
+        camilla_mockws.query("NoResult")
 
 
 def test_query_invalid_value(camilla_mockws):
@@ -425,6 +364,13 @@ def test_query_invalid_request(camilla_mockws):
     assert exc.value.value == "badstuff"
 
 
+def test_query_invalid_fader(camilla_mockws):
+    camilla_mockws.connect()
+    with pytest.raises(camilladsp.InvalidFaderError) as exc:
+        camilla_mockws.query("InvalidFader")
+    assert exc.value.message is None
+
+
 def test_query_too_many_requests(camilla_mockws):
     camilla_mockws.connect()
     with pytest.raises(camilladsp.RateLimitExceededError) as exc:
@@ -439,28 +385,27 @@ def test_query_device_errors(camilla_mockws):
     with pytest.raises(camilladsp.DeviceBusyError) as busy_exc:
         camilla_mockws.query("DeviceBusy")
     assert busy_exc.value.message == "device is busy"
-    assert busy_exc.value.value == {"name": "hw:Loopback,0,0"}
 
     with pytest.raises(camilladsp.DeviceNotFoundError) as missing_exc:
         camilla_mockws.query("DeviceNotFound")
     assert missing_exc.value.message == "device not found"
-    assert missing_exc.value.value == {"name": "missing"}
 
     with pytest.raises(camilladsp.DeviceError) as device_exc:
         camilla_mockws.query("DeviceError")
     assert device_exc.value.message == "backend failed"
-    assert device_exc.value.value == {"name": "hw:Broken"}
 
 
 def test_query_mockedws(camilla_mockws):
     camilla_mockws.connect()
-    assert camilla_mockws.query("SetSomeValue", arg=123) is None
-    assert camilla_mockws.dummyws.query == json.dumps({"SetSomeValue": 123})
+    assert camilla_mockws.query("SetSomeValue", value=123) is None
+    assert camilla_mockws.dummyws.query == cmd("SetSomeValue", value=123)
     assert camilla_mockws.general.supported_device_types() == (["a", "b"], ["c", "d"])
     assert camilla_mockws.volume.volume(1) == -1.23
     assert camilla_mockws.volume.adjust_volume(1, -2.5) == -3.73
+    assert camilla_mockws.volume.adjust_main_volume(-2.5) == -3.73
     assert camilla_mockws.volume.mute(1) == False
     assert camilla_mockws.volume.toggle_mute(1) == True
+    assert camilla_mockws.volume.toggle_main_mute() == True
     faders = camilla_mockws.volume.all()
     assert faders[0]["volume"] == -1.0
     assert faders[2]["volume"] == -3.0
@@ -488,10 +433,18 @@ def test_queries(camilla_mockquery):
     camilla_mockquery.query.assert_called_with("GetPlaybackSignalRms")
     camilla_mockquery.levels.playback_peak()
     camilla_mockquery.query.assert_called_with("GetPlaybackSignalPeak")
+    camilla_mockquery.levels.capture_rms_since(2.5)
+    camilla_mockquery.query.assert_called_with("GetCaptureSignalRmsSince", value=2.5)
+    camilla_mockquery.levels.playback_peak_since(2.5)
+    camilla_mockquery.query.assert_called_with("GetPlaybackSignalPeakSince", value=2.5)
+    camilla_mockquery.levels.levels_since(2.5)
+    camilla_mockquery.query.assert_called_with("GetSignalLevelsSince", value=2.5)
+    camilla_mockquery.levels.labels()
+    camilla_mockquery.query.assert_called_with("GetChannelLabels")
 
     # settings
     camilla_mockquery.settings.set_update_interval(1234)
-    camilla_mockquery.query.assert_called_with("SetUpdateInterval", arg=1234)
+    camilla_mockquery.query.assert_called_with("SetUpdateInterval", value=1234)
     camilla_mockquery.settings.update_interval()
     camilla_mockquery.query.assert_called_with("GetUpdateInterval")
 
@@ -502,36 +455,48 @@ def test_queries(camilla_mockquery):
     camilla_mockquery.query.assert_called_with("Exit")
     camilla_mockquery.general.reload()
     camilla_mockquery.query.assert_called_with("Reload")
+    camilla_mockquery.general.list_playback_devices("Alsa")
+    camilla_mockquery.query.assert_called_with(
+        "GetAvailablePlaybackDevices", backend="Alsa"
+    )
+    camilla_mockquery.general.list_capture_devices("Alsa")
+    camilla_mockquery.query.assert_called_with(
+        "GetAvailableCaptureDevices", backend="Alsa"
+    )
     camilla_mockquery.general.playback_device_capabilities("Alsa", "hw:Loopback,0,0")
     camilla_mockquery.query.assert_called_with(
-        "GetPlaybackDeviceCapabilities", arg=("Alsa", "hw:Loopback,0,0")
+        "GetPlaybackDeviceCapabilities", backend="Alsa", device="hw:Loopback,0,0"
     )
     camilla_mockquery.general.capture_device_capabilities("Alsa", "hw:Loopback,1,0")
     camilla_mockquery.query.assert_called_with(
-        "GetCaptureDeviceCapabilities", arg=("Alsa", "hw:Loopback,1,0")
+        "GetCaptureDeviceCapabilities", backend="Alsa", device="hw:Loopback,1,0"
     )
 
     # config
     camilla_mockquery.config.file_path()
     camilla_mockquery.query.assert_called_with("GetConfigFilePath")
     camilla_mockquery.config.set_file_path("some/path")
-    camilla_mockquery.query.assert_called_with("SetConfigFilePath", arg="some/path")
+    camilla_mockquery.query.assert_called_with("SetConfigFilePath", value="some/path")
     camilla_mockquery.config.active_raw()
     camilla_mockquery.query.assert_called_with("GetConfig")
     camilla_mockquery.config.active_json()
     camilla_mockquery.query.assert_called_with("GetConfigJson")
     camilla_mockquery.config.set_active_raw("some:yaml")
-    camilla_mockquery.query.assert_called_with("SetConfig", arg="some:yaml")
+    camilla_mockquery.query.assert_called_with("SetConfig", value="some:yaml")
     camilla_mockquery.config.set_active_json("{'some': 'json'}")
-    camilla_mockquery.query.assert_called_with("SetConfigJson", arg="{'some': 'json'}")
+    camilla_mockquery.query.assert_called_with(
+        "SetConfigJson", value="{'some': 'json'}"
+    )
     camilla_mockquery.config.set_active({"some": "yaml"})
-    camilla_mockquery.query.assert_called_with("SetConfig", arg="some: yaml\n")
+    camilla_mockquery.query.assert_called_with("SetConfig", value="some: yaml\n")
     camilla_mockquery.config.get_value("some")
-    camilla_mockquery.query.assert_called_with("GetConfigValue", arg="some")
+    camilla_mockquery.query.assert_called_with("GetConfigValue", value="some")
     camilla_mockquery.config.set_value("some", "value")
-    camilla_mockquery.query.assert_called_with("SetConfigValue", arg=("some", "value"))
+    camilla_mockquery.query.assert_called_with(
+        "SetConfigValue", pointer="some", value="value"
+    )
     camilla_mockquery.config.patch({"some": "value"})
-    camilla_mockquery.query.assert_called_with("PatchConfig", arg={"some": "value"})
+    camilla_mockquery.query.assert_called_with("PatchConfig", value={"some": "value"})
 
     # status
     camilla_mockquery.status.rate_adjust()
@@ -540,6 +505,8 @@ def test_queries(camilla_mockquery):
     camilla_mockquery.query.assert_called_with("GetBufferLevel")
     camilla_mockquery.status.clipped_samples()
     camilla_mockquery.query.assert_called_with("GetClippedSamples")
+    camilla_mockquery.status.reset_clipped_samples()
+    camilla_mockquery.query.assert_called_with("ResetClippedSamples")
     camilla_mockquery.status.processing_load()
     camilla_mockquery.query.assert_called_with("GetProcessingLoad")
     camilla_mockquery.status.resampler_load()
@@ -549,25 +516,29 @@ def test_queries(camilla_mockquery):
     camilla_mockquery.volume.main_volume()
     camilla_mockquery.query.assert_called_with("GetVolume")
     camilla_mockquery.volume.set_main_volume(-25.0)
-    camilla_mockquery.query.assert_called_with("SetVolume", arg=-25.0)
+    camilla_mockquery.query.assert_called_with("SetVolume", value=-25.0)
     camilla_mockquery.volume.set_volume(1, -1.23)
-    camilla_mockquery.query.assert_called_with("SetFaderVolume", arg=(1, -1.23))
+    camilla_mockquery.query.assert_called_with("SetFaderVolume", fader=1, value=-1.23)
+    camilla_mockquery.volume.set_volume_external(1, -1.23)
+    camilla_mockquery.query.assert_called_with(
+        "SetFaderExternalVolume", fader=1, value=-1.23
+    )
     camilla_mockquery.volume.main_mute()
     camilla_mockquery.query.assert_called_with("GetMute")
     camilla_mockquery.volume.set_main_mute(False)
-    camilla_mockquery.query.assert_called_with("SetMute", arg=False)
+    camilla_mockquery.query.assert_called_with("SetMute", value=False)
     camilla_mockquery.volume.set_mute(1, False)
-    camilla_mockquery.query.assert_called_with("SetFaderMute", arg=(1, False))
+    camilla_mockquery.query.assert_called_with("SetFaderMute", fader=1, value=False)
 
 
 def test_queries_adv(camilla_mockquery_yaml):
     camilla_mockquery_yaml.config.read_and_parse_file("some/path")
-    camilla_mockquery_yaml.query.assert_called_with("ReadConfigFile", arg="some/path")
+    camilla_mockquery_yaml.query.assert_called_with("ReadConfigFile", value="some/path")
     camilla_mockquery_yaml.config.parse_yaml("rawyaml")
-    camilla_mockquery_yaml.query.assert_called_with("ReadConfig", arg="rawyaml")
+    camilla_mockquery_yaml.query.assert_called_with("ReadConfig", value="rawyaml")
     camilla_mockquery_yaml.config.validate({"some": "yaml"})
     camilla_mockquery_yaml.query.assert_called_with(
-        "ValidateConfig", arg="some: yaml\n"
+        "ValidateConfig", value="some: yaml\n"
     )
     camilla_mockquery_yaml.config.active()
     camilla_mockquery_yaml.query.assert_called_with("GetConfig")
@@ -578,18 +549,26 @@ def test_queries_adv(camilla_mockquery_yaml):
 def test_queries_customreplies(camilla_mockquery):
     camilla_mockquery.query.return_value = [0, -12.0]
     camilla_mockquery.volume.adjust_volume(0, -5.0)
-    camilla_mockquery.query.assert_called_with("AdjustFaderVolume", arg=(0, -5.0))
+    camilla_mockquery.query.assert_called_with("AdjustFaderVolume", fader=0, value=-5.0)
     camilla_mockquery.volume.adjust_volume(0, -5.0, min_limit=-20, max_limit=3.0)
     camilla_mockquery.query.assert_called_with(
-        "AdjustFaderVolume", arg=(0, (-5.0, -20.0, 3.0))
+        "AdjustFaderVolume", fader=0, value=-5.0, min=-20.0, max=3.0
     )
     camilla_mockquery.volume.adjust_volume(0, -5.0, min_limit=-20)
     camilla_mockquery.query.assert_called_with(
-        "AdjustFaderVolume", arg=(0, (-5.0, -20.0, 50.0))
+        "AdjustFaderVolume", fader=0, value=-5.0, min=-20.0, max=50.0
     )
     camilla_mockquery.volume.adjust_volume(0, -5.0, max_limit=3.0)
     camilla_mockquery.query.assert_called_with(
-        "AdjustFaderVolume", arg=(0, (-5.0, -150.0, 3.0))
+        "AdjustFaderVolume", fader=0, value=-5.0, min=-150.0, max=3.0
+    )
+
+    camilla_mockquery.query.return_value = -12.0
+    camilla_mockquery.volume.adjust_main_volume(-5.0)
+    camilla_mockquery.query.assert_called_with("AdjustVolume", value=-5.0)
+    camilla_mockquery.volume.adjust_main_volume(-5.0, min_limit=-20, max_limit=3.0)
+    camilla_mockquery.query.assert_called_with(
+        "AdjustVolume", value=-5.0, min=-20.0, max=3.0
     )
 
 
@@ -601,24 +580,21 @@ def test_subscribe_signal_levels(camilla_mockquery):
 
     camilla_mockquery.subscribe_events.assert_called_with(
         command="SubscribeSignalLevels",
-        arg="playback",
         event_name="SignalLevelsEvent",
         callback=callback,
+        value="playback",
     )
 
 
-def test_subscribe_vu_levels(camilla_mockquery):
+def test_subscribe_state(camilla_mockquery):
     callback = MagicMock(return_value=False)
     camilla_mockquery.subscribe_events = MagicMock()
 
-    camilla_mockquery.levels.subscribe_vu_levels(
-        callback, max_rate=30, attack=10, release=200
-    )
+    camilla_mockquery.general.subscribe_state(callback)
 
     camilla_mockquery.subscribe_events.assert_called_with(
-        command="SubscribeVuLevels",
-        arg={"max_rate": 30.0, "attack": 10.0, "release": 200.0},
-        event_name="VuLevelsEvent",
+        command="SubscribeState",
+        event_name="StateEvent",
         callback=callback,
     )
 
@@ -633,9 +609,9 @@ def test_subscribe_vu_levels(camilla_mockquery):
 
     camilla_mockquery.subscribe_events.assert_called_with(
         command="SubscribeVuLevels",
-        arg={"max_rate": 30.0, "attack": 10.0, "release": 200.0},
         event_name="VuLevelsEvent",
         callback=callback,
+        value={"max_rate": 30.0, "attack": 10.0, "release": 200.0},
     )
 
 
@@ -644,20 +620,17 @@ def test_subscribe_events(camilla_mockws):
     sent = []
     replies = iter(
         [
-            json.dumps({"SubscribeSignalLevels": {"result": "Ok"}}),
-            json.dumps(
-                {
-                    "SignalLevelsEvent": {
-                        "result": "Ok",
-                        "value": {
-                            "side": "capture",
-                            "rms": [-58.1, -57.6],
-                            "peak": [-39.4, -38.9],
-                        },
-                    }
-                }
+            reply("SubscribeSignalLevels", result="Ok"),
+            reply(
+                "SignalLevelsEvent",
+                result="Ok",
+                value={
+                    "side": "capture",
+                    "rms": [-58.1, -57.6],
+                    "peak": [-39.4, -38.9],
+                },
             ),
-            json.dumps({"StopSubscription": {"result": "Ok"}}),
+            reply("StopSubscription", result="Ok"),
         ]
     )
 
@@ -674,14 +647,14 @@ def test_subscribe_events(camilla_mockws):
 
     camilla_mockws.subscribe_events(
         command="SubscribeSignalLevels",
-        arg="capture",
         event_name="SignalLevelsEvent",
         callback=on_event,
+        value="capture",
     )
 
     assert sent == [
-        json.dumps({"SubscribeSignalLevels": "capture"}),
-        '"StopSubscription"',
+        cmd("SubscribeSignalLevels", value="capture"),
+        cmd("StopSubscription"),
     ]
     assert events == [
         {
@@ -697,21 +670,18 @@ def test_subscribe_vu_events(camilla_mockws):
     sent = []
     replies = iter(
         [
-            json.dumps({"SubscribeVuLevels": {"result": "Ok"}}),
-            json.dumps(
-                {
-                    "VuLevelsEvent": {
-                        "result": "Ok",
-                        "value": {
-                            "playback_rms": [-20.0, -21.0],
-                            "playback_peak": [-10.0, -11.0],
-                            "capture_rms": [-30.0, -31.0],
-                            "capture_peak": [-12.0, -13.0],
-                        },
-                    }
-                }
+            reply("SubscribeVuLevels", result="Ok"),
+            reply(
+                "VuLevelsEvent",
+                result="Ok",
+                value={
+                    "playback_rms": [-20.0, -21.0],
+                    "playback_peak": [-10.0, -11.0],
+                    "capture_rms": [-30.0, -31.0],
+                    "capture_peak": [-12.0, -13.0],
+                },
             ),
-            json.dumps({"StopSubscription": {"result": "Ok"}}),
+            reply("StopSubscription", result="Ok"),
         ]
     )
 
@@ -739,10 +709,11 @@ def test_subscribe_vu_events(camilla_mockws):
         }
     ]
     assert sent == [
-        json.dumps(
-            {"SubscribeVuLevels": {"max_rate": 30.0, "attack": 10.0, "release": 200.0}}
+        cmd(
+            "SubscribeVuLevels",
+            value={"max_rate": 30.0, "attack": 10.0, "release": 200.0},
         ),
-        json.dumps("StopSubscription"),
+        cmd("StopSubscription"),
     ]
 
 
@@ -761,7 +732,7 @@ def test_spectrum_queries(camilla_mockquery):
     )
     camilla_mockquery.query.assert_called_with(
         "GetSpectrum",
-        arg={
+        value={
             "side": "capture",
             "channel": None,
             "min_freq": 20.0,
@@ -775,7 +746,7 @@ def test_spectrum_queries(camilla_mockquery):
     )
     camilla_mockquery.query.assert_called_with(
         "GetSpectrum",
-        arg={
+        value={
             "side": "playback",
             "channel": 1,
             "min_freq": 100.0,
@@ -794,15 +765,15 @@ def test_subscribe_spectrum(camilla_mockquery):
     )
     camilla_mockquery.subscribe_events.assert_called_with(
         command="SubscribeSpectrum",
-        arg={
+        event_name="SpectrumEvent",
+        callback=callback,
+        value={
             "side": "capture",
             "channel": None,
             "min_freq": 20.0,
             "max_freq": 20000.0,
             "n_bins": 100,
         },
-        event_name="SpectrumEvent",
-        callback=callback,
     )
 
 
@@ -821,7 +792,9 @@ def test_subscribe_spectrum_with_rate(camilla_mockquery):
     )
     camilla_mockquery.subscribe_events.assert_called_with(
         command="SubscribeSpectrum",
-        arg={
+        event_name="SpectrumEvent",
+        callback=callback,
+        value={
             "side": "playback",
             "channel": 0,
             "min_freq": 20.0,
@@ -829,8 +802,6 @@ def test_subscribe_spectrum_with_rate(camilla_mockquery):
             "n_bins": 100,
             "max_rate": 30.0,
         },
-        event_name="SpectrumEvent",
-        callback=callback,
     )
 
 
@@ -839,19 +810,16 @@ def test_subscribe_spectrum_events(camilla_mockws):
     sent = []
     replies = iter(
         [
-            json.dumps({"SubscribeSpectrum": {"result": "Ok"}}),
-            json.dumps(
-                {
-                    "SpectrumEvent": {
-                        "result": "Ok",
-                        "value": {
-                            "frequencies": [20.0, 44.7, 100.0],
-                            "magnitudes": [-42.3, -45.1, -38.7],
-                        },
-                    }
-                }
+            reply("SubscribeSpectrum", result="Ok"),
+            reply(
+                "SpectrumEvent",
+                result="Ok",
+                value={
+                    "frequencies": [20.0, 44.7, 100.0],
+                    "magnitudes": [-42.3, -45.1, -38.7],
+                },
             ),
-            json.dumps({"StopSubscription": {"result": "Ok"}}),
+            reply("StopSubscription", result="Ok"),
         ]
     )
 
@@ -877,19 +845,36 @@ def test_subscribe_spectrum_events(camilla_mockws):
         }
     ]
     assert sent == [
-        json.dumps(
-            {
-                "SubscribeSpectrum": {
-                    "side": "capture",
-                    "channel": None,
-                    "min_freq": 20.0,
-                    "max_freq": 20000.0,
-                    "n_bins": 100,
-                }
-            }
+        cmd(
+            "SubscribeSpectrum",
+            value={
+                "side": "capture",
+                "channel": None,
+                "min_freq": 20.0,
+                "max_freq": 20000.0,
+                "n_bins": 100,
+            },
         ),
-        json.dumps("StopSubscription"),
+        cmd("StopSubscription"),
     ]
+
+
+def test_subscribe_spectrum_processing_stopped(camilla_mockws):
+    """A final event with `ProcessingStopped` ends the subscription."""
+    camilla_mockws.connect()
+    replies = iter(
+        [
+            reply("SubscribeSpectrum", result="Ok"),
+            reply("SpectrumEvent", result="ProcessingStopped"),
+        ]
+    )
+    camilla_mockws.mockconnection.send = MagicMock()
+    camilla_mockws.mockconnection.recv = MagicMock(side_effect=lambda: next(replies))
+
+    with pytest.raises(camilladsp.ProcessingStoppedError):
+        camilla_mockws.spectrum.subscribe_spectrum(
+            MagicMock(), side="capture", min_freq=20.0, max_freq=20000.0, n_bins=100
+        )
 
 
 def test_spectrum_invalid_side(camilla_mockquery):

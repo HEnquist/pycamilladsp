@@ -123,7 +123,7 @@ class General(_CommandGroup):
             List[Tuple[str, str]]: A list containing tuples of two strings,
                 with system device name and a descriptive name.
         """
-        devs = self.client.query("GetAvailablePlaybackDevices", arg=value)
+        devs = self.client.query("GetAvailablePlaybackDevices", backend=value)
         return devs
 
     def list_capture_devices(self, value: str) -> List[Tuple[str, str]]:
@@ -137,7 +137,7 @@ class General(_CommandGroup):
             List[Tuple[str, str]]: A list containing tuples of two strings,
                 with system device name and a descriptive name.
         """
-        devs = self.client.query("GetAvailableCaptureDevices", arg=value)
+        devs = self.client.query("GetAvailableCaptureDevices", backend=value)
         return devs
 
     def playback_device_capabilities(
@@ -154,7 +154,7 @@ class General(_CommandGroup):
             AudioDeviceDescriptor: Device descriptor with capabilities.
         """
         capabilities = self.client.query(
-            "GetPlaybackDeviceCapabilities", arg=(backend, device_name)
+            "GetPlaybackDeviceCapabilities", backend=backend, device=device_name
         )
         return capabilities
 
@@ -172,6 +172,6 @@ class General(_CommandGroup):
             AudioDeviceDescriptor: Device descriptor with capabilities.
         """
         capabilities = self.client.query(
-            "GetCaptureDeviceCapabilities", arg=(backend, device_name)
+            "GetCaptureDeviceCapabilities", backend=backend, device=device_name
         )
         return capabilities

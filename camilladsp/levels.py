@@ -75,7 +75,7 @@ class Levels(_CommandGroup):
         Args:
             interval (float): Length of interval in seconds.
         """
-        sigpeak = self.client.query("GetPlaybackSignalPeakSince", arg=float(interval))
+        sigpeak = self.client.query("GetPlaybackSignalPeakSince", value=float(interval))
         return sigpeak
 
     def playback_rms_since(self, interval: float) -> List[float]:
@@ -86,7 +86,7 @@ class Levels(_CommandGroup):
         Args:
             interval (float): Length of interval in seconds.
         """
-        sigrms = self.client.query("GetPlaybackSignalRmsSince", arg=float(interval))
+        sigrms = self.client.query("GetPlaybackSignalRmsSince", value=float(interval))
         return sigrms
 
     def capture_peak_since(self, interval: float) -> List[float]:
@@ -97,7 +97,7 @@ class Levels(_CommandGroup):
         Args:
             interval (float): Length of interval in seconds.
         """
-        sigpeak = self.client.query("GetCaptureSignalPeakSince", arg=float(interval))
+        sigpeak = self.client.query("GetCaptureSignalPeakSince", value=float(interval))
         return sigpeak
 
     def capture_rms_since(self, interval: float) -> List[float]:
@@ -108,7 +108,7 @@ class Levels(_CommandGroup):
         Args:
             interval (float): Length of interval in seconds.
         """
-        sigrms = self.client.query("GetCaptureSignalRmsSince", arg=float(interval))
+        sigrms = self.client.query("GetCaptureSignalRmsSince", value=float(interval))
         return sigrms
 
     def playback_peak_since_last(self) -> List[float]:
@@ -165,7 +165,7 @@ class Levels(_CommandGroup):
         Args:
             interval (float): Length of interval in seconds.
         """
-        siglevels = self.client.query("GetSignalLevelsSince", arg=float(interval))
+        siglevels = self.client.query("GetSignalLevelsSince", value=float(interval))
         return siglevels
 
     def levels_since_last(self) -> Dict[str, List[float]]:
@@ -224,9 +224,9 @@ class Levels(_CommandGroup):
 
         self.client.subscribe_events(
             command="SubscribeSignalLevels",
-            arg=side,
             event_name="SignalLevelsEvent",
             callback=callback,
+            value=side,
         )
 
     def subscribe_vu_levels(
@@ -251,11 +251,11 @@ class Levels(_CommandGroup):
         """
         self.client.subscribe_events(
             command="SubscribeVuLevels",
-            arg={
+            event_name="VuLevelsEvent",
+            callback=callback,
+            value={
                 "max_rate": float(max_rate),
                 "attack": float(attack),
                 "release": float(release),
             },
-            event_name="VuLevelsEvent",
-            callback=callback,
         )

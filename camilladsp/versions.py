@@ -9,7 +9,7 @@ from typing import Tuple, Optional
 
 from .commandgroup import _CommandGroup
 
-VERSION = "4.1.0"
+VERSION = "5.0.0"
 
 
 class Versions(_CommandGroup):
