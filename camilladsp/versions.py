@@ -9,7 +9,7 @@ from typing import Optional
 
 from .commandgroup import _CommandGroup
 
-VERSION = "5.0.0"
+VERSION = "5.0.0-beta.1"
 
 
 class Versions(_CommandGroup):
