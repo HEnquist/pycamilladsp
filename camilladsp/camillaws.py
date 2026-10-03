@@ -4,7 +4,7 @@ Python library for communicating with CamillaDSP.
 This module contains the websocket connection class.
 """
 
-from typing import Any, Callable, Tuple, Optional, Union
+from typing import Any, Callable, Optional, Union
 from threading import Lock
 import json
 from websocket import create_connection, WebSocket  # type: ignore
@@ -28,7 +28,7 @@ class _CamillaWS:
         self._host = host
         self._port = int(port)
         self._ws: Optional[WebSocket] = None
-        self.cdsp_version: Optional[Tuple[str, str, str]] = None
+        self.cdsp_version: Optional[str] = None
         self._lock = Lock()
 
     def __del__(self):
@@ -118,12 +118,6 @@ class _CamillaWS:
             return value
         _raise_error(result, reply.get("message"), value)
 
-    def _update_version(self, resp: str):
-        version = resp.split(".", 3)
-        if len(version) < 3:
-            version.extend([""] * (3 - len(version)))
-        self.cdsp_version = (version[0], version[1], version[2])
-
     def connect(self):
         """
         Connect to the websocket of CamillaDSP.
@@ -131,8 +125,7 @@ class _CamillaWS:
         try:
             with self._lock:
                 self._ws = create_connection(f"ws://{self._host}:{self._port}")
-            rawvers = self.query("GetVersion")
-            self._update_version(rawvers)
+            self.cdsp_version = self.query("GetVersion")
         except Exception as _e:
             self._ws = None
             raise

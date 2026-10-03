@@ -223,8 +223,8 @@ def test_connect(camilla_mockws):
     camilla_mockws.connect()
     assert camilla_mockws.is_connected()
     assert camilla_mockws.general.state() == camilladsp.ProcessingState.INACTIVE
-    assert camilla_mockws.versions.camilladsp() == ("0", "3", "2")
-    assert camilla_mockws.versions.library() == tuple(camilladsp.VERSION.split("."))
+    assert camilla_mockws.versions.camilladsp() == "0.3.2"
+    assert camilla_mockws.versions.library() == camilladsp.VERSION
     camilla_mockws.disconnect()
     assert not camilla_mockws.is_connected()
 
