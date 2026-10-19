@@ -69,13 +69,18 @@ class DummyWS:
             value={
                 "name": "hw:Loopback,0,0",
                 "description": "Loopback, Loopback PCM, subdevice #0",
-                "capabilities": [
+                "capability_sets": [
                     {
-                        "channels": 2,
-                        "samplerates": [
+                        "mode": "Unified",
+                        "capabilities": [
                             {
-                                "samplerate": 44100,
-                                "formats": ["S16_LE", "S32_LE"],
+                                "channels": 2,
+                                "samplerates": [
+                                    {
+                                        "samplerate": 44100,
+                                        "formats": ["S16_LE", "S32_LE"],
+                                    }
+                                ],
                             }
                         ],
                     }
@@ -92,11 +97,16 @@ class DummyWS:
             value={
                 "name": "hw:Loopback,1,0",
                 "description": "Loopback capture",
-                "capabilities": [
+                "capability_sets": [
                     {
-                        "channels": 2,
-                        "samplerates": [
-                            {"samplerate": 48000, "formats": ["FLOAT32LE"]}
+                        "mode": "Unified",
+                        "capabilities": [
+                            {
+                                "channels": 2,
+                                "samplerates": [
+                                    {"samplerate": 48000, "formats": ["FLOAT32LE"]}
+                                ],
+                            }
                         ],
                     }
                 ],
@@ -249,12 +259,15 @@ def test_device_capabilities(camilla_mockws):
     )
 
     assert playback["name"] == "hw:Loopback,0,0"
-    assert playback["capabilities"][0]["samplerates"][0]["formats"] == [
+    playback_set = playback["capability_sets"][0]
+    assert playback_set["mode"] == "Unified"
+    assert playback_set["capabilities"][0]["samplerates"][0]["formats"] == [
         "S16_LE",
         "S32_LE",
     ]
     assert capture["description"] == "Loopback capture"
-    assert capture["capabilities"][0]["samplerates"][0]["samplerate"] == 48000
+    capture_set = capture["capability_sets"][0]
+    assert capture_set["capabilities"][0]["samplerates"][0]["samplerate"] == 48000
 
 
 def test_signal_range(camilla_mockws):

@@ -145,13 +145,16 @@ class General(_CommandGroup):
     ) -> AudioDeviceDescriptor:
         """
         Read the capabilities of a specific playback device.
+        The capabilities are grouped in one capability set per access mode.
+        Wasapi reports separate sets for shared and exclusive mode,
+        the other backends report a single `Unified` set.
 
         Args:
             backend (str): Backend name such as Alsa or CoreAudio.
             device_name (str): Device identifier or name.
 
         Returns:
-            AudioDeviceDescriptor: Device descriptor with capabilities.
+            AudioDeviceDescriptor: Device descriptor with capability sets.
         """
         capabilities = self.client.query(
             "GetPlaybackDeviceCapabilities", backend=backend, device=device_name
@@ -163,13 +166,16 @@ class General(_CommandGroup):
     ) -> AudioDeviceDescriptor:
         """
         Read the capabilities of a specific capture device.
+        The capabilities are grouped in one capability set per access mode.
+        Wasapi reports separate sets for shared and exclusive mode,
+        the other backends report a single `Unified` set.
 
         Args:
             backend (str): Backend name such as Alsa or CoreAudio.
             device_name (str): Device identifier or name.
 
         Returns:
-            AudioDeviceDescriptor: Device descriptor with capabilities.
+            AudioDeviceDescriptor: Device descriptor with capability sets.
         """
         capabilities = self.client.query(
             "GetCaptureDeviceCapabilities", backend=backend, device=device_name

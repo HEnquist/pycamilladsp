@@ -25,6 +25,11 @@ class Spectrum(_CommandGroup):
         """
         Get a single frequency spectrum snapshot.
 
+        CamillaDSP only starts collecting audio for a side once a client has asked for it.
+        The first request for a side can therefore raise an `InvalidRequestError`
+        with the message "Insufficient data in buffer".
+        Repeat the request once enough audio has passed for the analysis.
+
         Args:
             side (str): Which side to analyze, either ``"capture"`` or ``"playback"``.
             min_freq (float): Lower edge of the frequency range in Hz (must be > 0).

@@ -161,11 +161,25 @@ class AudioDeviceChannelCapability(TypedDict):
     samplerates: List[AudioDeviceSampleRateCapability]
 
 
+class AudioDeviceCapabilitySet(TypedDict):
+    """
+    Capabilities of a device for one access mode.
+    The mode is one of:
+    - `Unified`: the backend has a single capability model (Alsa, CoreAudio, Asio).
+    - `Shared`: Wasapi shared mode, derived from the mix format.
+    - `Exclusive`: Wasapi exclusive mode, probed separately.
+    """
+
+    mode: str
+    capabilities: List[AudioDeviceChannelCapability]
+
+
 class AudioDeviceDescriptor(TypedDict):
     """
-    Capabilities reported for an audio device.
+    Capabilities reported for an audio device,
+    with one capability set per access mode the backend supports.
     """
 
     name: str
     description: str
-    capabilities: List[AudioDeviceChannelCapability]
+    capability_sets: List[AudioDeviceCapabilitySet]
