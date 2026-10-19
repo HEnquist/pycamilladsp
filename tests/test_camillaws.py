@@ -27,11 +27,11 @@ class DummyWS:
         cmd("GetSupportedDeviceTypes"): reply(
             "GetSupportedDeviceTypes", result="Ok", value=[["a", "b"], ["c", "d"]]
         ),
-        cmd("GetSignalRange"): reply("GetSignalRange", result="Ok", value="0.2"),
+        cmd("GetSignalRange"): reply("GetSignalRange", result="Ok", value=0.2),
         cmd("GetCaptureSignalRms"): reply(
             "GetCaptureSignalRms", result="Ok", value=[0.1, 0.2]
         ),
-        cmd("GetCaptureRate"): reply("GetCaptureRate", result="Ok", value="88250"),
+        cmd("GetCaptureRate"): reply("GetCaptureRate", result="Ok", value=88250),
         cmd("GetFaders"): reply(
             "GetFaders",
             result="Ok",
@@ -284,7 +284,7 @@ def test_signal_range_decibel(camilla_mockws):
     camilla_mockws.connect()
     assert camilla_mockws.levels.range_decibel() == -20
     camilla_mockws.dummyws.responses[cmd("GetSignalRange")] = reply(
-        "GetSignalRange", result="Ok", value="0.0"
+        "GetSignalRange", result="Ok", value=0.0
     )
     assert camilla_mockws.levels.range_decibel() == -1000
 
