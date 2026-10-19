@@ -20,6 +20,7 @@ from .config import Config
 from .settings import Settings
 from .status import Status
 from .versions import Versions
+from .spectrum import Spectrum
 
 
 class CamillaClient(_CamillaWS):
@@ -55,6 +56,7 @@ class CamillaClient(_CamillaWS):
         self._settings = Settings(self)
         self._general = General(self)
         self._versions = Versions(self)
+        self._spectrum = Spectrum(self)
 
     @property
     def volume(self) -> Volume:
@@ -111,3 +113,10 @@ class CamillaClient(_CamillaWS):
         A `Versions` instance for version info.
         """
         return self._versions
+
+    @property
+    def spectrum(self) -> Spectrum:
+        """
+        A `Spectrum` instance for spectrum analysis.
+        """
+        return self._spectrum

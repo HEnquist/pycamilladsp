@@ -3,7 +3,7 @@ Various data structures used for communicating with CamillaDSP.
 """
 
 from enum import Enum, auto
-from typing import Optional, TypedDict
+from typing import List, Optional, TypedDict
 
 _STANDARD_RATES = (
     8000,
@@ -59,7 +59,7 @@ class StopReason(Enum):
     """
     An enum representing the possible reasons why CamillaDSP stopped processing.
     The StopReason enums carry additional data:
-    - CAPTUREERROR and PLAYBACKERROR:
+    - CAPTUREERROR, PLAYBACKERROR and UNKNOWNERROR:
       Carries the error message as a string.
     - CAPTUREFORMATCHANGE and PLAYBACKFORMATCHANGE:
       Carries the estimated new sample rate as an integer.
@@ -82,6 +82,8 @@ class StopReason(Enum):
     """The capture device encountered an error."""
     PLAYBACKERROR = auto()
     """The playback device encountered an error."""
+    UNKNOWNERROR = auto()
+    """An unexpected internal error occurred."""
     CAPTUREFORMATCHANGE = auto()
     """The sample format or rate of the capture device changed. """
     PLAYBACKFORMATCHANGE = auto()
@@ -120,6 +122,8 @@ def _reason_from_reply(value):
         reasonenum = StopReason.CAPTUREERROR
     elif reason == "PlaybackError":
         reasonenum = StopReason.PLAYBACKERROR
+    elif reason == "UnknownError":
+        reasonenum = StopReason.UNKNOWNERROR
     elif reason == "CaptureFormatChange":
         reasonenum = StopReason.CAPTUREFORMATCHANGE
     elif reason == "PlaybackFormatChange":
@@ -137,3 +141,45 @@ class Fader(TypedDict):
 
     volume: float
     mute: bool
+
+
+class AudioDeviceSampleRateCapability(TypedDict):
+    """
+    Supported formats for one sample rate.
+    """
+
+    samplerate: int
+    formats: List[str]
+
+
+class AudioDeviceChannelCapability(TypedDict):
+    """
+    Supported sample rates and formats for one channel count.
+    """
+
+    channels: int
+    samplerates: List[AudioDeviceSampleRateCapability]
+
+
+class AudioDeviceCapabilitySet(TypedDict):
+    """
+    Capabilities of a device for one access mode.
+    The mode is one of:
+    - `Unified`: the backend has a single capability model (Alsa, CoreAudio, Asio).
+    - `Shared`: Wasapi shared mode, derived from the mix format.
+    - `Exclusive`: Wasapi exclusive mode, probed separately.
+    """
+
+    mode: str
+    capabilities: List[AudioDeviceChannelCapability]
+
+
+class AudioDeviceDescriptor(TypedDict):
+    """
+    Capabilities reported for an audio device,
+    with one capability set per access mode the backend supports.
+    """
+
+    name: str
+    description: str
+    capability_sets: List[AudioDeviceCapabilitySet]

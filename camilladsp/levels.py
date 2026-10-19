@@ -4,13 +4,14 @@ Python library for communicating with CamillaDSP.
 This module contains commands for reading levels.
 """
 
-from typing import Dict, List
+from typing import Any, Callable, Dict, List, Optional
 import math
 
 from .commandgroup import _CommandGroup
 
 
 class Levels(_CommandGroup):
+    # pylint: disable=too-many-public-methods
     """
     Collection of methods for level monitoring
     """
@@ -74,7 +75,7 @@ class Levels(_CommandGroup):
         Args:
             interval (float): Length of interval in seconds.
         """
-        sigpeak = self.client.query("GetPlaybackSignalPeakSince", arg=float(interval))
+        sigpeak = self.client.query("GetPlaybackSignalPeakSince", value=float(interval))
         return sigpeak
 
     def playback_rms_since(self, interval: float) -> List[float]:
@@ -85,7 +86,7 @@ class Levels(_CommandGroup):
         Args:
             interval (float): Length of interval in seconds.
         """
-        sigrms = self.client.query("GetPlaybackSignalRmsSince", arg=float(interval))
+        sigrms = self.client.query("GetPlaybackSignalRmsSince", value=float(interval))
         return sigrms
 
     def capture_peak_since(self, interval: float) -> List[float]:
@@ -96,7 +97,7 @@ class Levels(_CommandGroup):
         Args:
             interval (float): Length of interval in seconds.
         """
-        sigpeak = self.client.query("GetCaptureSignalPeakSince", arg=float(interval))
+        sigpeak = self.client.query("GetCaptureSignalPeakSince", value=float(interval))
         return sigpeak
 
     def capture_rms_since(self, interval: float) -> List[float]:
@@ -107,7 +108,7 @@ class Levels(_CommandGroup):
         Args:
             interval (float): Length of interval in seconds.
         """
-        sigrms = self.client.query("GetCaptureSignalRmsSince", arg=float(interval))
+        sigrms = self.client.query("GetCaptureSignalRmsSince", value=float(interval))
         return sigrms
 
     def playback_peak_since_last(self) -> List[float]:
@@ -164,7 +165,7 @@ class Levels(_CommandGroup):
         Args:
             interval (float): Length of interval in seconds.
         """
-        siglevels = self.client.query("GetSignalLevelsSince", arg=float(interval))
+        siglevels = self.client.query("GetSignalLevelsSince", value=float(interval))
         return siglevels
 
     def levels_since_last(self) -> Dict[str, List[float]]:
@@ -201,3 +202,60 @@ class Levels(_CommandGroup):
         """
         labels = self.client.query("GetChannelLabels")
         return labels
+
+    def subscribe_signal_levels(
+        self,
+        callback: Callable[[Dict[str, Any]], Optional[bool]],
+        side: str = "both",
+    ):
+        """
+        Subscribe to signal level events and call `callback` for each event.
+
+        This method blocks until `callback` returns `False`.
+
+        Args:
+            callback: Function that receives event payloads.
+                Typical payload keys are `side`, `rms`, and `peak`.
+            side (str): Which side to subscribe to. One of
+                `capture`, `playback`, or `both`.
+        """
+        if side not in ("capture", "playback", "both"):
+            raise ValueError("side must be one of: capture, playback, both")
+
+        self.client.subscribe_events(
+            command="SubscribeSignalLevels",
+            event_name="SignalLevelsEvent",
+            callback=callback,
+            value=side,
+        )
+
+    def subscribe_vu_levels(
+        self,
+        callback: Callable[[Dict[str, Any]], Optional[bool]],
+        max_rate: float,
+        attack: float,
+        release: float,
+    ):
+        """
+        Subscribe to VU meter level events and call `callback` for each event.
+
+        This method blocks until `callback` returns `False`.
+
+        Args:
+            callback: Function that receives event payloads.
+                Typical payload keys are `playback_rms`, `playback_peak`,
+                `capture_rms`, and `capture_peak`.
+            max_rate (float): Maximum event rate in Hz. Use 0 to disable capping.
+            attack (float): Attack time constant in milliseconds.
+            release (float): Release time constant in milliseconds.
+        """
+        self.client.subscribe_events(
+            command="SubscribeVuLevels",
+            event_name="VuLevelsEvent",
+            callback=callback,
+            value={
+                "max_rate": float(max_rate),
+                "attack": float(attack),
+                "release": float(release),
+            },
+        )

@@ -9,8 +9,13 @@ from camilladsp.datastructures import (
 )
 from camilladsp.exceptions import (
     CamillaError,
+    DeviceBusyError,
+    DeviceError,
+    DeviceNotFoundError,
     InvalidRequestError,
     InvalidValueError,
+    ProcessingNotRunningError,
+    ProcessingStoppedError,
     RateLimitExceededError,
     ShutdownInProgressError,
     ConfigReadError,

@@ -29,4 +29,4 @@ class Settings(_CommandGroup):
         Args:
             value (int): New update interval.
         """
-        self.client.query("SetUpdateInterval", arg=value)
+        self.client.query("SetUpdateInterval", value=int(value))

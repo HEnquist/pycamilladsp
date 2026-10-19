@@ -31,7 +31,7 @@ class RateMonitor(_CommandGroup):
         Returns the nearest common rate, as long as it's within +-4% of the measured value.
 
         Returns:
-            int: The current capture rate.
+            int | None: The current capture rate, or None if not within +-4% of a standard rate.
         """
         rate = self.capture_raw()
         if 0.96 * _STANDARD_RATES[0] < rate < 1.04 * _STANDARD_RATES[-1]:

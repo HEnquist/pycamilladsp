@@ -4,12 +4,12 @@ Python library for communicating with CamillaDSP.
 This module contains commands for reading version information.
 """
 
-from typing import Tuple, Optional
+from typing import Optional
 
 
 from .commandgroup import _CommandGroup
 
-VERSION = "4.0.0"
+VERSION = "5.0.0-beta.1"
 
 
 class Versions(_CommandGroup):
@@ -17,23 +17,21 @@ class Versions(_CommandGroup):
     Version info
     """
 
-    def camilladsp(self) -> Optional[Tuple[str, str, str]]:
+    def camilladsp(self) -> Optional[str]:
         """
         Read CamillaDSP version.
 
         Returns:
-            Tuple[List[str], List[str]] | None: A tuple containing the CamillaDSP version,
-                as (major, minor, patch).
+            str | None: The CamillaDSP version as reported by CamillaDSP,
+                for example "5.0.0", or None if not connected.
         """
         return self.client.cdsp_version
 
-    def library(self) -> Tuple[str, str, str]:
+    def library(self) -> str:
         """
         Read pyCamillaDSP library version.
 
         Returns:
-            Tuple[List[str], List[str]] | None: A tuple containing the pyCamillaDSP version,
-                as (major, minor, patch).
+            str: The pyCamillaDSP version, for example "5.0.0".
         """
-        ver = VERSION.split(".", 2)
-        return (ver[0], ver[1], ver[2])
+        return VERSION
